@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Epers.DataAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+823f35605be08ea6062fc54074dc4492f42d649b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49e8572fbe9f5597f15ba1e2c37c0d1f8297b504")]
 [assembly: System.Reflection.AssemblyProductAttribute("Epers.DataAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Epers.DataAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

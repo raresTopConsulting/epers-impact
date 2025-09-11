@@ -7,13 +7,13 @@ namespace Epers.Models.Salesforce
     /// <summary>
     /// Represents a single row in the AgentMetrics table.
     /// </summary>
-    [Table("AgentMetrics", Schema = "dbo")]
     public class AgentMetrics
     {
         /// <summary>
         /// Primary key – the _id string coming from your JSON.
         /// </summary>
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [JsonPropertyName("_id")]
         [Column("Id")]
         public string Id { get; set; }

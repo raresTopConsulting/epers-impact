@@ -1,0 +1,111 @@
+<div class="row p-3 border" style="font-size: small">
+  <div class="col-12 border-bottom text-center">
+    <h3 *ngIf="isEdit">Modificați Profilul Postului</h3>
+    <h3 *ngIf="!isEdit">Creați Profilul Postului</h3>
+  </div>
+
+  <div class="row pt-2">
+    <div class="col-4">
+      <div class="label-value-container">
+        <span class="label">Denumire Post:</span>
+        <span class="value">{{post?.nume}}</span>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="label-value-container">
+        <span class="label">COR:</span>
+        <span class="value">{{post?.cor}}</span>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="label-value-container">
+        <span class="label">Denumire Funcție:</span>
+        <span class="value">{{post?.denFunctie}}</span>
+      </div>
+    </div>
+  </div>
+
+  <form #profilPostForm="ngForm">
+    <div class="row pt-4">
+
+      <table class="table p-3 table-striped table-bordered">
+        <thead class="thead-primar">
+          <tr class="table-info">
+            <td>Competența (denumire)</td>
+            <td>Competența (detalii)</td>
+            <td>Ideal</td>
+            <td>Modificați</td>
+            <td>Ștergeți</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let currentProfilData of tableSetareProfil; let i = index;">
+            <td class="table-cloumn-center">
+              <input type="checkbox" class="form-check-input" name="selectedProfil"
+                [(ngModel)]="currentProfilData.selected" (ngModelChange)="selectProfilPost(currentProfilData)" />
+            </td>
+            <td>{{currentProfilData.denumireSkill}}</td>
+            <td>{{currentProfilData.descriereSkill}}</td>
+            <td>{{currentProfilData.setareProfil.ideal}}</td>
+            <td class="table-cloumn-center">
+              <button mat-icon-button type="button" (click)="removeProfilPost(i)">
+                <mat-icon fontIcon="delete"></mat-icon>
+              </button>
+            </td>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row pt-4">
+      <div class="col-12 pt-2">
+        <div class="row mb-3">
+          <div class="col-md-10">
+            <label for="setProf-id_Skill" class="required-label">Competența</label>
+            <select id="setProf-id_Skill" class="form-select" name="id_Skill" #id_Skill="ngModel"
+              [(ngModel)]="currentProfil.id_Skill" required
+              [class.invalid]="saveAttempted && (id_Skill.touched || id_Skill.dirty) && id_Skill.invalid">
+              <option [value]="">Selectați Competența</option>
+              <option *ngFor="let skill of ddCompetente" [value]="skill.Id">{{ skill.Text }}
+              </option>
+            </select>
+            <span *ngIf="saveAttempted && (id_Skill.touched || id_Skill.dirty) && id_Skill.invalid"
+              class="help-block help-block-danger">Câmpul este
+              obligatoriu!</span>
+          </div>
+          <div class="col-md-2">
+            <label for="setProf-ideal" class="required-label">Ideal</label>
+            <select id="setProf-ideal" class="form-select" name="ideal" #ideal="ngModel"
+              [(ngModel)]="currentProfil.ideal" required
+              [class.invalid]="saveAttempted && (ideal.touched || ideal.dirty) && ideal.invalid">
+              <option *ngFor="let ideal of idealList" [value]="ideal">{{ ideal }}
+              </option>
+            </select>
+            <span *ngIf="saveAttempted && (ideal.touched || ideal.dirty) && ideal.invalid"
+              class="help-block help-block-danger">Câmpul este
+              obligatoriu!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 pt-4">
+      <div class="form-group row">
+        <div class="col-6">
+          <cancel-button [routerLink]="'../../'"></cancel-button>
+        </div>
+        <div class="col-6">
+          <button type="button" *ngIf="!showUpdateBtn" [disabled]="profilPostForm.invalid" mat-raised-button
+            color="primary" class="form-control" (click)="addToProfil()">
+            <mat-icon color="basic" fontIcon="save"></mat-icon> &nbsp;
+            Adăugați
+          </button>
+          <button type="button" *ngIf="showUpdateBtn" [disabled]="profilPostForm.invalid" mat-raised-button
+            color="primary" class="form-control" (click)="updateProfilPost()">
+            <mat-icon color="basic" fontIcon="save"></mat-icon>
+            &nbsp;
+            Modificați
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

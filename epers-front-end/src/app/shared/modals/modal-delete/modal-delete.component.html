@@ -1,0 +1,20 @@
+<div mat-dialog-title>
+  <div class="form-group row">
+    <div class="col-10">
+      <h3>Ștergeți {{data.entityName}}</h3>
+    </div>
+    <div class="col-2">
+      <button mat-icon-button (click)="onClose()">
+        <mat-icon fontIcon="close"></mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content>
+  <p>Sunteți sigur/sigură că doriți să ștergeți {{data.entityName}}?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-stroked-button color="primary" (click)="onClose()">Renunțați</button>
+  <button mat-button mat-raised-button color color="warn" (click)="onDelete()" [mat-dialog-close]="data"
+    cdkFocusInitial>Ștergeți</button>
+</div>

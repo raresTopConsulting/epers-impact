@@ -1,0 +1,167 @@
+<!-- <div class="col-12 text-center p-1 border-bottom">
+<h3 *ngIf="isEditMode">Detalii Curs</h3>
+</div>
+
+<div class="row py-1" *ngIf="curs">
+
+  <div class="col-5 pt-2">
+    <div class="form-group row p-2">
+      <div class="col-4">
+        <label for="curs-denumire">Denumire Curs:</label>
+      </div>
+      <div class="col-8">
+        <h6>
+          {{curs.denumire}}
+        </h6>
+      </div>
+    </div>
+
+    <div class="form-group row p-2" *ngIf="curs.organizator">
+      <div class="col-4">
+        <label for="curs-organizator">Organizator:</label>
+      </div>
+      <div class="col-8">
+        <h6>{{curs.organizator}}</h6>
+      </div>
+    </div>
+
+    <div class="form-group row p-2" *ngIf="curs.pret">
+      <div class="col-4">
+        <label for="curs-pret">Preț</label>
+      </div>
+      <div class="col-8">
+        <h6>{{curs.pret}}</h6>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-7 pt-4">
+
+    <div class="form-group row p-2" *ngIf="curs.dataInceput">
+      <div class="col-2">
+        <label for="curs-dataInceput">Data Început</label>
+      </div>
+      <div class="col-4">
+        <h6>{{curs.dataInceput | date: 'dd/MM/yyyy'}}</h6>
+
+      </div>
+
+      <div class="col-2" *ngIf="curs.dataSfarsit">
+        <label for="curs-dataSfarsit">Data Sfărșit</label>
+      </div>
+      <div class="col-4">
+        <h6>{{curs.dataSfarsit | date: 'dd/MM/yyyy'}}</h6>
+      </div>
+    </div>
+
+    <div class="form-group row p-2">
+      <div class="col-4">
+        <label for="curs-isOnline">Cursul se desfasoara online</label>
+      </div>
+      <div class="col-1">
+        <input class="form-check-input" type="checkbox" name="isOnline" id="curs-isOnline" #isOnline="ngModel"
+          [(ngModel)]="curs.isOnline" disabled />
+      </div>
+    </div>
+
+    <div class="form-group row p-2" *ngIf="curs.isOnline && curs.link">
+      <div class="col-2">
+        <label for="curs-link">Link: </label>
+      </div>
+      <div class="col-10">
+        <a [href]="curs.link" target="_blank">{{curs.link}}</a>
+      </div>
+    </div>
+
+    <div class="form-group row p-2" *ngIf="!curs.isOnline && curs.locatie">
+      <div class="col-2">
+        <label for="curs-locatie">Locație</label>
+      </div>
+      <div class="col-10">
+        <h6>{{curs.locatie}}</h6>
+      </div>
+    </div>
+
+  </div>
+
+</div> -->
+
+<div class="col-12 text-center p-3 border-bottom bg-light">
+  @if (isEditMode) {
+    <h3 class="text-primary">Detalii Curs</h3>
+  }
+</div>
+
+@if (curs) {
+  <div class="row py-3">
+    <!-- Left Column -->
+    <div class="col-lg-5 col-md-6 col-12">
+      <mat-card class="mb-3">
+        <mat-card-content>
+          <h4 class="text-secondary mb-3">Informații Generale</h4>
+          <div class="mb-2">
+            <strong>Denumire Curs:</strong>
+            <p>{{curs.denumire}}</p>
+          </div>
+          @if (curs.organizator) {
+            <div class="mb-2">
+              <strong>Organizator:</strong>
+              <p>{{curs.organizator}}</p>
+            </div>
+          }
+          @if (curs.pret) {
+            <div class="mb-2">
+              <strong>Preț:</strong>
+              <p>{{curs.pret}}</p>
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!-- Right Column -->
+    <div class="col-lg-7 col-md-6 col-12">
+      <mat-card class="mb-3">
+        <mat-card-content>
+          <h4 class="text-secondary mb-3">Detalii Curs</h4>
+          @if (curs.dataInceput) {
+            <div class="row mb-2">
+              <div class="col-6">
+                <strong>Data Început:</strong>
+                <p>{{curs.dataInceput | date: 'dd/MM/yyyy'}}</p>
+              </div>
+              @if (curs.dataSfarsit) {
+                <div class="col-6">
+                  <strong>Data Sfărșit:</strong>
+                  <p>{{curs.dataSfarsit | date: 'dd/MM/yyyy'}}</p>
+                </div>
+              }
+            </div>
+          }
+          <div class="row mb-2">
+            <div class="col-12 d-flex align-items-center">
+              <strong class="me-2">Cursul se desfășoară online:</strong>
+              <mat-checkbox [(ngModel)]="curs.isOnline" disabled></mat-checkbox>
+            </div>
+          </div>
+          @if (curs.isOnline && curs.link) {
+            <div class="row mb-2">
+              <div class="col-12">
+                <strong>Link:</strong>
+                <a [href]="curs.link" target="_blank">{{curs.link}}</a>
+              </div>
+            </div>
+          }
+          @if (!curs.isOnline && curs.locatie) {
+            <div class="row mb-2">
+              <div class="col-12">
+                <strong>Locație:</strong>
+                <p>{{curs.locatie}}</p>
+              </div>
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+}

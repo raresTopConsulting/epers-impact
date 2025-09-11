@@ -1,0 +1,132 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3 *ngIf="isAutoEvaluare">Autoevaluare</h3>
+    <h3 *ngIf="!isEvalFinala && !isAutoEvaluare">Evaluare Subaltern</h3>
+    <h3 *ngIf="isEvalFinala">Evaluare Finală</h3>
+  </div>
+</div>
+<userdata-header [idAngajat]="idAngajat"></userdata-header>
+<form (ngSubmit)="submitForm()" #evaluareForm="ngForm">
+  <div class="row pt-1">
+
+    <div class="col-12">
+      <div class="form-group row p-2">
+        <div class="col-auto">
+          <mat-label>Anul:</mat-label>
+        </div>
+        <div class="col-auto">
+          <select class="form-select" [(ngModel)]="anSelectat" name="anEvaluare" (ngModelChange)="searchEval()">
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row p-4">
+      <div class="col-1">
+        <span mat-fab color="accent" (click)="showSemnificatieNote = !showSemnificatieNote"
+          matTooltip="Vizualizare semnificație note de la 1 la 5">
+          <mat-icon color="accent" fontIcon="info"></mat-icon> &nbsp;
+        </span>
+      </div>
+      <div class="col-5">
+        <semnificatie-note-evaluare *ngIf="showSemnificatieNote"></semnificatie-note-evaluare>
+      </div>
+
+      <div class="col-6">
+        <div class="col-12 p-2" *ngIf="isAutoEvaluare">
+          <button type="button" mat-raised-button color="primary" class="form-control"
+            [routerLink]="['../istoricEvPersonala/']">
+            <mat-icon color="basic" fontIcon="info"></mat-icon> &nbsp;
+            Istoric Evaluări
+          </button>
+        </div>
+        <div class="col-12 p-2" *ngIf="evaluare.flagFinalizat">
+          <h5 class="error-text">Evaluarea pentru anul {{anSelectat}} a fost finalizată și închisă!</h5>
+          <p class="error-text">Atenție! În cazul în care doriți să contestați rezultatele evauării, acest lucru poate
+            fi făcut în termen de maxim 5 zile de la data finalizării evaluării.</p>
+        </div>
+        <div class="col-12 p-2" *ngIf="contestarePosibila && evaluare.flagFinalizat">
+          <button type="button" mat-raised-button color="warn" class="form-control" (click)="contestare()">
+            <mat-icon color="basic" fontIcon="create"></mat-icon> &nbsp;
+            Contestare evaluare
+          </button>
+        </div>
+        <div class="col-12 p-2" *ngIf="canNavigateToConcluzii && evaluare.flagFinalizat">
+          <button type="button" mat-raised-button color="primary" class="form-control"
+            [routerLink]="['../../../concluzii/add/' + idAngajat]">
+            <mat-icon color="basic" fontIcon="add"></mat-icon> &nbsp;
+            Adăugare Concluzii
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12">
+      <div class="p-4 border rounded">
+        <table class="table table-striped" style="width: 100%;">
+          <thead class="table-header">
+            <tr>
+              <th scope="col" colspan="1">Competența</th>
+              <th scope="col" colspan="2">Detalii</th>
+              <th scope="col" colspan="1" *ngIf="isEvalFinala">Autoevaluare</th>
+              <th scope="col" colspan="1" *ngIf="isEvalFinala">Evaluare Superior</th>
+              <th scope="col" colspan="1">Nota (1-5)</th>
+              <!-- <th scope="col" colspan="1">Ideal</th> -->
+              <th scope="col" colspan="1" *ngIf="isEvalFinala">Observații Anterioare</th>
+              <th scope="col" colspan="2">Observații</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="evaluare">
+            <tr *ngFor="let inpEval of evaluare.dateEval; let i = index">
+              <td colspan="1">
+                {{ inpEval.denumireSkill }}
+              </td>
+              <td colspan="2">
+                {{ inpEval.detaliiSkill }}
+              </td>
+              <td colspan="1" *ngIf="isEvalFinala">
+                <button type="button" color="basic" mat-mini-fab>{{inpEval.valIndiv}}</button>
+              </td>
+              <td colspan="1" *ngIf="isEvalFinala">
+                <button type="button" color="basic" mat-mini-fab>{{inpEval.val}}</button>
+              </td>
+              <td colspan="1">
+                <select *ngIf="isAutoEvaluare" class="form-select" name="valIdeal" [(ngModel)]="inpEval.valIndiv">
+                  <option *ngFor="let valIdeal of valoriIdeale" [value]="valIdeal">{{ valIdeal }}</option>
+                </select>
+                <select *ngIf="!isAutoEvaluare && !isEvalFinala" class="form-select" name="valIdeal"
+                  [(ngModel)]="inpEval.val">
+                  <option *ngFor="let valIdeal of valoriIdeale" [value]="valIdeal">{{ valIdeal }}</option>
+                </select>
+                <select *ngIf="isEvalFinala && !canNavigateToConcluzii" class="form-select" name="valIdeal" [(ngModel)]="inpEval.valFin">
+                  <option *ngFor="let valIdeal of valoriIdeale" [value]="valIdeal">{{ valIdeal }}</option>
+                </select>
+                <span *ngIf="isEvalFinala && canNavigateToConcluzii">{{inpEval.valFin}}</span>
+              </td>
+              <!-- <td colspan="1">
+                <button type="button" color="primary" mat-mini-fab>{{inpEval.ideal}}</button>
+              </td> -->
+              <td colspan="1" *ngIf="isEvalFinala">
+                {{ observatiiAnterioare[i] }}
+              </td>
+              <td colspan="2">
+                <textarea class="form-control form-control-sm" rows="2" [(ngModel)]="inpEval.obs" name="obs"></textarea>
+              </td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <div class="row pt-1">
+    <div class="col-6">
+      <cancel-button [routerLink]="['../../listaSubalterni']"></cancel-button>
+    </div>
+    <div class="col-6">
+      <save-button
+        [disabled]="!evaluareForm.valid || evaluare.flagFinalizat || (!autoEvalSiEvalSefIsDone && isEvalFinala) || alreadySaved || isSaving"></save-button>
+    </div>
+  </div>
+</form>

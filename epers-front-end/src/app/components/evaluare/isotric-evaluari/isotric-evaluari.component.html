@@ -1,0 +1,184 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    @if (!isIstoricEvalPersonala) {
+      <h3>Istoric Evaluare Calitativă</h3>
+    }
+    @if (isIstoricEvalPersonala) {
+      <h3>Istoric Evaluare Calitativă Personală</h3>
+    }
+  </div>
+</div>
+<userdata-header [idAngajat]="idAngajat"></userdata-header>
+<div class="row pt-1">
+  <div class="col-12">
+    <div class="p-4 border rounded">
+
+      <div class="form-group row p-2">
+        <div class="col-auto">
+          <mat-label>Anul:</mat-label>
+        </div>
+        <div class="col-auto">
+          <select class="form-select" [(ngModel)]="yearFilter" name="yearFilter" (ngModelChange)="searchEval()">
+            @for (year of years; track year) {
+              <option [value]="year">{{ year }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-auto">
+          <button type="button" mat-raised-button color="primary" class="form-control" (click)="generatePDFEval()">
+            <mat-icon color="basic" fontIcon="print"></mat-icon> &nbsp;
+            PDF Istoric Evaluare
+          </button>
+        </div>
+        <div class="col-auto">
+          <button type="button" mat-raised-button color="accent" class="form-control" (click)="generatePDFEvalSiConcluzii()">
+            <mat-icon color="basic" fontIcon="print"></mat-icon> &nbsp;
+            PDF Istoric Evaluare si Concluzii
+          </button>
+        </div>
+      </div>
+
+      <table class="table table-striped" style="width: 100%;">
+        <thead class="table-header">
+          <tr>
+            <th scope="col" colspan="1">Competența</th>
+            <th scope="col" colspan="1">Detalii</th>
+            <th scope="col" colspan="1">
+              <div class="text-center">
+                Autoevaluare
+              </div>
+            </th>
+            <th scope="col" colspan="1">
+              <div class="text-center">
+                Evaluare Manager direct
+              </div>
+            </th>
+            <th scope="col" colspan="1">
+              <div class="text-center">
+                Evaluare Finală
+              </div>
+            </th>
+            <!-- <th scope="col" colspan="1">Ideal</th> -->
+            <th scope="col" colspan="2">Observații</th>
+          </tr>
+        </thead>
+        @if (evaluare) {
+          <tbody>
+            @for (istoricEval of evaluare.dateEval; track istoricEval; let i = $index) {
+              <tr>
+                <td colspan="1">
+                  {{ istoricEval.denumireSkill }}
+                </td>
+                <td colspan="1">
+                  {{ istoricEval.detaliiSkill }}
+                </td>
+                <td colspan="1">
+                  <div class="text-center">
+                    <button type="button" color="basic" mat-mini-fab>{{istoricEval.valIndiv}}</button>
+                  </div>
+                </td>
+                <td colspan="1">
+                  <div class="text-center">
+                    <button type="button" color="basic" mat-mini-fab>{{istoricEval.val}}</button>
+                  </div>
+                </td>
+                <td colspan="1">
+                  <div class="text-center">
+                    <button type="button" color="basic" mat-mini-fab>{{istoricEval.valFin}}</button>
+                  </div>
+                </td>
+                <!-- <td colspan="1">
+                <div class="text-center">
+                  <button type="button" color="primary" mat-mini-fab>{{istoricEval.ideal}}</button>
+                </div>
+              </td> -->
+              <td colspan="2">
+                {{istoricEval.obs}}
+              </td>
+            
+            <td colspan="1">
+              {{ istoricEval.denumireSkill }}
+            </td>
+            <td colspan="1">
+              {{ istoricEval.detaliiSkill }}
+            </td>
+            <td colspan="1">
+              <div class="text-center">
+                <button type="button" color="basic" mat-mini-fab>{{istoricEval.valIndiv}}</button>
+              </div>
+            </td>
+            <td colspan="1">
+              <div class="text-center">
+                <button type="button" color="basic" mat-mini-fab>{{istoricEval.val}}</button>
+              </div>
+            </td>
+            <td colspan="1">
+              <div class="text-center">
+                <button type="button" color="basic" mat-mini-fab>{{istoricEval.valFin}}</button>
+              </div>
+            </td>
+            <!-- <td colspan="1">
+            <div class="text-center">
+              <button type="button" color="primary" mat-mini-fab>@for (idTraiing of evaluare.displayIdsTraining; track idTraiing) {
+                > -->
+                <td colspan="2">
+                  {{istoricEval.obs}}
+                </td>
+                </tr>
+              }
+              </tbody>
+            }
+          </table>
+          @if (evaluare.calificativFinal && yearFilter >= 2024) {
+            <div class="form-group row p-2">
+              <div class="col-auto py-1">
+                <h6>Calificativul final al evaluării:
+                  <button type="button" color="accent" mat-mini-fab>{{evaluare.calificativFinal}}</button>&nbsp;
+                  {{evaluare.incadrareCalificativFinal}}
+                </h6>
+              </div>
+              @if (userHasPip) {
+                <div class="col-auto py-1">
+                  <button type="button" mat-raised-button color="accent" class="form-control" (click)="openPipDetailsModal()">
+                    <mat-icon color="basic" fontIcon="info"></mat-icon> &nbsp;
+                    Vizualizare PIP
+                  </button>
+                </div>
+              }
+            </div>
+          }
+
+          @if (evaluare?.displayIdsTraining) {
+            <div class="form-group row p-2">
+              @if (evaluare.displayIdsTraining?.length > 0) {
+                <div class="col-12 py-1">
+                  <h5>Training-uri recomandate:</h5>
+                  <ng-container *ngFor="let idTraiing of evaluare.displayIdsTraining">
+                    <div class="row">
+                      <curs-recomandat-details [idCurs]="idTraiing"></curs-recomandat-details>
+                    </div>
+                  </ng-container>
+                </div>
+              }
+            </div>
+          }
+
+          @if (evaluare.dateEval && displayChart) {
+            <div class="row p-2">
+              <chart-istoric-evaluari [chartData]="evaluare.dateEval" chartName="Grafic Evaluare"></chart-istoric-evaluari>
+            </div>
+          }
+        </div>
+
+      </div>
+    </div>
+    <div class="row pt-1">
+      <div class="col-12">
+        @if (!isIstoricEvalPersonala) {
+          <back-button [routerLink]="['../../listaSubalterni']"></back-button>
+        }
+        @if (isIstoricEvalPersonala) {
+          <back-button [routerLink]="['../listaSubalterni']"></back-button>
+        }
+      </div>
+    </div>

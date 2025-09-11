@@ -1,0 +1,12 @@
+<table mat-table [dataSource]="codificareNote" class="mat-elevation-z8">
+  <ng-container matColumnDef="nota">
+    <th mat-header-cell *matHeaderCellDef>Calificativul final al evaluării (Media notelor Evaluării Finale)</th>
+    <td mat-cell *matCellDef="let element"> {{element.nota}} </td>
+  </ng-container>
+  <ng-container matColumnDef="semnificatie">
+    <th mat-header-cell *matHeaderCellDef> Semnificație </th>
+    <td mat-cell *matCellDef="let element"> {{element.semnificatie}} </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

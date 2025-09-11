@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>In aceasta pagina se pot rula scripturile urmatoare:</h3>
+    <h6 style="background-color: rgb(114, 174, 114);">{{message}}</h6>
+  </div>
+</div>
+<div class="conatiner">
+  <ol>
+    <li>
+      <h6>Adaugare Id Firma in tabela  Evaluare Competente:</h6>
+      <button type="button" mat-raised-button color="primary" (click)="addIdFirmaToEvaluareTable()">
+        <mat-icon color="basic" fontIcon="save"></mat-icon> &nbsp;
+        Adaugare IdFirma
+      </button>
+    </li>
+    <li>
+      <h6>Adaugare utilizator admin: (cu nume: "admin&#64;mail.com" si parola: "abcd"):</h6>
+      <button type="button" mat-raised-button color="primary" (click)="addAdmin()">
+        <mat-icon color="basic" fontIcon="save"></mat-icon> &nbsp;
+        Adaugare Administrator
+      </button>
+    </li>
+    <hr>
+      <li>
+        <h6>Copierea tuturor utiliatorilor din AspNetUsers in noua tabela de Utilizatori:</h6>
+        <button type="button" mat-raised-button color="primary" (click)="updateUserTable()"
+          [disabled]="updateUserTableInProgress">
+          <mat-icon color="basic" fontIcon="save"></mat-icon> &nbsp;
+          Copiere utilizatori in tabela noua
+        </button>
+        @if (updateUserTableInProgress) {
+          <mat-spinner></mat-spinner>
+        }
+      </li>
+      <hr>
+        <li>
+          <h6>Setarea ierarhiei utilizatorilor in noua tabela de Utilizatori:</h6>
+          <button type="button" mat-raised-button color="primary" (click)="setUserHierarchy()"
+            [disabled]="updateUserHierarchyInProgress">
+            <mat-icon color="basic" fontIcon="save"></mat-icon> &nbsp;
+            Setarea ierarhiei
+          </button>
+          @if (updateUserHierarchyInProgress) {
+            <mat-spinner></mat-spinner>
+          }
+        </li>
+      </ol>
+    </div>

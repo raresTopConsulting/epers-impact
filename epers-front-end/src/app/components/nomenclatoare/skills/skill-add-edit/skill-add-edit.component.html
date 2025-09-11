@@ -1,0 +1,98 @@
+<div class="container">
+  @if (skill) {
+    <div class="row">
+      <div class="row p-3 border">
+        <div class="col-12 text-center p-4 border-bottom">
+          @if (!isEditMode) {
+            <h3>Adăugare Competență</h3>
+          }
+          @if (isEditMode) {
+            <h3>Modificare Competență</h3>
+          }
+        </div>
+        <form (ngSubmit)="save()" #skillForm="ngForm">
+          <input name="id" type="hidden" [(ngModel)]="skill.id" />
+          <div class="row">
+            <div class="col-5 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="skill-denumire" class="required-label">Denumire</label>
+                  <input type="text" id="skill-denumire" name="denumire" class="form-control" [(ngModel)]="skill.denumire"
+                    #denumire="ngModel" required [class.invalid]="denumire.touched && denumire.invalid">
+                  @if (!denumire.valid && denumire.touched) {
+                    <span class="help-block help-block-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="skill-descriere" class="required-label">Descriere</label>
+                  <input type="text" id="skill-descriere" name="descriere" class="form-control"
+                    [(ngModel)]="skill.descriere" #descriere="ngModel" required
+                    [class.invalid]="descriere.touched && descriere.invalid" />
+                  @if (!descriere.valid && descriere.touched) {
+                    <span class="help-block help-block-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="col-7 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="skill-tip">Tip</label>
+                  <select id="skill-tip" class="form-select" name="tip" #tip="ngModel" [(ngModel)]="skill.tip">
+                    <option value="">Selectați tipul</option>
+                    @for (tip of tipComp; track tip) {
+                      <option [value]="tip.Valoare">{{ tip.Valoare }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="skill-firma">Firma</label>
+                  <select class="form-select" [(ngModel)]="skill.idFirma" id="idFirma" name="idFirma" [disabled]="loggedInUserHasFirma">
+                    <option [value]="0">Selectați firma</option>
+                    @for (ddFilter of ddFirmeSelectionList; track ddFilter) {
+                      <option [value]="ddFilter.Value">{{ ddFilter.Text }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="skill-dataIn">Data Început</label>
+                  <input class="form-control date" type="date" [ngModel]="skill.dataIn | date:'yyyy-MM-dd'"
+                    (ngModelChange)="skill.dataIn = $event" name="dataIn" id="skill-dataIn" #dataIn="ngModel" />
+                  <span class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                  <label for="skill-dataSf">Data Sfârșit</label>
+                  <input class="form-control date" type="date" name="dataSf" id="skill-dataSf" #dataSf="ngModel"
+                    [ngModel]="skill.dataSf | date:'yyyy-MM-dd'" (ngModelChange)="skill.dataSf = $event" />
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="skill-detalii">Detalii</label>
+                  <input type="text" id="skill-detalii" class="form-control" name="detalii" #detalii="ngModel"
+                    [(ngModel)]="skill.detalii" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-6">
+              <cancel-button (click)="onCancel()"></cancel-button>
+            </div>
+            <div class="col-6">
+              <save-button [disabled]="!skillForm.valid"></save-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  }

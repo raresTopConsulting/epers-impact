@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="row p-3 border">
+      <div class="col-12 text-center p-4 border-bottom">
+        <h3>Plan de îmbunătățire a Performanțelor</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="row p-2">
+            <h4>Personal</h4>
+            <button type="button" mat-raised-button color="primary" class="form-control" (click)="showPipPersonal()">
+              <mat-icon color="basic" fontIcon="info"></mat-icon> &nbsp;
+              Vizualizare PIP Personal
+            </button>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row p-2">
+            <h4>Subalterni</h4>
+            <button type="button" mat-raised-button color="primary" class="form-control" (click)="showPipSubalterni()">
+              <mat-icon color="basic" fontIcon="info"></mat-icon> &nbsp;
+              Vizualizare PIP Subalterni
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <br>
+        <hr />
+
+        @if (isPipPersonal) {
+          <div class="row">
+            <pip-details [idAngajat]="loggedInUserId"></pip-details>
+          </div>
+        }
+
+        @if (isPipSualterni) {
+          <div class="row">
+            <lista-subalterni-with-pip></lista-subalterni-with-pip>
+          </div>
+        }
+      </div>
+    </div>
+  </div>

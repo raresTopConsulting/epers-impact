@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Nomenclator Locații</h3>
+  </div>
+</div>
+<div class="row p-2 border-rounded">
+  <router-outlet></router-outlet>
+
+  @if (!idFirmaLoggedInUser) {
+    <table-header (add)="navToAdd()" [currentPage]="currentPage" [pages]="pages"
+      [itemsPerPage]="itemsPerPage" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)"
+      (lastPage)="lastPage($event)" [displayAddButton]="true" (selectItemsPerPage)="changeItemsPerPage($event)"
+      (serachFilter)="filter($event)" [searchCriteria]="filtru ? filtru : 'Denumire, Adresa, Localitate, Tara'" [ddFilterList]="ddFirme"
+      [ddFilterVisible]="true" (serachIdDDFilter)="filterFirma($event)" ddFilterCriteria="Firma">
+    </table-header>
+  }
+
+  @if (idFirmaLoggedInUser) {
+    <table-header (add)="navToAdd()" [currentPage]="currentPage" [pages]="pages"
+      [itemsPerPage]="itemsPerPage" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)"
+      (lastPage)="lastPage($event)" [displayAddButton]="true" (selectItemsPerPage)="changeItemsPerPage($event)"
+      (serachFilter)="filter($event)" [searchCriteria]="filtru ? filtru : 'Denumire, Adresa, Localitate, Tara'">
+    </table-header>
+  }
+
+  <table class="table p-3 table-striped table-bordered">
+    <thead class="table-header">
+      <tr class="table-info">
+        @for (header of headers; track header) {
+          <td>{{ header }}</td>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (locatie of locatii; track locatie) {
+        <tr>
+          <td>{{locatie.denumire}}</td>
+          <td>{{locatie.adresa}}</td>
+          <td>{{locatie.localitate}}</td>
+          <td>{{locatie.judet}}</td>
+          <td>{{locatie.tara}}</td>
+          <td style="text-align: center;">
+            @if (locatie.activ) {
+              <mat-icon color="primary" fontIcon="check"></mat-icon>
+            }
+            @if (!locatie.activ) {
+              <mat-icon color="warn" fontIcon="close"></mat-icon>
+            }
+          </td>
+          <td>
+            @if (locatie.isSediuPrincipalFirma) {
+              <span>
+                <strong>{{ locatie.firma }}</strong>
+              </span>
+            }
+            @if (!locatie.isSediuPrincipalFirma) {
+              <span>
+                {{ locatie.firma }}
+              </span>
+            }
+          </td>
+          <td>
+            <div class="text-center">
+              <table-edit-button [routerLink]="['edit', locatie.id]"></table-edit-button>
+            </div>
+          </td>
+          <td>
+            <div class="text-center">
+              <table-delete-button (click)="deleteLocatie(locatie.id)"></table-delete-button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

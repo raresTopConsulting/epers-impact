@@ -1,0 +1,94 @@
+<div class="container">
+  @if (compartiment) {
+    <div class="row">
+      <div class="row p-3 border">
+        <div class="col-12 text-center p-4 border-bottom">
+          @if (!isEditMode) {
+            <h3>Adăugare Compartiment</h3>
+          }
+          @if (isEditMode) {
+            <h3>Modificare Compartiment</h3>
+          }
+        </div>
+        <form (ngSubmit)="save()" #compartimentForm="ngForm">
+          <input name="id" type="hidden" [(ngModel)]="compartiment.id" />
+          <div class="row">
+            <div class="col-5 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="comp-denumire" class="required-label">Denumire</label>
+                  <input type="text" id="comp-denumire" name="denumire" class="form-control"
+                    [(ngModel)]="compartiment.denumire" #denumire="ngModel" required
+                    [class.invalid]="denumire.touched && denumire.invalid">
+                  @if (!denumire.valid && denumire.touched) {
+                    <span class="help-block help-block-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="compartiment-firma">Firma</label>
+                  <select class="form-select" [(ngModel)]="compartiment.idFirma" id="idFirma" name="idFirma" (ngModelChange)="firmaChanged($event)"
+                    [disabled]="loggedInUserHasFirma">
+                    <option [value]="0">Selectați firma</option>
+                    @for (ddFilter of ddFirmeSelectionList; track ddFilter) {
+                      <option [value]="ddFilter.Value">{{ ddFilter.Text }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-7 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="comp-data_in">Data Început</label>
+                  <input class="form-control date" data-provide="datepicker" type="date"
+                    [ngModel]="compartiment.data_in  | date:'yyyy-MM-dd'" (ngModelChange)="compartiment.data_in = $event"
+                    name="data_in" id="comp-data_in" #data_in="ngModel" />
+                  <span class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                  <label for="comp-data_sf">Data Sfărșit</label>
+                  <input class="form-control date" data-provide="datepicker" type="date"
+                    [ngModel]="compartiment.data_sf  | date:'yyyy-MM-dd'" (ngModelChange)="compartiment.data_sf = $event"
+                    name="data_sf" id="comp-data_sf" #data_sf="ngModel" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="comp-sus">Compartiment Superior</label>
+                  <select id="comp-sus" class="form-select" name="sus" #sus="ngModel" [(ngModel)]="compartiment.sus">
+                    <option value="">Selectați compartimentul</option>
+                    @for (compSup of compartimenteSelection; track compSup) {
+                      <option [value]="compSup.Id">{{ compSup.Text  }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="comp-locatie">Locație</label>
+                  <select id="comp-locatie" class="form-select" name="locatie" #locatie="ngModel"
+                    [(ngModel)]="compartiment.id_Locatie">
+                    @for (locatie of locatii; track locatie) {
+                      <option [value]="locatie.id">{{locatie.judet}} - {{ locatie.denumire
+                      }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-6">
+              <cancel-button (click)="onCancel()"></cancel-button>
+            </div>
+            <div class="col-6">
+              <save-button [disabled]="!compartimentForm.valid"></save-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

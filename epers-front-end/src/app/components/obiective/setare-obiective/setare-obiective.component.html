@@ -1,0 +1,175 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Setare Obiective Subaltern</h3>
+  </div>
+</div>
+<userdata-header [idAngajat]="idAngajat"></userdata-header>
+<form (ngSubmit)="submitForm()" #setareObiective="ngForm">
+  <div class="row pt-1">
+    <div class="col-12">
+      <mat-card>
+        <mat-card-content>
+          @if (setareOb.obiectivTemplate && setareOb.obiectivTemplate.length > 0) {
+            <div class="row p-2">
+              <table class="table p-3 table-striped table-bordered">
+                <thead class="table-header">
+                  <th>Tip</th>
+                  <th>Denumire</th>
+                  <th>Data început</th>
+                  <th>Frecvența</th>
+                  <th>Val. min. | Bonus min.</th>
+                  <th>Val. target | Bonus target</th>
+                  <th>Val. max. | Bonus max.</th>
+                  <th>Obiectiv calitativ</th>
+                  <th>Ștergeți</th>
+                </thead>
+                <tbody>
+                  @for (ob of setareOb.obiectivTemplate; track ob; let i = $index) {
+                    <tr>
+                      <td>{{ob.tip == "I" ? "Individual" : ob.tip == "D" ? "Depatamental" : "Corporativ"}}</td>
+                      <td>{{ob.denumire}}</td>
+                      <td>{{ob.dataIn | date: "dd/MM/yyyy"}}</td>
+                      <td>{{ob.frecventa}}</td>
+                      <td>Val.: {{ob.valMin ? ob.valMin: '-'}} | {{ob.bonusMin ? ob.bonusMin : '0'}} ( {{ ob.isBonusProcentual ? "%" : "RON"}} )</td>
+                      <td class="bold-font">Val.: {{ob.valTarget ? ob.valTarget : '-'}} | {{ob.bonusTarget ? ob.bonusTarget : '0'}} ( {{ ob.isBonusProcentual ? "%" : "RON"}} )</td>
+                      <td>Val.: {{ob.valMax ? ob.valMax : '-'}} | {{ob.bonusMax ? ob.bonusMax : '0'}} ( {{ ob.isBonusProcentual ? "%" : "RON"}} )</td>
+                      <td style="text-align: center;">
+                        @if (ob.isFaraProcent) {
+                          <mat-icon color="primary"
+                          fontIcon="check"></mat-icon>
+                        }
+                        @if (!ob.isFaraProcent) {
+                          <mat-icon color="warn"
+                          fontIcon="close"></mat-icon>
+                        }
+                      </td>
+                      <td>
+                        <table-delete-button (click)="removeOb(i)"></table-delete-button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+
+          <div class="row pl-2">
+            <div class="col-auto pt-2 pb-2">
+              <h5>Alegeți din obiective predefinite în nomenclator</h5>
+            </div>
+            <div class="col-auto">
+              <button type="button" color="primary" mat-mini-fab (click)="onAddObFromNom()">
+                <mat-icon fontIcon="add"></mat-icon>
+              </button>
+            </div>
+            @if (isAddObFromNomenclator) {
+              <button type="button" color="basic" mat-mini-fab (click)="hideAddObFormNom()"
+                >
+                <mat-icon fontIcon="arrow_drop_up"></mat-icon>
+              </button>
+            }
+          </div>
+
+          @if (isAddObFromNomenclator) {
+            <div class="row pt-2 pb-4">
+              <obiectiv-from-dd (addObFromNomenclator)="addObiectivTemplateFromNom($event)" [idFirma]="idFirma"></obiectiv-from-dd>
+              <div class="col-6">
+              </div>
+            </div>
+          }
+
+          <hr>
+            <div class="row pl-2">
+              <div class="col-auto pt-2 pb-2" [ngClass]="{'selectedTipOb': isAddObIndividual}">
+                <h5>Obiective individuale</h5>
+              </div>
+              <div class="col-auto">
+                <button type="button" color="accent" mat-mini-fab (click)="onAddObIndiv()">
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+              <div class="col-auto pt-2 pb-2" [ngClass]="{'selectedTipOb': isAddObDepartamental}">
+                <h5>Obiective departamentale</h5>
+              </div>
+              <div class="col-auto">
+                <button type="button" color="accent" mat-mini-fab (click)="onAddObDep()">
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+              <div class="col-auto pt-2 pb-2" [ngClass]="{'selectedTipOb': isAddObCorporariv}">
+                <h5>Obiective coorporative</h5>
+              </div>
+              <div class="col-auto">
+                <button type="button" color="accent" mat-mini-fab (click)="onAddObCorp()">
+                  <mat-icon fontIcon="add"></mat-icon>
+                </button>
+              </div>
+              <div class="col-auto">
+                @if (isAddObIndividual || isAddObDepartamental || isAddObCorporariv) {
+                  <button type="button" color="basic" mat-mini-fab (click)="hideAddObForm()"
+                    >
+                    <mat-icon fontIcon="arrow_drop_up"></mat-icon>
+                  </button>
+                }
+              </div>
+            </div>
+
+            @if (isAddObIndividual || isAddObDepartamental || isAddObCorporariv) {
+              <div class="row pt-2 pb-2">
+                <div class="col-4">
+                  <div class="row pt-2">
+                    <h6>Frecvență și valabilitate</h6>
+                  </div>
+                  <div class="row pt-2">
+                    <mat-radio-group aria-label="Frecvență și valabilitate" name="isFrecvAndValIdentic"
+                      [(ngModel)]="isFrecvAndValIdentic" (ngModelChange)="flagFrecvAndDataChanged()" color="primary">
+                      <mat-radio-button [value]="true">identică</mat-radio-button>&nbsp;&nbsp;&nbsp;
+                      <mat-radio-button [value]="false">diferită</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                  <hr>
+                  </div>
+                  <div class="col-8">
+                    <obiectiv-input (addedObTemplate)="addObiectivTemplate($event)"
+                      [isFrecvAndValIdentic]="isFrecvAndValIdentic" [dataInceputIdentica]="selectedDataDin"
+                      [frecventaIdentica]="selectedFrecventa"
+                    [tipObiectiv]="isAddObIndividual ? 'I' : isAddObDepartamental ? 'D' : 'C'"></obiectiv-input>
+                  </div>
+                </div>
+              }
+              <hr>
+                <div class="row pt-2 pb-2">
+                  <div class="col-4">
+                    <h5>Setați aceste obiective la toți subalternii sau la cei selectați</h5>
+                    <mat-label>Listă subalterni</mat-label>
+                    <select id="obSetListaSubalt" class="form-select" [(ngModel)]="subalternSelectat" (ngModelChange)="onSelectSubalt($event)"
+                      name="listaSubalterniDD">
+                      <option [value]="'all'">Toți</option>
+                      @for (subalt of listaSubalterniDD; track subalt) {
+                        <option [value]="subalt.idAngajat">{{ subalt.numePrenume }}
+                        </option>
+                      }
+                      <option [value]="'none'">Niciunul</option>
+                    </select>
+                  </div>
+                  <div class="col-8">
+                    <h5>Subalterni selectați: </h5>
+                    @for (selectedSubalt of subalterniSelectatiSetareOb; track selectedSubalt) {
+                      <span class="medium-text">{{ selectedSubalt.numePrenume }}</span> |
+                    }
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+        <div class="row pt-1">
+          <div class="col-6">
+            <cancel-button [routerLink]="['../../listaSubalterni']"></cancel-button>
+          </div>
+          <div class="col-6">
+            <save-button
+            [disabled]="!setareObiective.valid || (setareOb.obiectivTemplate && setareOb.obiectivTemplate.length <= 0) || isSaving"></save-button>
+          </div>
+        </div>
+      </form>

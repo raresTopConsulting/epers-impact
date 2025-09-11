@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "y9GSPHl4IFEJCeJrWtndM+/WNHA0fsuWRlSLyOMEmr0=",
+  "Source": "EpersBackend",
+  "BasePath": "_content/EpersBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

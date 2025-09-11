@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Listă Subalterni</h3>
+  </div>
+</div>
+<div class="row p-2 border-rounded">
+  <router-outlet></router-outlet>
+  <div class="form-group row m-1">
+    <label class="col-sm-4 col-form-label">Sincronizarea datelor cu cele din platforma Sincron</label>
+    <label class="col-sm-1 col-form-label" for="minId">Id minim:</label>
+    <div class="col-sm-2">
+      <input type="number" class="form-control form-control-sm" id="minId" name="minId" [(ngModel)]="minId" />
+    </div>
+    <label class="col-sm-1 col-form-label" for="maxId">Id maxim:</label>
+    <div class="col-sm-2">
+      <input type="number" class="form-control form-control-sm" id="maxId" name="maxId" [(ngModel)]="maxId" />
+    </div>
+    <div class="col-sm-2">
+      <button mat-raised-button color="primary" type="button" (click)="registerFromSincron()">
+        <mat-icon fontIcon="sync"></mat-icon>Sincronizare
+      </button>
+    </div>
+  </div>
+  <hr>
+
+    @if (!idFirmaLoggedInUser) {
+      <table-header (add)="navToAdd()" [currentPage]="currentPage" [pages]="pages"
+        [itemsPerPage]="itemsPerPage" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)"
+        (lastPage)="lastPage($event)" [displayAddButton]="true" (selectItemsPerPage)="changeItemsPerPage($event)"
+        (serachFilter)="filter($event)"
+        [searchCriteria]="filtru ? filtru : 'Nume, Prenume, Matricola, Post, Compartiment, Locație'"
+        [ddFilterList]="ddFirme" [ddFilterVisible]="true" (serachIdDDFilter)="filterFirma($event)" ddFilterCriteria="Firma">
+      </table-header>
+    }
+
+    @if (idFirmaLoggedInUser) {
+      <table-header (add)="navToAdd()" [currentPage]="currentPage" [pages]="pages"
+        [itemsPerPage]="itemsPerPage" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)"
+        (lastPage)="lastPage($event)" [displayAddButton]="true" (selectItemsPerPage)="changeItemsPerPage($event)"
+        (serachFilter)="filter($event)"
+        [searchCriteria]="filtru ? filtru : 'Nume, Prenume, Matricola, Post, Compartiment, Locație'">
+      </table-header>
+    }
+    <p>
+      <mat-icon color="basic" fontIcon="info"></mat-icon>
+      Căutarea se poate efectua după următoarele criterii: Nume, Prenume, Matricola, Post, Compartiment și Locație.
+    </p>
+
+    @if (!isSync) {
+      <table class="table table-striped table-bordered">
+        <thead class="table-header">
+          <tr class="table-info">
+            <th scope="col" colspan="1">Matricola</th>
+            <th scope="col" colspan="1">Nume și prenume</th>
+            <th scope="col" colspan="1">Rol</th>
+            <th scope="col" colspan="1">Email</th>
+            <th scope="col" colspan="1">Post</th>
+            <th scope="col" colspan="1">COR</th>
+            <th scope="col" colspan="1">Firma</th>
+            <th scope="col" colspan="1">Organizație intermediară</th>
+            <th scope="col" colspan="1">Organizație de bază</th>
+            <th scope="col" colspan="1">Locație</th>
+            <th scope="col" colspan="1">Schimbați parola</th>
+            <th scope="col" colspan="1">Modificați datele</th>
+            <th scope="col" colspan="1">Ștergeți</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (utilizator of listaUtilizatori; track utilizator) {
+            <tr>
+              <td colspan="1">{{utilizator.matricola}}</td>
+              <td colspan="1">{{utilizator.nume_Prenume}}</td>
+              <td colspan="1">{{utilizator.rol}}</td>
+              <td colspan="1">{{utilizator.username}}</td>
+              <td colspan="1">{{utilizator.denumirePost}}</td>
+              <td colspan="1">{{utilizator.cor}}</td>
+              <td colspan="1">{{utilizator.firma}}</td>
+              <td colspan="1">{{utilizator.organizatieIntermediara}}</td>
+              <td colspan="1">{{utilizator.organizatieBaza}}</td>
+              <td colspan="1">{{utilizator.locatie}}</td>
+              <td colspan="1">
+                <div class="text-center">
+                  <button type="button" mat-mini-fab color="primary" [routerLink]="['./changePassword/', utilizator.id]">
+                    <mat-icon fontIcon="lock"></mat-icon>
+                  </button>
+                </div>
+              </td>
+              <td colspan="1">
+                <div class="text-center">
+                  <table-edit-button [routerLink]="['./edit', utilizator.id]"></table-edit-button>
+                </div>
+              </td>
+              <td colspan="1">
+                <div class="text-center">
+                  <table-delete-button (click)="openDeleteDialog(utilizator.id)"></table-delete-button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    @if (isSync) {
+      <mat-spinner></mat-spinner>
+    }
+  </div>

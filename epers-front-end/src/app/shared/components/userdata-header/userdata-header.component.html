@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-6">
+    <mat-card style="background-color: floralwhite;">
+      <mat-card-header class="card-header-underline">
+        <mat-card-title class="mat-card-title-routeLink">Date Angajat&nbsp;&nbsp;
+          <button type="button" color="primary" mat-mini-fab (click)="openUserDetailsDialog(headerData.idSubaltern)">
+            <mat-icon fontIcon="perm_identity"></mat-icon>
+          </button>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Matricolă:</mat-label>
+              <span>{{headerData.matricola}}</span>
+            </div>
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Nume și Prenum:</mat-label>
+              <span>{{headerData.numePrenume}}</span>
+            </div>
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Locație:</mat-label>
+              <span>{{headerData.locatie}}</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Compartiment:</mat-label>
+              <span>{{headerData.compartiment}}</span>
+            </div>
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">COR:</mat-label>
+              <span>{{headerData.cor}}</span>
+            </div>
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Post:</mat-label>
+              <span>{{headerData.denumirePost}}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-6">
+    <mat-card style="background-color: floralwhite;">
+      <mat-card-header>
+        <mat-card-title class="mat-card-title-routeLink">Date Manager direct&nbsp;&nbsp;
+          <button type="button" color="primary" mat-mini-fab (click)="openUserDetailsDialog(headerData.idSuperior)">
+            <mat-icon fontIcon="supervisor_account"></mat-icon>
+          </button>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Matricolă:</mat-label>
+              <span>{{headerData.matricolaSef}}</span>
+            </div>
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Nume și Prenum:</mat-label>
+              <span>{{headerData.numePrenumeSef}}</span>
+            </div>
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Locație:</mat-label>
+              <span>{{headerData.locatieSupervizor}}</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Compartiment:</mat-label>
+              <span>{{headerData.compartimentSupervizor}}</span>
+            </div>
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">COR:</mat-label>
+              <span>{{headerData.corSupervizor}}</span>
+            </div>
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Post:</mat-label>
+              <span>{{headerData.denumirePostSupervizor}}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

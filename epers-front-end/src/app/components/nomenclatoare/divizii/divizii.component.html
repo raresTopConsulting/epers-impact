@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Nomenclator Linii de Business</h3>
+  </div>
+</div>
+<router-outlet></router-outlet>
+<div class="row p-2 border-rounded">
+  @if (!idFirmaLoggedInUser) {
+    <table-header (add)="navToAdd()" [currentPage]="currentPage" [pages]="pages"
+      [itemsPerPage]="itemsPerPage" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)"
+      (lastPage)="lastPage($event)" [displayAddButton]="true" (selectItemsPerPage)="changeItemsPerPage($event)"
+      (serachFilter)="filter($event)" [searchCriteria]="filtru ? filtru : 'Denumire, Descriere'" [ddFilterList]="ddFirme"
+      [ddFilterVisible]="true" (serachIdDDFilter)="filterFirma($event)" ddFilterCriteria="Firma">
+    </table-header>
+  }
+
+  @if (idFirmaLoggedInUser) {
+    <table-header (add)="navToAdd()" [currentPage]="currentPage" [pages]="pages"
+      [itemsPerPage]="itemsPerPage" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)"
+      (lastPage)="lastPage($event)" [displayAddButton]="true" (selectItemsPerPage)="changeItemsPerPage($event)"
+      (serachFilter)="filter($event)" [searchCriteria]="filtru ? filtru : 'Denumire, Descriere'">
+    </table-header>
+  }
+
+  <table class="table p-3 table-striped table-bordered">
+    <thead class="table-header">
+      <tr class="table-info">
+        @for (header of headers; track header) {
+          <td>{{ header }}</td>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (divizie of divizii; track divizie) {
+        <tr>
+          <td>{{divizie.denumire}}</td>
+          <td>{{divizie.descriere}}</td>
+          <td style="text-align: center;">
+            @if (divizie.activ) {
+              <mat-icon color="primary" fontIcon="check"></mat-icon>
+            }
+            @if (!divizie.activ) {
+              <mat-icon color="warn" fontIcon="close"></mat-icon>
+            }
+          </td>
+          <td>{{divizie.firma}}</td>
+          <td>
+            <div class="text-center">
+              <table-edit-button [routerLink]="['edit', divizie.id]"></table-edit-button>
+            </div>
+          </td>
+          <td>
+            <div class="text-center">
+              <table-delete-button (click)="deleteDvizie(divizie.id)"></table-delete-button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

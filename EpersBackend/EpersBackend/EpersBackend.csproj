@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>633ef580-8353-4782-b770-2bd16fc2be78</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
+    <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
+    <PackageReference Include="QuestPDF" Version="2025.7.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Controllers\Nomenclatoare\" />
+    <None Remove="Services\" />
+    <None Remove="Services\Nomenclatoare\" />
+    <None Remove="System.Net.Http" />
+    <None Remove="Services\Pagination\" />
+    <None Remove="Controllers\Evaluare\" />
+    <None Remove="Services\Evaluare\" />
+    <None Remove="Services\Users\" />
+    <None Remove="Services\Competente\" />
+    <None Remove="Services\Header\" />
+    <None Remove="Services\PDF\" />
+    <None Remove="Services\Sincron\" />
+    <None Remove="Controllers\User\" />
+    <None Remove="Services\Common\" />
+    <None Remove="Services\Mapper\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Pagination\" />
+    <Folder Include="Services\Evaluare\" />
+    <Folder Include="Services\Competente\" />
+    <Folder Include="Services\Header\" />
+    <Folder Include="Services\PDF\" />
+    <Folder Include="Services\Sincron\" />
+    <Folder Include="Controllers\User\" />
+    <Folder Include="Services\Mapper\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epers.DataAccess\Epers.DataAccess.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\Epers.Models\Epers.Models.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

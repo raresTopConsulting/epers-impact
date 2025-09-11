@@ -1,0 +1,97 @@
+<div class="container">
+  @if (firma) {
+    <div class="row">
+      <div class="row p-3 border">
+        <div class="col-12 text-center p-4 border-bottom">
+          @if (!isEditMode) {
+            <h3>Adăugare Firmă</h3>
+          }
+          @if (isEditMode) {
+            <h3>Modificare Firmă</h3>
+          }
+        </div>
+        <form (ngSubmit)="save()" #firmaForm="ngForm">
+          <input name="id" type="hidden" [(ngModel)]="firma.id" />
+          <div class="row">
+            <div class="col-5 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="firma-denumire" class="mb-1 required-label">Denumire</label>
+                  <input type="text" id="firma-denumire" name="denumire" class="form-control" [(ngModel)]="firma.denumire"
+                    #denumire="ngModel" ngModel required [class.invalid]="denumire.touched && denumire.invalid">
+                  @if (!denumire.valid && denumire.touched) {
+                    <span class="help-bfirmak help-bfirmak-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label class="mb-1" for="firma-atributFiscal">Atribut Fiscal</label>
+                  <select class="form-select" [(ngModel)]="firma.atributFiscal" name="firma-atributFiscal"
+                    #atributFiscal="ngModel">
+                    <option value=""></option>
+                    <option value="RO">RO</option>
+                  </select>
+                </div>
+                <div class="col-md-8">
+                  <label class="mb-1" for="firma-codFiscal">Cod Fiscal</label>
+                  <input type="text" id="firma-codFiscal" name="codFiscal" class="form-control"
+                    [(ngModel)]="firma.codFiscal" #codFiscal="ngModel" ngModel />
+                </div>
+              </div>
+            </div>
+            <div class="col-7 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label class="mb-1" for="firma-tipIntreprindere">Tip Întreprindere</label>
+                  <select class="form-select" [(ngModel)]="firma.tipIntreprindere" name="firma-tipIntreprindere"
+                    #tipIntreprindere="ngModel">
+                    <option value=""></option>
+                    <option value="II">II - Întreprindere individuală</option>
+                    <option value="PFA">PFA - Persoana Fizică Autorizată</option>
+                    <option value="SRL">SRL - SOCIETATE CU RĂSPUNDERE LIMITATĂ</option>
+                    <option value="SNC">SNC - SOCIETATE ÎN NUME COLECTIV</option>
+                    <option value="SCS">SCS - SOCIETATE ÎN COMANDITĂ SIMPLĂ</option>
+                    <option value="SA">SA - SOCIETATE PE ACŢIUNI</option>
+                    <option value="SCA">SCA - SOCIETATE ÎN COMANDITĂ PE ACŢIUNI</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="mb-1" for="firma-dataIn">Data Început</label>
+                  <input id="firma-dataIn" class="form-control date" data-provide="datepicker" type="date"
+                    [ngModel]="firma.dataIn | date:'yyyy-MM-dd'" (ngModelChange)="firma.dataIn = $event" name="dataIn"
+                    #dataIn="ngModel" ngModel />
+                </div>
+                <div class="col-md-6">
+                  <label class="mb-1" for="firma-dataSf">Data Sfărșit</label>
+                  <input id="firma-dataSf" class="form-control date" data-provide="datepicker" type="date" name="dataSf"
+                    [ngModel]="firma.dataSf | date:'yyyy-MM-dd'" (ngModelChange)="firma.dataSf = $event" #dataSf="ngModel"
+                    ngModel />
+                </div>
+              </div>
+              <div class="row mb-3">
+                @if (firma.adresa) {
+                  <div class="col-md-12">
+                    <label class="mb-1" for="firma-adresa">Adresa</label>
+                    <span class="form-control">{{firma.adresa}}</span>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-6">
+                <cancel-button (click)="onCancel()"></cancel-button>
+              </div>
+              <div class="col-6">
+                <save-button [disabled]="!firmaForm.valid"></save-button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

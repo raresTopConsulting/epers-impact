@@ -1,0 +1,75 @@
+<div class="container">
+  @if (divizie) {
+    <div class="row">
+      <div class="row p-3 border">
+        <div class="col-12 text-center p-4 border-bottom">
+          @if (isEditMode) {
+            <h3>Modificare Linie de Business</h3>
+          }
+          @if (!isEditMode) {
+            <h3>Adăugare Linie de Business</h3>
+          }
+        </div>
+        <form (ngSubmit)="save()" #divizieForm="ngForm">
+          <input name="id" type="hidden" [(ngModel)]="divizie.id" />
+          <div class="row">
+            <div class="col-5 pt-4">
+              <div class="row mb-3">
+                <div class="col-12">
+                  <label for="divizie-denumire">Denumire</label>
+                  <input type="text" id="divizie-denumire" name="denumire" class="form-control "
+                    [(ngModel)]="divizie.denumire" #denumire="ngModel">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-12">
+                  <label for="divizie-firma">Frima</label>
+                  <select class="form-select" [(ngModel)]="divizie.idFirma" id="idFirma" name="idFirma" [disabled]="loggedInUserHasFirma">
+                    <option [value]="0">Selectați firma</option>
+                    @for (ddFilter of ddFirmeSelectionList; track ddFilter) {
+                      <option [value]="ddFilter.Value">{{ ddFilter.Text }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-7 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="divizie-dataIn">Data Început</label>
+                  <input for="dataIn" class="form-control  date" data-provide="datepicker" type="date" name="dataIn"
+                    [ngModel]="divizie.dataIn | date:'yyyy-MM-dd'" (ngModelChange)="divizie.dataIn = $event"
+                    id="divizie-dataIn" #dataIn="ngModel" />
+                  <span class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                  <label for="divizie-dataSf">Data Sfărșit</label>
+                  <input class="form-control  date" data-provide="datepicker" type="date" name="dataSf"
+                    [ngModel]="divizie.dataSf | date:'yyyy-MM-dd'" (ngModelChange)="divizie.dataSf = $event"
+                    id="divizie-dataSf" #dataSf="ngModel" [(ngModel)]="divizie.dataSf" />
+                </div>
+              </div>
+            </div>
+            <div class="col-12 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="divizie-descriere">Descriere</label>
+                  <textarea type="text" id="divizie-descriere" class="form-control " name="descriere" #descriere="ngModel"
+                  [(ngModel)]="divizie.descriere" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-1">
+            <div class="col-6">
+              <cancel-button (click)="onCancel()"></cancel-button>
+            </div>
+            <div class="col-6">
+              <save-button [disabled]="!divizieForm.valid"></save-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  }

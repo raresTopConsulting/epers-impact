@@ -1,0 +1,1 @@
+var C=function(I){return I.OBIECTIVEACTUALE="Obiective Actuale",I.OBIECTIVEISTORIC="Istoric Obiective",I.CONCLUZII="Concluzii",I.ISTORICEVALUARE="Istoric Evaluare",I.CONCLUZII_EVALUARE="Concluzii Evaluare",I}(C||{});export{C as a};

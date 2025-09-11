@@ -1,0 +1,164 @@
+<div class="container">
+  <div class="row">
+    <div class="row p-3 border">
+      <div class="col-12 text-center p-4 border-bottom">
+        @if (!isEditMode) {
+        <h3>Adăugare Obiectiv</h3>
+        }
+        @if (isEditMode) {
+        <h3>Modificare Obiectiv</h3>
+        }
+      </div>
+      @if (nObiectiv) {
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <div class="row pt-4">
+          <div class="row mb-2">
+            <label for="nom-denumire" class="required-label">Denumire</label>
+            <div class="col-md-9">
+              <textarea type="text" rows="2" id="nom-denumire" name="denumire" class="form-control"
+                [(ngModel)]="nObiectiv.denumire" #denumire="ngModel" required
+                [class.invalid]="(denumire.touched || denumire.dirty) && denumire.invalid"></textarea>
+              @if ((denumire.touched || denumire.dirty) && denumire.invalid) {
+              <span class="help-block help-block-danger">Câmpul este
+                obligatoriu!</span>
+              }
+            </div>
+            <div class="col-md-3">
+              <label for="loc-firma">Firma</label>
+              <select class="form-select" [(ngModel)]="nObiectiv.idFirma" id="ddFilter" name="ddFilter"
+                (ngModelChange)="firmaChanged($event)" [disabled]="loggedInUserHasFirma">
+                <option [value]="0">Selectați firma</option>
+                @for (ddFilter of ddFirmeSelectionList; track ddFilter) {
+                <option [value]="ddFilter.Value">{{ ddFilter.Text }}
+                </option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3">
+              <label for="nom-valMin">Val. Min.</label>
+              <input type="number" id="nom-valMin" name="valMin" class="form-control" [(ngModel)]="nObiectiv.valMin"
+                #valMin="ngModel" />
+            </div>
+            <div class="col-md-3">
+              <label for="nom-valTarget">Val. Target</label>
+              <input type="number" id="nom-valTarget" name="valTarget" class="form-control"
+                [(ngModel)]="nObiectiv.valTarget" #valTarget="ngModel" />
+            </div>
+            <div class="col-md-3">
+              <label for="nom-valMax">Val. Max.</label>
+              <input type="number" id="nom-valMax" name="valMax" class="form-control" [(ngModel)]="nObiectiv.valMax"
+                #valMax="ngModel" />
+            </div>
+            <div class="col-md-3">
+              <label for="nom-idPost">Post</label>
+              <select id="nom-idPost" class="form-select" name="idPost" #idPost="ngModel"
+                [(ngModel)]="nObiectiv.idPost">
+                <option [ngValue]="null">Alegeți un post</option>
+                @for (post of ddPosturi; track post) {
+                <option [value]="post.Id">{{ post.Text }}
+                </option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3">
+              <label for="nom-bonusMin">Bonus. Min. (% sau RON)</label>
+              <percentage-nr-input type="number" id="nom-bonusMin" name="bonusMin" [(ngModel)]="nObiectiv.bonusMin"
+                #bonusMin="ngModel" (isPercentChange)="bonusMinIsPercentage = $event"
+                [isPercent]="bonusMinIsPercentage"></percentage-nr-input>
+            </div>
+            <div class="col-md-3">
+              <label for="nom-bonusTarget">Bonus Target (% sau RON)</label>
+              <percentage-nr-input type="number" id="nom-bonusTarget" name="bonusTarget"
+                [(ngModel)]="nObiectiv.bonusTarget" #bonusTarget="ngModel"
+                (isPercentChange)="bonusTargetIsPercentage = $event"
+                [isPercent]="bonusTargetIsPercentage"></percentage-nr-input>
+            </div>
+            <div class="col-md-3">
+              <label for="nom-bonusMax">Bonus Max. (% sau RON)</label>
+              <percentage-nr-input type="number" id="nom-bonusMax" name="bonusMax" [(ngModel)]="nObiectiv.bonusMax"
+                #bonusMax="ngModel" (isPercentChange)="bonusMaxIsPercentage = $event"
+                [isPercent]="bonusMaxIsPercentage"></percentage-nr-input>
+            </div>
+            <div class="col-md-3">
+              <label for="nom-idCompartiment">Compartiment</label>
+              <select id="nom-idCompartiment" class="form-select" name="idCompartiment" #idCompartiment="ngModel"
+                [(ngModel)]="nObiectiv.idCompartiment">
+                <option [ngValue]="null">Alegeți un compartiment</option>
+                @for (compartiment of ddCompartimente; track compartiment) {
+                <option [value]="compartiment.Id">
+                  {{ compartiment.Text }}
+                </option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-3">
+              <label for="nom-frecventa">Frecvența</label>
+              <select id="nom-frecventa" class="form-select" name="frecventa" #frecventa="ngModel"
+                [(ngModel)]="nObiectiv.frecventa">
+                @for (frecventa of frecventeSelection; track frecventa) {
+                <option [value]="frecventa.Id">{{ frecventa.Valoare
+                  }}
+                </option>
+                }
+              </select>
+            </div>
+            <div class="col-md-3">
+              <div class="row">
+                <label for="nom-isFaraProcent">Obiectiv Calitativ</label>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <input type="checkbox" name="isFaraProcent" id="nom-isFaraProcent"
+                    [(ngModel)]="nObiectiv.isFaraProcent" #isFaraProcent="ngModel"
+                    class="form-check-input big-checkbox" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="row">
+                <label for="nom-isFaraProcent">Bonus Procentual</label>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <input type="checkbox" name="isBonusProcentual" id="nom-isBonusProcentual"
+                    [(ngModel)]="nObiectiv.isBonusProcentual" #isBonusProcentual="ngModel"
+                    class="form-check-input big-checkbox" disabled />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="nom-tip">Tip</label>
+              <select id="nom-tip" class="form-select" name="tip" #tip="ngModel" [(ngModel)]="nObiectiv.tip">
+                <option value="">Selectați tipul</option>
+                @for (tip of tipuriSelection; track tip) {
+                <option [value]="tip.Valoare">{{ tip.Valoare }}
+                </option>
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col-6">
+            @if (!isEditMode) {
+            <cancel-button [routerLink]="['../']"></cancel-button>
+            }
+            @if (isEditMode) {
+            <cancel-button [routerLink]="['../../']"></cancel-button>
+            }
+          </div>
+          <div class="col-6">
+            <save-button [disabled]="!registerForm.valid"></save-button>
+          </div>
+        </div>
+      </form>
+      }
+    </div>
+  </div>
+</div>

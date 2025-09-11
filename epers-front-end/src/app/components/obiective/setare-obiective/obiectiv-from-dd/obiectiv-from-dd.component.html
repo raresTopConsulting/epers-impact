@@ -1,0 +1,167 @@
+<form #obTemplateFromNomFrom="ngForm" (ngSubmit)="onAddObiectivFromNom()">
+  <div class="row pt-2">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12">
+          <h6>Alegeți din nomenclatorul de obiective</h6>
+        </div>
+        <div class="col-12">
+          <select id="selectedObFromNomId" class="form-select" name="selectedObFromNomId"
+            [(ngModel)]="selectedObFromNomId" (ngModelChange)="onObFromNomChange()">
+            @for (nomOb of ddObiective; track nomOb) {
+            <option [value]="nomOb.Id">{{ nomOb.Text }}
+            </option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-6">
+          <mat-label class="required-label">Valabil din:</mat-label>
+        </div>
+        <div class="col-6">
+          <mat-label class="required-label">Frecvența:</mat-label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <input for="nomObDatadin" class="form-control date" data-provide="datepicker" type="date" name="nomObDatadin"
+            id="nomObDatadin" required [(ngModel)]="selectedObNomDataDin" #nomObDatadin="ngModel"
+            [class.invalid]="(nomObDatadin.touched || nomObDatadin.dirty) && nomObDatadin.invalid" />
+          @if ((nomObDatadin.touched || nomObDatadin.dirty) && nomObDatadin.invalid) {
+          <span class="help-block help-block-danger">Câmpul este
+            obligatoriu!</span>
+          }
+        </div>
+        @if (frecventeSelection) {
+        <div class="col-6">
+          <select id="nomObFrecventa" class="form-select" name="selectedObNomFrecventa"
+            [(ngModel)]="selectedObNomFrecventa" #nomObFrecventa="ngModel" required
+            [class.invalid]="(nomObFrecventa.touched || nomObFrecventa.dirty) && nomObFrecventa.invalid">
+            @for (frecventa of frecventeSelection; track frecventa) {
+            <option [value]="frecventa.Valoare">{{
+              frecventa.Valoare
+              }}
+            </option>
+            }
+          </select>
+          @if ((nomObFrecventa.touched || nomObFrecventa.dirty) && nomObFrecventa.invalid) {
+          <span class="help-block help-block-danger">Câmpul este
+            obligatoriu!</span>
+          }
+        </div>
+        }
+      </div>
+      <div class="row pt-2">
+        <div class="col-4">
+          <mat-label>Val. Min.:</mat-label>
+        </div>
+        <div class="col-4">
+          <mat-label>Val. Target:</mat-label>
+        </div>
+        <div class="col-4">
+          <mat-label>Val. Max.:</mat-label>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-4">
+          <input [(ngModel)]="obTemplateFromNom.valMin" #valMin="ngModel" name="setObNom-valMin" class="form-control" />
+        </div>
+        <div class="col-4">
+          <input type="text" id="setObNom-valTarget" name="setObNom-valTarget" class="form-control"
+            [(ngModel)]="obTemplateFromNom.valTarget" #valTarget="ngModel" />
+        </div>
+        <div class="col-4">
+          <input type="text" id="setObNom-valMax" name="setObNom-valMax" class="form-control"
+            [(ngModel)]="obTemplateFromNom.valMax" #valMax="ngModel" />
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-4">
+          <mat-label>Bonus Min.:</mat-label>
+        </div>
+        <div class="col-4">
+          <mat-label>Bonus Target:</mat-label>
+        </div>
+        <div class="col-4">
+          <mat-label>Bonus Max.:</mat-label>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-4">
+          <percentage-nr-input type="number" id="setObNom-bonusMin" name="setObNom-bonusMin"
+            [(ngModel)]="obTemplateFromNom.bonusMin" #bonusMin="ngModel"
+            (isPercentChange)="bonusMinIsPercentage = $event" [isPercent]="bonusMinIsPercentage"></percentage-nr-input>
+        </div>
+        <div class="col-4">
+          <percentage-nr-input type="number" id="setObNom-bonusTarget" name="setObNom-bonusTarget"
+            [(ngModel)]="obTemplateFromNom.bonusTarget" #bonusTarget="ngModel"
+            (isPercentChange)="bonusTargetIsPercentage = $event"
+            [isPercent]="bonusTargetIsPercentage"></percentage-nr-input>
+        </div>
+        <div class="col-4">
+          <percentage-nr-input type="number" id="setObNom-bonusMax" name="setObNom-bonusMax"
+            [(ngModel)]="obTemplateFromNom.bonusMax" #bonusMax="ngModel"
+            (isPercentChange)="bonusMaxIsPercentage = $event" [isPercent]="bonusMaxIsPercentage"></percentage-nr-input>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-12">
+          <button mat-raised-button color="primary" class="form-control" type="submit"
+            [disabled]="!obTemplateFromNomFrom.valid">
+            <mat-icon fontIcon="add"></mat-icon>Adăugați
+          </button>
+        </div>
+      </div>
+    </div>
+    @if (obTemplateFromNom) {
+    <div class="col-6 container border rounded">
+      <div class="row pt-2">
+        <div class="col-12">
+          <h6>Descriere Obiectiv ales din Nomenclator</h6>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-12">
+          <label class="label-bold-sm">Denumire:</label> {{obTemplateFromNom.denumire}}
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-4">
+          <label class="label-bold-sm">Val. Min.:</label> {{obTemplateFromNom.valMin}}
+        </div>
+        <div class="col-4">
+          <label class="label-bold-sm">Val. Target:</label> {{obTemplateFromNom.valTarget}}
+        </div>
+        <div class="col-4">
+          <label class="label-bold-sm">Val. Max.:</label> {{obTemplateFromNom.valMax}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label class="label-bold-sm">Bonus Min.:</label> {{obTemplateFromNom.bonusMin}} {{obTemplateFromNom.isBonusProcentual || bonusMinIsPercentage ? '%' :
+          'RON'}}
+        </div>
+        <div class="col-4">
+          <label class="label-bold-sm">Bonus Target:</label> {{obTemplateFromNom.bonusTarget}} {{obTemplateFromNom.isBonusProcentual || bonusTargetIsPercentage ? '%'
+          : 'RON'}}
+        </div>
+        <div class="col-4">
+          <label class="label-bold-sm">Bonus Max.:</label> {{obTemplateFromNom.bonusMax}} {{obTemplateFromNom.isBonusProcentual || bonusMaxIsPercentage ? '%' :
+          'RON'}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <label class="label-bold-sm">Frecvența:</label> {{obTemplateFromNom.frecventa}}
+        </div>
+        <div class="col-4">
+          <label class="label-bold-sm">Obiectiv Calitativ:</label> {{obTemplateFromNom.isFaraProcent ? 'DA' : 'NU'}}
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</form>

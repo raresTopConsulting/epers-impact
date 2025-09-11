@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row">
+    <div class="row p-3 border">
+      <div class="col-12 text-center p-4 border-bottom">
+        @if (!isEditMode) {
+          <h3>Adăugare Post</h3>
+        }
+        @if (isEditMode) {
+          <h3>Modificare Post</h3>
+        }
+      </div>
+
+      @if (post) {
+        <form (ngSubmit)="onSubmit()" #postForm="ngForm">
+          <input name="id" type="hidden" [(ngModel)]="post.id" />
+          <div class="row">
+            <div class="col-5 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="post-nume" class="required-label">Denumire</label>
+                  <input type="text" id="post-nume" name="nume" class="form-control" [(ngModel)]="post.nume"
+                    #nume="ngModel" required [class.invalid]="nume.touched && nume.invalid">
+                  @if (!nume.valid && nume.touched) {
+                    <span class="help-block help-block-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="post-cor">COR</label>
+                  <input type="text" id="post-cor" class="form-control" name="cor" #cor="ngModel"
+                    [(ngModel)]="post.cor" />
+                </div>
+              </div>
+            </div>
+            <div class="col-7 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="post-dataIn">Data Început</label>
+                  <input class="form-control date" data-provide="datepicker" type="date"
+                    [ngModel]="post.dataIn | date:'yyyy-MM-dd'" (ngModelChange)="post.dataIn = $event" name="dataIn"
+                    id="post-dataIn" #dataIn="ngModel" />
+                  <span class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                  <label for="post-dataSf">Data Sfărșit</label>
+                  <input class="form-control date" data-provide="datepicker" type="date" name="dataSf" id="post-dataSf"
+                    [ngModel]="post.dataSf | date:'yyyy-MM-dd'" (ngModelChange)="post.dataSf = $event" name="dataSf"
+                    #dataSf="ngModel" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="post-nivelPost">Nivel post</label>
+                  <input type="text" id="post-nivelPost" class="form-control" name="nivelPost" #nivelPost="ngModel"
+                    [(ngModel)]="post.nivelPost" />
+                </div>
+                <div class="col-md-6">
+                  <label for="post-denFunctie">Denumire funcție</label>
+                  <input type="text" id="post-denFunctie" class="form-control" name="denFunctie" #denFunctie="ngModel"
+                    [(ngModel)]="post.denFunctie" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="post-punctaj">Punctaj</label>
+                  <input type="number" id="post-punctaj" class="form-control" name="punctaj" #punctaj="ngModel"
+                    [(ngModel)]="post.punctaj" />
+                </div>
+                <div class="col-md-6">
+                  <label for="post-firma">Firma</label>
+                  <select class="form-select" [(ngModel)]="post.idFirma" id="idFirma" name="idFirma" [disabled]="loggedInUserHasFirma">
+                    <option [value]="0">Selectați firma</option>
+                    @for (ddFilter of ddFirmeSelectionList; track ddFilter) {
+                      <option [value]="ddFilter.Value">{{ ddFilter.Text }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-6">
+                <cancel-button (click)="onCancel()"></cancel-button>
+              </div>
+              <div class="col-6">
+                <save-button [disabled]="!postForm.valid"></save-button>
+              </div>
+            </div>
+          </div>
+        </form>
+      }
+    </div>
+  </div>

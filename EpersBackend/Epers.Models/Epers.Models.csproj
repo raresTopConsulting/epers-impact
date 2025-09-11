@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Obiective\**" />
+    <EmbeddedResource Remove="Obiective\**" />
+    <None Remove="Obiective\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Nomenclatoare\" />
+    <None Remove="Pagination\" />
+    <None Remove="Users\" />
+    <None Remove="Roles\" />
+    <None Remove="Evaluare\" />
+    <None Remove="Competente\" />
+    <None Remove="Afisare\" />
+    <None Remove="Pdf\" />
+    <None Remove="Sincron\" />
+    <None Remove="Obiective\" />
+    <None Remove="Concluzii\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pagination\" />
+    <Folder Include="Roles\" />
+    <Folder Include="Evaluare\" />
+    <Folder Include="Competente\" />
+    <Folder Include="Afisare\" />
+    <Folder Include="Pdf\" />
+    <Folder Include="Sincron\" />
+    <Folder Include="Concluzii\" />
+  </ItemGroup>
+</Project>

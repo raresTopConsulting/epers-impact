@@ -1,0 +1,156 @@
+/* You can add global styles to this file, and also import other style files */
+input.invalid {
+    border: 1px solid red;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.help-block-danger {
+    color: red;
+}
+
+.btn-clear {
+    background-color: #E2EBF0;
+    color: #000;
+}
+
+.table {
+    width: 100%;
+    font-size: small;
+    align-items: center;
+    align-self: center;
+    flex: auto;
+}
+
+.navbar-menu-title {
+    background-color: #ECE3E2;
+}
+
+.navbar-impact {
+    background-color: #00b51a;
+}
+
+.navbar-demo {
+    background-color: #DCDCDC;
+}
+
+.login {
+    width: 50%;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 2%;
+    padding: 20px;
+    border-color: #c0c0c0;
+}
+
+.login-container {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.help-block-danger {
+    color: red;
+}
+
+.required-label::after {
+    content: "*";
+    padding-left: 3px;
+}
+
+.label {
+    font-weight: bold;
+    font-size: large;
+    margin-right: 10px;
+}
+
+.label-bold-sm {
+    font-weight: bold;
+    font-size: medium;
+}
+
+.value {
+    font-size: large;
+    color: #131784;
+}
+
+.table-cloumn-center {
+    text-align: center;
+}
+
+.header-mat-label {
+    font-weight: bold;
+    padding-right: 0.5em;
+}
+
+.table-header {
+    font-weight: bold;
+    font-size: medium;
+    background-color: #ECE3E2;
+}
+
+.mat-card-title-routeLink {
+    cursor: pointer;
+}
+
+.big-checkbox {
+    width: 2.2em;
+    height: 2.2em;
+}
+
+.selectedTipOb {
+    background-color: rgb(244, 244, 244);
+    border-radius: 5%;
+}
+
+.medium-text {
+    font-size: medium;
+    color: #3f51b5;
+}
+
+.bold-font {
+    font-weight: bold;
+}
+
+.home__image {
+    width: 120px;
+}
+
+.white-button {
+    color: #ffffff !important;
+}
+
+.selected-elements-list {
+    background-color: floralwhite;
+}
+
+.error-text {
+    color: red;
+}
+
+.dialog-title {
+    text-align: center;
+}
+
+.warning {
+    color: #ff4081;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 18px;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+}

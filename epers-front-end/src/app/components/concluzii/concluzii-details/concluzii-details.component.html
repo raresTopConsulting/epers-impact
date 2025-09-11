@@ -1,0 +1,34 @@
+@if (concluzie) {
+  <div class="row">
+    <div class="col-6 py-1">
+      <h5>Concluzii despre rezultatele evaluării competențelor și despre activitățile de dezvoltare profesională
+      </h5>
+      <div class="form-outline">
+        <textarea class="form-control" id="ist-conc_eval_comp_act_prof" rows="5" name="concluziiEvalCompActDezProf"
+        [textContent]="concluzie.concluziiEvalCompActDezProf" disabled></textarea>
+      </div>
+    </div>
+    <div class="col-6 py-1">
+      <h5>Concluzii despre evaluarea cantitativă a obiectivelor și despre setarea noilor obiective</h5>
+      <div class="form-outline">
+        <textarea class="form-control" id="ist-conc_eval_cant_ob" rows="5" name="concluziiEvalCantOb"
+        [textContent]="concluzie.concluziiEvalCantOb" disabled></textarea>
+      </div>
+    </div>
+    <div class="col-12 py-1">
+      <h5>Așteptări angajat și aspecte generale</h5>
+      <div class="form-outline">
+        <textarea class="form-control" id="ist-conc_astept_ang_gen" rows="4" name="concluziiAspecteGen"
+        [textContent]="concluzie.concluziiAspecteGen" disabled></textarea>
+      </div>
+    </div>
+    @if (concluzie && concluzie.displayIdsTraining && concluzie.displayIdsTraining.length > 0) {
+      <div class="col-12 py-1">
+        <h5>Training-uri recomandate:</h5>
+        @for (idTraiing of concluzie.displayIdsTraining; track idTraiing) {
+          <curs-recomandat-details [idCurs]="idTraiing"></curs-recomandat-details>
+        }
+      </div>
+    }
+  </div>
+}

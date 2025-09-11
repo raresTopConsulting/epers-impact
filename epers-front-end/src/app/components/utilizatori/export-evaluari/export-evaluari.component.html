@@ -1,0 +1,58 @@
+<div class="conatiner">
+  <div class="row mb-2">
+    <h5>Generare Rapoarte PDF Evaluare și concluzii</h5>
+  </div>
+
+  <div class="row mb-2">
+    <label>Anul</label>
+    <div class="col-sm-2">
+      <select class="form-select" [(ngModel)]="anul" name="anul">
+        @for (year of years; track year) {
+          <option [value]="year">{{ year }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <ol>
+    <li class="mb-3">
+      <h5>pentru toți angajații</h5>
+      <button type="button" mat-raised-button color="primary" (click)="generateRaportPdfSiExcel()"
+        [disabled]="isWritingFiles">
+        <mat-icon color="basic" fontIcon="save"></mat-icon> &nbsp;
+        Generare Rapoarte
+      </button>
+    </li>
+
+    <li class="mb-3">
+      <h5>pentru angajații cu id-ul între cele 2 valori</h5>
+      <div class="d-flex align-items-end gap-3">
+        <div>
+          <label>Id Angajat Start</label>
+          <input type="number" id="eport_eval-idAngStart" name="idAngajatStart" class="form-control form-control-sm"
+            [(ngModel)]="idAngajatStart" />
+        </div>
+        <div>
+          <label>Id Angajat Stop</label>
+          <input type="number" id="port_eval-idAngStop" name="idAngajatStop" class="form-control form-control-sm"
+            [(ngModel)]="idAngajatStop" />
+        </div>
+        <button type="button" mat-raised-button color="primary" (click)="generateRaportPdfSiExcelBetween()"
+          [disabled]="isWritingFiles">
+          <mat-icon color="basic" fontIcon="save"></mat-icon> &nbsp;
+          Generare Rapoarte
+        </button>
+      </div>
+    </li>
+  </ol>
+
+  <div class="col-sm-2">
+    @if (isWritingFiles) {
+      <mat-spinner></mat-spinner>
+    }
+  </div>
+  <div class="row mb-2">
+    <span>{{successMessage}}</span>
+    <span>{{errorMessage}}</span>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="form-group row p-2">
+    <div class="col-auto">
+      <div class="input input-group mb-1">
+        <select (change)="onSelectItems()" [(ngModel)]="itemsPerPage" class="form-select">
+          @for (itemsInPage of totalItemsInPage; track itemsInPage) {
+            <option>{{ itemsInPage }}</option>
+          }
+        </select>
+      </div>
+    </div>
+    <div class="col-auto">
+      <nav aria-label="Paginare">
+        <ul class="pagination pagination-sm">
+          <li class="page-item">
+            <button type="button" (click)="onPreviousPage()" color="primary" mat-mini-fab>
+              <mat-icon fontIcon="keyboard_arrow_left"></mat-icon>
+            </button>&nbsp;
+          </li>
+          <li class="page-item">
+            @if (currentPage > 1) {
+              <button type="button" (click)="onPreviousPage()" color="basic" mat-mini-fab>{{
+                currentPage - 1 }}
+              </button>
+              }&nbsp;
+            </li>
+            <li class="page-item active">
+              <button type="button" color="primary" mat-mini-fab>{{ currentPage }}</button>&nbsp;
+            </li>
+            <li class="page-item">
+              @if ((currentPage + 1) < pages) {
+                <button type="button" color="basic" mat-mini-fab (click)="onNextPage()">{{
+                currentPage + 1 }}</button>
+                }&nbsp;
+              </li>
+              <li class="page-item">
+                @if (currentPage < pages) {
+                  <button type="button" color="basic" mat-mini-fab (click)="onLastPage()">{{
+                    pages
+                  }}</button>
+                  }&nbsp;
+                </li>
+                <li class="page-item">
+                  <button type="button" (click)="onNextPage()" color="primary" mat-mini-fab>
+                    <mat-icon fontIcon="keyboard_arrow_right"></mat-icon>
+                  </button>&nbsp;
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="col-auto">
+            <div class="input input-group mb-2">
+              <div class="input-group-prepend">
+                <input type="text" id="filter" name="filter" class="form-control" [(ngModel)]="filter"
+                  (keydown.enter)="onFilter()" [placeholder]="searchCriteria" />
+              </div>
+              <button mat-raised-button color="primary" type="button" (click)="onFilter()">
+                <mat-icon fontIcon="search"></mat-icon>
+              </button>
+              <button mat-stroked-button color="accent" type="button" (click)="onClearFilter()">
+                <mat-icon fontIcon="clear"></mat-icon>
+              </button>
+            </div>
+          </div>
+          @if (ddFilterVisible) {
+            <div class="col-auto">
+              <select class="form-select" [(ngModel)]="ddFilter" id="ddFilter" name="ddFilter" (ngModelChange)="onDDFilter($event)">
+                <option value="">Selectați {{ddFilterCriteria}}</option>
+                @for (ddFilter of ddFilterList; track ddFilter) {
+                  <option [value]="ddFilter.Value">{{ ddFilter.Text }}</option>
+                }
+              </select>
+            </div>
+          }
+          @if (displayAddButton) {
+            <div class="col-auto">
+              <button mat-raised-button color="primary" type="button" (click)="onAddNewItem()">
+                <mat-icon fontIcon="add"></mat-icon>Adăugați
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+      <hr>

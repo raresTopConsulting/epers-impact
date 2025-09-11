@@ -1,0 +1,35 @@
+@if (companyName !== 'demo' ) {
+  <button mat-button [ngClass]="'white-button'" [matMenuTriggerFor]="menu">
+    <mat-icon fontIcon="perm_identity"></mat-icon>
+  Utilizator</button>
+}
+@if (companyName === 'demo' ) {
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon fontIcon="perm_identity"></mat-icon>
+  Utilizator</button>
+}
+
+<mat-menu #menu="matMenu">
+  <h6 class="dropdown-item" style="background-color: #ECE3E2;">Administrare cont</h6>
+  @if (isUserAuth) {
+    <button mat-menu-item [routerLink]="['/utilizatori/changePassword/', userId]">
+      <mat-icon fontIcon="lock"></mat-icon>
+    Gestionare parolă</button>
+  }
+  @if (userIsAdminOrHR) {
+    <button mat-menu-item [routerLink]="['../utilizatori/add']">
+      <mat-icon fontIcon="account_circle"></mat-icon>
+    Înregistrare Utilizator</button>
+  }
+  @if (displayUserSetup) {
+    <button  mat-menu-item [routerLink]="['../utilizatori/userDbSetup']">
+      Setup Utilizatori new app
+    </button>
+  }
+  @if (displayGenerarePdfExcelEvaluari && userIsAdminOrHR) {
+    <button  mat-menu-item [routerLink]="['../utilizatori/export-evaluari']">
+      Export Evaluari (PDF + Excel)
+    </button>
+  }
+  <logout [isUserAuth]="isUserAuth"></logout>
+</mat-menu>

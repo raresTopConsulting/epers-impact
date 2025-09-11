@@ -1,0 +1,8 @@
+@if (isUserAuth) {
+  <button mat-menu-item class="btn btn-sm btn-danger" (click)="logout()">
+    <mat-icon fontIcon="exit_to_app"></mat-icon>
+  Deconectare</button>
+}
+@if (!isUserAuth) {
+  <a mat-menu-item class="btn btn-sm btn-primary" [routerLink]="['../auth/login']">Autentificare</a>
+}

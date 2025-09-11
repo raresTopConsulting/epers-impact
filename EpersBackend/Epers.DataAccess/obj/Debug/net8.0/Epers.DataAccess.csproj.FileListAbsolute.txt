@@ -1,0 +1,16 @@
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/bin/Debug/net8.0/Epers.DataAccess.deps.json
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/bin/Debug/net8.0/Epers.DataAccess.dll
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/bin/Debug/net8.0/Epers.DataAccess.pdb
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/bin/Debug/net8.0/Epers.Models.dll
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/bin/Debug/net8.0/Epers.Models.pdb
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/Epers.DataAccess.csproj.AssemblyReference.cache
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/Epers.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/Epers.DataAccess.AssemblyInfoInputs.cache
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/Epers.DataAccess.AssemblyInfo.cs
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/Epers.DataAccess.csproj.CoreCompileInputs.cache
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/Epers.DataAccess.sourcelink.json
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/Epers.Da.7D4246B7.Up2Date
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/Epers.DataAccess.dll
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/refint/Epers.DataAccess.dll
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/Epers.DataAccess.pdb
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/Debug/net8.0/ref/Epers.DataAccess.dll

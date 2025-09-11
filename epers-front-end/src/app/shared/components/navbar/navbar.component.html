@@ -1,0 +1,18 @@
+@if (companyName === 'Aquila') {
+  <navbar-aquila [isUserAdmin]="isUserAdmin" [userId]="userId" [isUserAuth]="isUserAuth"
+  [userRoleId]="userRoleId"></navbar-aquila>
+}
+@if (companyName === 'Crevedia') {
+  <navbar-crevedia [userId]="userId" [isUserAuth]="isUserAuth" [userRoleId]="userRoleId"></navbar-crevedia>
+}
+@if (companyName === 'TVR') {
+  <navbar-tvr [userId]="userId" [isUserAuth]="isUserAuth" [userRoleId]="userRoleId"></navbar-tvr>
+}
+@if (companyName === 'Impact') {
+  <navbar-impact [isUserAdmin]="isUserAdmin" [userId]="userId" [isUserAuth]="isUserAuth"
+  [userRoleId]="userRoleId"></navbar-impact>
+}
+@if (companyName === 'demo') {
+  <navbar-demo [isUserAdmin]="isUserAdmin" [userId]="userId" [isUserAuth]="isUserAuth"
+  [userRoleId]="userRoleId"></navbar-demo>
+}

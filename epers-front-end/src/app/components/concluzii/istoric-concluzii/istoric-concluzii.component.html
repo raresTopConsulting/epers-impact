@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Istoric Concluzii</h3>
+  </div>
+</div>
+<userdata-header [idAngajat]="idAngajat"></userdata-header>
+<div class="row pt-1">
+  <div class="col-12">
+    <div class="p-4 border rounded">
+      <div class="form-group row p-2">
+        <div class="col-auto">
+          <mat-label>Anul:</mat-label>
+        </div>
+        <div class="col-auto">
+          <select class="form-select" [(ngModel)]="yearFilter" name="yearFilter" (ngModelChange)="searchConcluzie()">
+            @for (year of years; track year) {
+              <option [value]="year">{{ year }}</option>
+            }
+          </select>
+        </div>
+        @if (userHasPip) {
+          <div class="col-auto">
+            <button type="button" mat-raised-button color="accent" class="form-control" (click)="openPipDetailsModal()">
+              <mat-icon color="basic" fontIcon="info"></mat-icon> &nbsp;
+              Vizualizare PIP
+            </button>
+          </div>
+        }
+        <div class="col-auto">
+          <button type="button" mat-raised-button color="accent" class="form-control" (click)="generatePDF()">
+            <mat-icon color="basic" fontIcon="print"></mat-icon> &nbsp;
+            PDF Istoric Evaluare
+          </button>
+        </div>
+      </div>
+      <br>
+        <div class="row">
+          @if (istoricEvalCalificativ && istoricEvalCalificativ?.calificativFinal && yearFilter >= 2024) {
+            <div class="col-auto">
+              <h6>Calificativul final al evaluării:
+                <button type="button" color="accent" mat-mini-fab>{{istoricEvalCalificativ.calificativFinal}}</button>&nbsp;
+                {{istoricEvalCalificativ.incadrareCalificativFinal}}
+              </h6>
+            </div>
+          }
+        </div>
+        <concluzii-details [concluzie]="concluzie"></concluzii-details>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-1">
+    <div class="col-12">
+      <back-button [routerLink]="['../../listaSubalterni']"></back-button>
+    </div>
+  </div>

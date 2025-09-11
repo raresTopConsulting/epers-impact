@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Ghid video de utilizare a aplicației</h3>
+  </div>
+</div>
+@for (video of videos; track video) {
+  <div class="p-4 border rounded video-border">
+    <div class="col-12 mb-2">
+      <h5 style="text-align:center">{{video.denumire}}</h5>
+      <div class="video-container">
+        <video #videoPlayer width="70%" controls>
+          <source [src]="video.link" type="video/mp4">
+        </video>
+        <div class="controls">
+          <button color="primary" mat-mini-fab (click)="playVideo(videoPlayer)">
+            <mat-icon fontIcon="play_arrow"></mat-icon>
+          </button>
+          <button color="accent" mat-mini-fab (click)="pauseVideo(videoPlayer)">
+            <mat-icon color="secondary" fontIcon="pause"></mat-icon>
+          </button>
+          <a class="button" color="primary" mat-raised-button [href]="video.link" [download]="video.downloadLink">
+            <mat-icon color="secondary" fontIcon="download"></mat-icon>
+            Descărcați
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+}

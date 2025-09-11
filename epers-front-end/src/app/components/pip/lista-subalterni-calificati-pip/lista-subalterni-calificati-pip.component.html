@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>{{ showListaAngajatiCuMedieDePip ? 'Listă Angajați calificați pentru PIP' : 'Listă Angajați aprobare PIP'}}</h3>
+  </div>
+</div>
+<div class="row p-4 border-rounded">
+  <router-outlet></router-outlet>
+
+  <div class="form-group row p-2">
+    <div class="col-auto">
+      <mat-label>Anul:</mat-label>
+    </div>
+    <div class="col-auto">
+      <select class="form-select" [(ngModel)]="yearFilter" name="yearFilter" (ngModelChange)="onChangeYearFilter()">
+        @for (year of years; track year) {
+          <option [value]="year">{{ year }}</option>
+        }
+      </select>
+    </div>
+    <div class="col-auto">
+      <button type="button" mat-stroked-button color="primary" (click)="onTipListaChange()">
+        <mat-icon color="basic" fontIcon="refresh"></mat-icon>
+        {{ !showListaAngajatiCuMedieDePip ? 'Vizualizare Listă Angajați calificați pentru PIP' : 'Vizualizare Listă Angajați aprobare PIP'}}
+      </button>
+    </div>
+  </div>
+
+  @if (!idFirmaLoggedInUser) {
+    <table-header [currentPage]="currentPage" [pages]="pages" [itemsPerPage]="itemsPerPage"
+      (nextPage)="nextPage($event)" (previousPage)="previousPage($event)" (lastPage)="lastPage($event)"
+      (selectItemsPerPage)="changeItemsPerPage($event)" (serachFilter)="filter($event)"
+      [searchCriteria]="'Nume, Prenume, Matricola'" [ddFilterList]="ddFirme" [ddFilterVisible]="true"
+      (serachIdDDFilter)="filterFirma($event)" ddFilterCriteria="Firma">
+    </table-header>
+  }
+
+
+  @if (idFirmaLoggedInUser) {
+    <table-header [currentPage]="currentPage" [pages]="pages" [itemsPerPage]="itemsPerPage"
+      (nextPage)="nextPage($event)" (previousPage)="previousPage($event)" (lastPage)="lastPage($event)"
+      (selectItemsPerPage)="changeItemsPerPage($event)" (serachFilter)="filter($event)"
+      [searchCriteria]="'Nume, Prenume, Matricola'">
+    </table-header>
+  }
+
+
+  <table class="table p-3 table-striped table-bordered">
+    <thead class="table-header">
+      <tr class="table-info">
+        <th>Nume și prenume</th>
+        <th>Matricolă angajat</th>
+        <th>Post angajat</th>
+        <th>COR angajat</th>
+        <th>Proces</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (subalern of listaSubalterni; track subalern) {
+        <tr>
+          <td>{{subalern.numePrenume}}</td>
+          <td>{{subalern.matricola}}</td>
+          <td>{{subalern.postAngajat}}</td>
+          <td>{{subalern.cor}}</td>
+          <td class="text-center">
+            @if (!showListaAngajatiCuMedieDePip) {
+              <button type="button" mat-stroked-button color="primary"
+                (click)="openPipStartModal(subalern.idAngajat)"
+                [disabled]="subalern.hasPipAprobat || loggedInUserIdRol == 2 || loggedInUserIdRol == 3">
+                <mat-icon color="basic" fontIcon="info"></mat-icon>
+                Aprobare PIP
+              </button>
+            }
+            @if (showListaAngajatiCuMedieDePip) {
+              <span>{{ subalern.starePip }}</span>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>

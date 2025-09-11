@@ -1,0 +1,164 @@
+<form #addObiectivTemplate="ngForm">
+  <div class="container border rounded" style="background-color: rgb(244, 244, 244);">
+    @if (obiectivTemplate) {
+      <div class="col-12 pt-2">
+        <div class="form-group">
+          <div class="col-3">
+            <label for="obInp-denumire" class="required-label">Denumire</label>
+          </div>
+          <div class="col-12">
+            <textarea type="text" rows="2" id="obInp-denumire" name="denumire" class="form-control form-control-sm"
+              [(ngModel)]="obiectivTemplate.denumire" #denumire="ngModel" required
+            [class.invalid]="(denumire.touched || denumire.dirty) && denumire.invalid"></textarea>
+            @if ((denumire.touched || denumire.dirty) && denumire.invalid) {
+              <span
+                class="help-block help-block-danger">Câmpul este
+              obligatoriu!</span>
+            }
+          </div>
+        </div>
+      </div>
+    }
+    <div class="col-12 pt-2 pb-2">
+      <div class="row pt-4">
+        <div class="col-3">
+          <mat-label for="obInp-dataIn" class="required-label">Valabil din:</mat-label>
+        </div>
+        <div class="col-3">
+          <mat-label for="obInp-frecventa" class="required-label">Frecvența:</mat-label>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-3">
+          <input class="form-control form-control-sm date" data-provide="datepicker" type="date"
+            name="dataIn" id="obInp-dataIn" required [(ngModel)]="obiectivTemplate.dataIn"
+            #dataIn="ngModel"
+            [class.invalid]="(dataIn.touched || dataIn.dirty) && dataIn.invalid" />
+          @if ((dataIn.touched || dataIn.dirty) && dataIn.invalid) {
+            <span
+              class="help-block help-block-danger">Câmpul este
+            obligatoriu!</span>
+          }
+        </div>
+        @if (frecventeSelection) {
+          <div class="col-3">
+            <select id="obInp-frecventa" class="form-select form-select-sm" name="frecventa"
+              [(ngModel)]="obiectivTemplate.frecventa" #frecventa="ngModel" required
+              [class.invalid]="(frecventa.touched || frecventa.dirty) && frecventa.invalid">
+              @for (frecventa of frecventeSelection; track frecventa) {
+                <option [value]="frecventa.Valoare">{{
+                  frecventa.Valoare
+                  }}
+                </option>
+              }
+            </select>
+            @if ((frecventa.touched || frecventa.dirty) && frecventa.invalid) {
+              <span
+                class="help-block help-block-danger">Câmpul este
+              obligatoriu!</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+    <div class="col-12 pt-2 pb-2">
+      <div class="row">
+        <div class="col-3">
+          <div class="form-group">
+            <div class="col-12">
+              <label for="obInp-valMin">Val. Min.</label>
+            </div>
+            <div class="col-12">
+              <input type="number" id="obInp-valMin" name="valMin" class="form-control form-control-sm" [(ngModel)]="obiectivTemplate.valMin"
+                #valMin="ngModel" />
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <div class="col-12">
+              <label for="obInp-valTarget">Val. Target</label>
+            </div>
+            <div class="col-12">
+              <input type="number" id="obInp-valTarget" name="valTarget" class="form-control form-control-sm"
+                [(ngModel)]="obiectivTemplate.valTarget" #valTarget="ngModel" />
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <div class="col-12">
+              <label for="obInp-valMax">Val. Max.</label>
+            </div>
+            <div class="col-12">
+              <input type="number" id="obInp-valMax" name="valMax" class="form-control form-control-sm" [(ngModel)]="obiectivTemplate.valMax"
+                #valMax="ngModel" />
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <div class="col-12">
+              <label for="obInp-isFaraProcent">Obiectiv Calitativ</label>
+            </div>
+            <div class="col-12">
+              <input type="checkbox" name="isFaraProcent" id="obInp-isFaraProcent"
+                [(ngModel)]="obiectivTemplate.isFaraProcent" #isFaraProcent="ngModel"
+                class="form-check-input big-checkbox" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-3">
+          <div class="form-group">
+            <div class="col-12">
+              <label for="obInp-bonusMin">Bonus. Min. (% / RON)</label>
+            </div>
+            <div class="col-12">
+              <percentage-nr-input id="obInp-bonusMin" name="bonusMin" classType="form-control form-control-sm"
+                [(ngModel)]="obiectivTemplate.bonusMin" #bonusMin="ngModel" (isPercentChange)="bonusMinIsPercentage = $event"
+                [isPercent]="bonusMinIsPercentage" />
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <div class="col-12">
+              <label for="obInp-bonusTarget">Bonus Target (% / RON)</label>
+            </div>
+            <div class="col-12">
+              <percentage-nr-input id="obInp-bonusTarget" name="bonusTarget" classType="form-control form-control-sm"
+                [(ngModel)]="obiectivTemplate.bonusTarget" #bonusTarget="ngModel" (isPercentChange)="bonusTargetIsPercentage = $event"
+                [isPercent]="bonusTargetIsPercentage" />
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <div class="col-12">
+              <label for="obInp-bonusMax">Bonus Max. (% / RON)</label>
+            </div>
+            <div class="col-12">
+              <percentage-nr-input id="obInp-bonusMax" name="bonusMax" classType="form-control form-control-sm"
+                [(ngModel)]="obiectivTemplate.bonusMax" #bonusMax="ngModel" (isPercentChange)="bonusMaxIsPercentage = $event"
+                [isPercent]="bonusMaxIsPercentage" />
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <div class="col-12">
+              <label></label>
+            </div>
+            <div class="col-12">
+              <button mat-raised-button color="primary" type="button" (click)="onAddObiectiv()" [disabled]="!addObiectivTemplate.valid">
+                <mat-icon fontIcon="add"></mat-icon>Adăugați
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

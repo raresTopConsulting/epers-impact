@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Listă Subalterni Obiective</h3>
+  </div>
+</div>
+<div class="row p-2 border-rounded">
+  <router-outlet></router-outlet>
+
+  @if (!idFirmaLoggedInUser) {
+  <table-header [currentPage]="currentPage" [pages]="pages" [itemsPerPage]="itemsPerPage" (nextPage)="nextPage($event)"
+    (previousPage)="previousPage($event)" (lastPage)="lastPage($event)"
+    (selectItemsPerPage)="changeItemsPerPage($event)" (serachFilter)="filter($event)"
+    [searchCriteria]="filtru ? filtru : 'Nume, Prenume, Matricola'" [ddFilterList]="ddFirme" [ddFilterVisible]="true"
+    (serachIdDDFilter)="filterFirma($event)" ddFilterCriteria="Firma">
+  </table-header>
+  }
+
+  @if (idFirmaLoggedInUser) {
+  <table-header [currentPage]="currentPage" [pages]="pages" [itemsPerPage]="itemsPerPage" (nextPage)="nextPage($event)"
+    (previousPage)="previousPage($event)" (lastPage)="lastPage($event)"
+    (selectItemsPerPage)="changeItemsPerPage($event)" (serachFilter)="filter($event)"
+    [searchCriteria]="filtru ? filtru : 'Nume, Prenume, Matricola'">
+  </table-header>
+  }
+
+  <table class="table p-3 table-striped table-bordered">
+    <thead class="table-header">
+      <tr class="table-info">
+        <th>Nume și prenume</th>
+        <th>Matricolă angajat</th>
+        <th>Post angajat</th>
+        <th>COR angajat</th>
+        <th>Vizualizare obiective curente</th>
+        <th>Vizualizare istoric obiective</th>
+        <th>Setare obiective individuale</th>
+        <th>Evaluare Obiective</th>
+        <th>PIP</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (subalern of listaSubalterni; track subalern) {
+      <tr>
+        <td>{{subalern.numePrenume}}</td>
+        <td>{{subalern.matricolaAngajat}}</td>
+        <td>{{subalern.postAngajat}}</td>
+        <td>{{subalern.cor}}</td>
+        <td>
+          <div class="text-center">
+            <button type="button" mat-stroked-button color="accent"
+              [routerLink]="['/obiective/actuale', subalern.idAngajat]">
+              <mat-icon color="basic" fontIcon="access_time"></mat-icon>
+              Actuale
+            </button>
+          </div>
+        </td>
+        <td>
+          <div class="text-center">
+            <button type="button" mat-stroked-button color="primary"
+              [routerLink]="['/obiective/istoric', subalern.idAngajat]">
+              <mat-icon color="basic" fontIcon="history"></mat-icon>
+              Istoric
+            </button>
+          </div>
+        </td>
+        <td>
+          <div class="text-center">
+            <button type="button" mat-raised-button color="primary"
+              [routerLink]="['/obiective/setareObiective', subalern.idAngajat]">
+              <mat-icon color="basic" fontIcon="edit"></mat-icon>
+              Setați
+            </button>
+          </div>
+        </td>
+        <td>
+          <div class="text-center">
+            <button type="button" mat-raised-button color="primary"
+              [routerLink]="['/obiective/evaluare', subalern.idAngajat]">
+              <mat-icon color="basic" fontIcon="edit"></mat-icon>
+              Evaluare
+            </button>
+          </div>
+        </td>
+        <td>
+          @if (!subalern.hideStartPip) {
+          <div class="text-center">
+            <button type="button" mat-raised-button color="primary" (click)="openPipAddModal(subalern.idAngajat)">
+              <mat-icon color="basic" fontIcon="edit"></mat-icon>
+              Start PIP
+            </button>
+          </div>
+          }
+          @if (subalern.hideStartPip) {
+          <div class="text-center">
+            <button type="button" mat-raised-button color="primary" (click)="openPipDetailsModal(subalern.idAngajat)">
+              <mat-icon color="basic" fontIcon="info"></mat-icon>
+              Viz. PIP
+            </button>
+          </div>
+          }
+
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,190 @@
+<div class="container">
+  <div class="row">
+    <div class="row p-3 border" style="font-size: small">
+      <div class="col-12 text-center p-4 border-bottom">
+        @if (!isEditMode) {
+          <h3>Înregistrare Utilizator (utilizator nou)</h3>
+        }
+        @if (isEditMode) {
+          <h3>Modificare date Utilizator</h3>
+        }
+      </div>
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <div class="row">
+          <div class="col-6 pt-4">
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label for="usr-create-edit-username" class="required-label">Email</label>
+                <input type="text" id="usr-create-edit-username" name="username" class="form-control"
+                  [(ngModel)]="user.username" #username="ngModel" required
+                  [class.invalid]="(username.touched || username.dirty) && username.invalid">
+                @if ((username.touched || username.dirty) && username.invalid) {
+                  <span
+                    class="help-block help-block-danger">Câmpul este
+                  obligatoriu!</span>
+                }
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-ms-12">
+                <label for="usr-create-edit-numePrenume" class="required-label">Nume și prenume</label>
+                <input type="text" id="usr-create-edit-numePrenume" name="numePrenume" class="form-control"
+                  [(ngModel)]="user.numePrenume" #numePrenume="ngModel" required
+                  [class.invalid]="(numePrenume.touched || numePrenume.dirty) && numePrenume.invalid">
+                @if ((numePrenume.touched || numePrenume.dirty) && numePrenume.invalid) {
+                  <span
+                    class="help-block help-block-danger">Câmpul este
+                  obligatoriu!</span>
+                }
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label for="usr-create-edit-matricola" class="required-label">Matricola</label>
+                <input type="text" id="usr-create-edit-matricola" name="matricola" class="form-control"
+                  [(ngModel)]="user.matricola" #matricola="ngModel" required
+                  [class.invalid]="(matricola.touched || matricola.dirty) && matricola.invalid">
+                @if ((matricola.touched || matricola.dirty) && matricola.invalid) {
+                  <span
+                    class="help-block help-block-danger">Câmpul este
+                  obligatoriu!</span>
+                }
+              </div>
+            </div>
+
+            @if (!isEditMode) {
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="usr-create-edit-password" class="required-label">Parola</label>
+                  <input type="password" id="usr-create-edit-password" name="password" class="form-control"
+                    [(ngModel)]="user.password" #password="ngModel" required
+                    [class.invalid]="(password.touched || password.dirty) && password.invalid">
+                  @if ((password.touched || password.dirty) && password.invalid) {
+                    <span
+                      class="help-block help-block-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (!isEditMode) {
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="usr-create-edit-confirmPassword" class="required-label">Confirmă Parola</label>
+                  <input type="password" id="usr-create-edit-confirmPassword" name="confirmPassword" class="form-control"
+                    [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" required
+                    [class.invalid]="(confirmPassword.touched || confirmPassword.dirty) && confirmPassword.invalid">
+                  @if ((confirmPassword.touched || confirmPassword.dirty) && confirmPassword.invalid) {
+                    <span
+                      class="help-block help-block-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                  @if (errorPassword) {
+                    <span class="help-block help-block-danger">Parolele introduse nu sunt
+                    identice!</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+
+          <div class="col-6 pt-4">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="loc-firma">Firma</label>
+                <select class="form-select" [(ngModel)]="user.idFirma" id="ddFilter" name="ddFilter" (ngModelChange)="firmaChanged($event)"
+                  [disabled]="loggedInUserHasFirma">
+                  <option [value]="0">Selectați firma</option>
+                  @for (ddFilter of ddFirmeSelectionList; track ddFilter) {
+                    <option [value]="ddFilter.Value">{{ ddFilter.Text }}
+                    </option>
+                  }
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label for="usr-create-edit-locatie">Locație</label>
+                <select id="usr-create-edit-locatie" class="form-select" name="idLocatie" #idLocatie="ngModel"
+                  [(ngModel)]="user.idLocatie">
+                  <option value="">Selectați Locația</option>
+                  @for (locatie of ddLocatii; track locatie) {
+                    <option [value]="locatie.Id">{{
+                      locatie.Text
+                      }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label for="usr-create-edit-post">Post</label>
+                <select id="usr-create-edit-post" class="form-select" name="idPost" #idPost="ngModel"
+                  [(ngModel)]="user.idPost">
+                  <option value="">Selectați Postul</option>
+                  @for (post of ddPosturi; track post) {
+                    <option [value]="post.Id">{{ post.Text }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label for="usr-create-edit-compartiment">Compartiment</label>
+                <select id="usr-create-edit-compartiment" class="form-select" name="idCompartiment"
+                  #idCompartiment="ngModel" [(ngModel)]="user.idCompartiment">
+                  <option value="">Selectați Compartimentul</option>
+                  @for (compartiment of ddCompartimente; track compartiment) {
+                    <option
+                      [value]="compartiment.Id">{{ compartiment.Text }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label for="usr-create-edit-rol">Rol</label>
+                <select id="usr-create-edit-rol" class="form-select" name="idRol" #idRol="ngModel"
+                  [(ngModel)]="user.idRol">
+                  @for (rol of ddRoluri; track rol) {
+                    <option [value]="rol.Id">{{ rol.Text }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-12">
+                <label for="usr-create-edit-superior">Manager direct</label>
+                <select id="usr-create-edit-superior" class="form-select" name="idSuperior" #idSuperior="ngModel"
+                  [(ngModel)]="user.idSuperior">
+                  <option value="">Selectați Superiorul</option>
+                  @for (user of ddUseri; track user) {
+                    <option [value]="user.Id">{{ user.Text }}
+                    </option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col-6">
+            <cancel-button (click)="onCancel()"></cancel-button>
+          </div>
+          <div class="col-6">
+            <save-button [disabled]="!registerForm.valid"></save-button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Nomenclator Firme</h3>
+  </div>
+</div>
+<div class="row p-2 border-rounded">
+  <router-outlet></router-outlet>
+
+  <table-header (add)="navToAdd()" [currentPage]="currentPage" [pages]="pages" [itemsPerPage]="itemsPerPage"
+    (nextPage)="nextPage($event)" (previousPage)="previousPage($event)" (lastPage)="lastPage($event)"
+    [displayAddButton]="true" (selectItemsPerPage)="changeItemsPerPage($event)"
+    (serachFilter)="filter($event)" [searchCriteria]="'Denumire, Cod Fiscal '">
+  </table-header>
+
+  <table class="table p-3 table-striped table-bordered">
+    <thead class="table-header">
+      <tr class="table-info">
+        @for (header of headers; track header) {
+          <td>{{ header }}</td>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (firma of firme; track firma) {
+        <tr>
+          <td>{{firma.denumire}}</td>
+          <td>{{firma.atributFiscal}} {{firma.codFiscal}}</td>
+          <td>{{firma.tipIntreprindere}}</td>
+          <td style="text-align: center;">
+            @if (firma.activ) {
+              <mat-icon color="primary" fontIcon="check"></mat-icon>
+            }
+            @if (!firma.activ) {
+              <mat-icon color="warn" fontIcon="close"></mat-icon>
+            }
+          </td>
+          <td>
+            <div class="text-center">
+              <table-edit-button [routerLink]="['edit', firma.id]"></table-edit-button>
+            </div>
+          </td>
+          <td>
+            <div class="text-center">
+              <table-delete-button (click)="deleteFirma(firma.id)"></table-delete-button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

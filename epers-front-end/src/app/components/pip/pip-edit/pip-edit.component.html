@@ -1,0 +1,318 @@
+<div mat-dialog-title>
+  <div class="form-group row">
+    <div class="col-10 text-center">
+      <h3>Plan de îmbunătățire a performanței profesionale a salariaților (PIP)</h3>
+    </div>
+    <div class="col-2">
+      <button mat-icon-button (click)="close()">
+        <mat-icon fontIcon="close"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <hr>
+  </div>
+  <div mat-dialog-content>
+    @if (pipDisplay) {
+      <form (ngSubmit)="onSubmit()" #pipForm="ngForm">
+        <div class="row">
+          <div class="col-6 pt-4">
+            <div class="form-group row p-2">
+              <div class="col-6">
+                <mat-label class="header-mat-label">Nume și Prenume Salariat:</mat-label>
+              </div>
+              <div class="col-6">
+                <span>{{pipDisplay.numePrenumeAngajat}}</span>
+              </div>
+            </div>
+            <div class="form-group row p-2">
+              <div class="col-6">
+                <mat-label class="header-mat-label">Post ocupat:</mat-label>
+              </div>
+              <div class="col-6">
+                <span>{{pipDisplay.postAngajat}}</span>
+              </div>
+            </div>
+            <div class="form-group row p-2">
+              <div class="col-6">
+                <mat-label class="header-mat-label">Califiactivul obținut în urma evaluării profesionale:</mat-label>
+              </div>
+              <div class="col-6">
+                <span>{{pipDisplay.calificativEvaluare | number: '1.2-2'}}</span>
+              </div>
+            </div>
+            <div class="form-group row p-2">
+              <mat-label class="header-mat-label">Observații HR:</mat-label>
+              <span>{{pipDisplay.observatiiHr}}</span>
+            </div>
+          </div>
+          <div class="col-6 pt-4">
+            <div class="form-group row p-2">
+              <div class="col-6">
+                <mat-label class="header-mat-label">Nume și Prenume Manager direct:</mat-label>
+              </div>
+              <div class="col-6">
+                <span>{{pipDisplay.numePrenumeSuperior}}</span>
+              </div>
+            </div>
+            <div class="form-group row p-2">
+              <div class="col-6">
+                <mat-label class="header-mat-label">Post ocupat:</mat-label>
+              </div>
+              <div class="col-6">
+                <span>{{pipDisplay.postSuperior}}</span>
+              </div>
+            </div>
+            <div class="form-group row p-2">
+              <div class="col-12">
+                <mat-label class="header-mat-label">Perioada de desfășurare a evaluării profesionale:</mat-label>
+              </div>
+              <div class="col-12">
+                <span>{{pipDisplay.dataInceputEvaluare | date: 'dd/MM/yyyy'}}</span> -
+                <span>{{pipDisplay.dataSfarsitEvaluare | date: 'dd/MM/yyyy'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        @if (pipDisplay.idStare === 1 || pipDisplay.idStare === 3) {
+          <h5>Completare Observații și Propunere PIP</h5>
+        }
+        @if (pipDisplay.idStare == 1 || pipDisplay.idStare === 3) {
+          <div class="row">
+            <div class="col-6 pt-4">
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label>Data start PIP:</label>
+                </div>
+                <div class="col-8">
+                  <input class="form-control date" data-provide="datepicker" type="date" name="dataInceputPip"
+                    id="pip-dataInceputPip" [ngModel]="pipDisplay.dataInceputPip | date:'yyyy-MM-dd'"
+                    (ngModelChange)="pipDisplay.dataInceputPip = $event" name="dataInceputPip" #dataInceputPip="ngModel" />
+                </div>
+              </div>
+            </div>
+            <div class="col-6 pt-4">
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label>Data finalizare PIP:</label>
+                </div>
+                <div class="col-8">
+                  <input class="form-control date" data-provide="datepicker" type="date" name="dataSfarsitPip"
+                    id="pip-dataSfarsitPip" [ngModel]="pipDisplay.dataSfarsitPip | date:'yyyy-MM-dd'"
+                    (ngModelChange)="pipDisplay.dataSfarsitPip = $event" name="dataSfarsitPip" #dataSfarsitPip="ngModel" />
+                </div>
+              </div>
+            </div>
+            <div class="col-12 pt-4">
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label>Calificativ minim așteptat după finalizarea PIP:</label>
+                </div>
+                <div class="col-8">
+                  <input type="number" id="pip-calificativMinimPip" class="form-control" name="calificativMinimPip"
+                    #calificativMinimPip="ngModel" [(ngModel)]="pipDisplay.calificativMinimPip" />
+                </div>
+              </div>
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label for="post-obiectiveDezvoltare">Obiectivele de dezvoltare:</label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <textarea class="form-control" id="pip-obiectiveDezvoltare" rows="5" name="obiectiveDezvoltare"
+                      [(ngModel)]="pipDisplay.obiectiveDezvoltare"
+                    placeholder="Obiectivele de dezvoltare ale salariatului pentru îmbunătățirea performanței"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label for="post-actiuniSalariat">Acțiunile specifice pentru atingerea obiectivelor de dezvoltare:</label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <textarea class="form-control" id="pip-actiuniSalariat" rows="5" name="actiuniSalariat"
+                      [(ngModel)]="pipDisplay.actiuniSalariat"
+                    placeholder="Acțiunile specifice de întreprins de către salariat pentru atingerea obiectivelor de dezvoltare"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label for="post-suportManager">Suportul oferit de Managerul direct:</label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <textarea class="form-control" id="pip-suportManager" rows="5" name="suportManager"
+                    [(ngModel)]="pipDisplay.suportManager" placeholder="Suportul oferit de Managerul direct"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label for="post-altSuport">Alte tipuri de suport:</label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <textarea class="form-control" id="pip-altSuport" rows="5" name="altSuport"
+                      [(ngModel)]="pipDisplay.altSuport"
+                    placeholder="Alte tipuri de suport oferit de Societate pentru dezvoltarea salariatului"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+        @if (pipDisplay.idStare == 2) {
+          <div class="row">
+            <div class="col-6 pt-4">
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <mat-label class="header-mat-label">Data start PIP:</mat-label>
+                </div>
+                <div class="col-8">
+                  <span>{{pipDisplay.dataInceputPip | date: 'dd/MM/yyyy'}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 pt-4">
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <mat-label class="header-mat-label">Data finalizare PIP:</mat-label>
+                </div>
+                <div class="col-8">
+                  <span>{{pipDisplay.dataSfarsitPip | date: 'dd/MM/yyyy'}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 pt-4">
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <mat-label class="header-mat-label">Calificativ minim așteptat după finalizarea PIP:</mat-label>
+                </div>
+                <div class="col-8">
+                  <span>{{pipDisplay.calificativMinimPip}}</span>
+                </div>
+              </div>
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <mat-label class="header-mat-label">Obiectivele de dezvoltare ale salariatului pentru îmbunătățirea
+                  performanței:</mat-label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <span>{{pipDisplay.obiectiveDezvoltare}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <mat-label class="header-mat-label">Acțiunile specifice pentru atingerea obiectivelor de
+                  dezvoltare:</mat-label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <span>{{pipDisplay.actiuniSalariat}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <mat-label class="header-mat-label">Suportul oferit de Managerul direct:</mat-label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <span>{{pipDisplay.suportManager}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <mat-label class="header-mat-label">Alte tipuri de suport oferit de Societate pentru dezvoltarea
+                  salariatului:</mat-label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <span>{{pipDisplay.altSuport}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+        <hr />
+        <br>
+          @if (pipDisplay.idStare == 2) {
+            <h5>Evaluare finalizare PIP:</h5>
+          }
+          @if (pipDisplay.idStare == 2) {
+            <div class="row">
+              <p class="warning"><mat-icon fontIcon="info"></mat-icon>Atenție! Această secțiune se completează la sfârșitul
+            procesului PIP.</p>
+            <div class="col-12 pt-4">
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label class="required-label">Calificativ obținut la finalizarea PIP:</label>
+                </div>
+                <div class="col-8">
+                  <input type="number" id="pip-calificativFinalPip" class="form-control" name="calificativFinalPip" required
+                    #calificativFinalPip="ngModel" [(ngModel)]="pipDisplay.calificativFinalPip"
+                    [class.invalid]="(calificativFinalPip.touched || calificativFinalPip.dirty) && calificativFinalPip.invalid" />
+                  @if (!calificativFinalPip.valid && (calificativFinalPip.touched || calificativFinalPip.dirty)) {
+                    <span
+                      class="help-block help-block-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="col-12 pt-4">
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label for="observatiFinalPip">Observații Manager direct pe perioada PIP:</label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <textarea class="form-control" id="pip-observatiFinalPip" rows="5" name="observatiFinalPip"
+                      [(ngModel)]="pipDisplay.observatiFinalPip"
+                    placeholder="Observații Manager direct cu privire la activitatea și evoluția salariatului pe perioada PIP"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 pt-4">
+              <div class="form-group row p-2">
+                <div class="col-4">
+                  <label for="post-deczieFinalaManager" class="required-label">Decizie finală Manager direct:</label>
+                </div>
+                <div class="col-8">
+                  <div class="form-outline">
+                    <input type="text" class="form-control" id="pip-deczieFinalaManager" name="deczieFinalaManager" required
+                      [(ngModel)]="pipDisplay.deczieFinalaManager" #deczieFinalaManager="ngModel"
+                      [class.invalid]="(deczieFinalaManager.touched || deczieFinalaManager.dirty) && deczieFinalaManager.invalid" />
+                    @if (!deczieFinalaManager.valid && (deczieFinalaManager.touched || deczieFinalaManager.dirty)) {
+                      <span
+                        class="help-block help-block-danger">Câmpul este
+                      obligatoriu!</span>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </form>
+    }
+  </div>
+  <div mat-dialog-actions>
+
+    <button mat-raised-button class="form-control" color="primary" (click)="onSubmit()">
+      <mat-icon mat-stroked-icon fontIcon="save"></mat-icon> &nbsp;
+    Salvați</button>
+    <br>
+      <br>
+        <button mat-button mat-stroked-button class="form-control" color="primary" (click)="close()">
+          <mat-icon mat-stroked-icon fontIcon="cancel"></mat-icon> &nbsp;
+        Închideți</button>
+
+      </div>

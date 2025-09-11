@@ -1,0 +1,187 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Concluzii</h3>
+  </div>
+</div>
+<userdata-header [idAngajat]="idAngajat"></userdata-header>
+<form (ngSubmit)="save()" #concluziiFrom="ngForm">
+  <div class="row py-3">
+    <hr>
+      <div class="col-12 py-3">
+        <div class="row">
+          <div class="col-auto">
+            <mat-label>Anul:</mat-label>
+          </div>
+          <div class="col-auto">
+            <select class="form-select" [(ngModel)]="yearFilter" name="yearFilter"
+              (ngModelChange)="searchConcluzie()">
+              @for (year of years; track year) {
+                <option [value]="year">{{ year }}</option>
+              }
+            </select>
+          </div>
+          <div class="col-auto">
+            <h5>Recomandați cursuri (max. 5)</h5>
+          </div>
+          <div class="col-auto">
+            <select id="conc-curs" class="form-select form-select-sm" name="curs" [(ngModel)]="cursSelectat"
+              (ngModelChange)="selectCurs($event)" [disabled]="existaConcluzii">
+              @for (curs of cursuriSelection; track curs) {
+                <option [value]="curs.Id">{{
+                  curs.Text
+                  }}
+                </option>
+              }
+            </select>
+          </div>
+          @if (showAddPip && !userHasPip) {
+            <div class="col-auto">
+              <button type="button" mat-raised-button color="primary" class="form-control"
+                (click)="openPipAddModal()">
+                <mat-icon color="basic" fontIcon="add"></mat-icon> &nbsp;
+                Start PIP
+              </button>
+            </div>
+          }
+          @if (userHasPipNefinalizat) {
+            <div class="col-auto">
+              <button type="button" mat-raised-button color="primary" class="form-control"
+                (click)="openPipEditModal()">
+                <mat-icon color="basic" fontIcon="edit"></mat-icon> &nbsp;
+                {{userHasPipRespins ? 'Refacere PIP': 'Finalizare PIP'}}
+              </button>
+            </div>
+          }
+          @if (userHasPip) {
+            <div class="col-auto">
+              <button type="button" mat-raised-button color="primary" class="form-control"
+                (click)="openPipDetailsModal()">
+                <mat-icon color="basic" fontIcon="info"></mat-icon> &nbsp;
+                Vizualizare PIP
+              </button>
+            </div>
+          }
+        </div>
+        <br>
+          <div class="row">
+            @if (istoricEvalCalificativ && istoricEvalCalificativ?.calificativFinal && yearFilter >= 2024) {
+              <div class="col-auto"
+                >
+                <h6>Calificativul final al evaluării:
+                  <button type="button" color="primary"
+                  mat-mini-fab>{{istoricEvalCalificativ.calificativFinal}}</button>&nbsp;
+                  {{istoricEvalCalificativ.incadrareCalificativFinal}}
+                </h6>
+              </div>
+            }
+            @if (!idEvaluari || idEvaluari.length <= 0) {
+              <div class="col-auto">
+                <p class="warning"><mat-icon fontIcon="info"></mat-icon> Atenție, nu exită evaluare finalizată
+              pentru anul selectat.</p>
+            </div>
+          }
+        </div>
+        @if (showAddPip && !userHasPip) {
+          <div class="row">
+            <p class="warning"> <mat-icon fontIcon="info"></mat-icon> Atenție, concluziile evaluării nu pot fi completate până ce
+          Planul de Îmbunătățire a Performanțelor nu a fost încheiat.</p>
+        </div>
+      }
+      <div class="row">
+        @if (cursuriSelectate && cursuriSelectate.length > 0) {
+          <div class="col-12">
+            <mat-list aria-label="Cursuri Selectate">
+              @for (cursSelectat of cursuriSelectate; track cursSelectat) {
+                <mat-chip removable
+                  (removed)="removeCurs(cursSelectat.Id)">
+                  {{cursSelectat.Text}}
+                  @if (cursSelectat) {
+                    <button mat-icon-button (click)="removeCurs(cursSelectat.Id)">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  }
+                </mat-chip>
+              }
+            </mat-list>
+          </div>
+        }
+      </div>
+
+      @if (existaConcluzii) {
+        <div class="row">
+          <p class="col-12 warning alert alert-warning">
+            <mat-icon color="accent" fontIcon="info"></mat-icon>
+            Atenție, Concluzile evaluării pe anul {{yearFilter}} au fost completate!
+          </p>
+        </div>
+      }
+      <!-- <div class="row">
+      <div class="col-8  selected-elements-list" *ngIf="cursuriSelectate && cursuriSelectate.length > 0">
+        <ul *ngFor="let cursSelectat of cursuriSelectate">
+          <li>
+            {{cursSelectat.Text}}
+            <span class="btn btn-sm" (click)="removeCurs(cursSelectat.Id)">
+              <mat-icon fontIcon="clear" color="warn"></mat-icon>
+            </span>
+          </li>
+          <hr>
+          </ul>
+        </div>
+      </div>
+      <div class="row" *ngIf="existaConcluzii">
+        <p class="warning"><mat-icon color="accent" fontIcon="info"></mat-icon> Atenție, Concluzile evaluării pe
+      anul {{yearFilter}} au fost completate!</p>
+    </div> -->
+  </div>
+  <hr>
+
+    @if (existaConcluzii) {
+      <concluzii-details [concluzie]="concluzie"></concluzii-details>
+    }
+
+    @if (!existaConcluzii) {
+      <div class="row">
+        <div class="col-6 py-1">
+          <h5>Concluzii despre rezultatele evaluării competențelor și despre activitățile de dezvoltare
+            profesională
+          </h5>
+          <div class="form-outline">
+            <textarea class="form-control" id="conc_eval_comp_act_prof" rows="5"
+              name="concluziiEvalCompActDezProf" [(ngModel)]="concluzie.concluziiEvalCompActDezProf"
+            placeholder="Rezultatele evaluării competențelor și activitățile de dezvoltare profesională"></textarea>
+          </div>
+        </div>
+        <div class="col-6 py-1">
+          <h5>Concluzii despre evaluarea cantitativă a obiectivelor și despre setarea noilor obiective
+            <span mat-fab color="primary" (click)="addConcluziiCantitative = !addConcluziiCantitative"
+              matTooltip="Adăugați concluziile privind evaluarea cantitativă">
+              <mat-icon color="primary" fontIcon="edit"></mat-icon>
+            </span>
+          </h5>
+          <div class="form-outline">
+            <textarea class="form-control" id="conc_eval_cant_ob" rows="5" name="concluziiEvalCantOb"
+              [(ngModel)]="concluzie.concluziiEvalCantOb" [disabled]="!addConcluziiCantitative"
+            placeholder="Evaluarea cantitativă a obiectivelor și setarea noilor obiective"></textarea>
+          </div>
+        </div>
+        <div class="col-12 py-1">
+          <h5>Așteptări angajat și aspecte generale</h5>
+          <div class="form-outline">
+            <textarea class="form-control" id="conc_astept_ang_gen" rows="4" name="concluziiAspecteGen"
+              [(ngModel)]="concluzie.concluziiAspecteGen"
+            placeholder="Așteptări angajat și aspecte generale"></textarea>
+          </div>
+        </div>
+      </div>
+    }
+
+  </div>
+  <div class="row pt-1">
+    <div class="col-6">
+      <cancel-button [routerLink]="['../../listaSubalterni']"></cancel-button>
+    </div>
+    <div class="col-6">
+      <save-button [disabled]="!concluziiFrom.valid || existaConcluzii"></save-button>
+    </div>
+  </div>
+</form>

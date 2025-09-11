@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Istoric Obiective</h3>
+  </div>
+</div>
+<userdata-header [idAngajat]="idAngajat"></userdata-header>
+<div class="row pt-1">
+  <div class="col-12">
+    <div class="p-4 border rounded">
+      <div class="form-group row p-2">
+        <div class="col-auto">
+          <button type="button" mat-raised-button color="accent" class="form-control" (click)="generatePDF()">
+            <mat-icon color="basic" fontIcon="print"></mat-icon> &nbsp;
+            PDF Istoric Obiective
+          </button>
+        </div>
+      </div>
+      <table-header [currentPage]="currentPage" [pages]="pages" [itemsPerPage]="itemsPerPage"
+        (nextPage)="nextPage($event)" (previousPage)="previousPage($event)" (lastPage)="lastPage($event)"
+        (selectItemsPerPage)="changeItemsPerPage($event)" (serachFilter)="filter($event)"></table-header>
+      <table class="table p-3 table-striped table-bordered">
+        <thead class="table-header">
+          <th>Tip</th>
+          <th>Denumire</th>
+          <th>Data început</th>
+          <th>Frecvența</th>
+          <th>Data sfârșit</th>
+          <th>Val. min. | Bonus min.</th>
+          <th>Val. target | Bonus target</th>
+          <th>Val. max. | Bonus max.</th>
+          <th>Obiectiv calitativ</th>
+          <th>Realizat</th>
+        </thead>
+        <tbody>
+          @for (ob of istoricObiective; track ob; let i = $index) {
+          <tr>
+            <td>{{ob.tip == "I" ? "Individual" : ob.tip == "D" ? "Depatamental" : "Corporativ"}}</td>
+            <td>{{ob.denumire}}</td>
+            <td>{{ob.dataIn | date: "dd/MM/yyyy"}}</td>
+            <td>{{ob.frecventa}}</td>
+            <td>{{ob.dataSf | date: "dd/MM/yyyy"}}</td>
+            <td>Val.: {{ob.valMin ? ob.valMin: '-'}} | {{ob.bonusMin ? ob.bonusMin : '0'}} ( {{ ob.isBonusProcentual ?
+              "%" : "RON"}} )</td>
+            <td class="bold-font">Val.: {{ob.valTarget ? ob.valTarget : '-'}} | {{ob.bonusTarget ? ob.bonusTarget :
+              '0'}} ( {{ ob.isBonusProcentual ? "%" : "RON"}} )</td>
+            <td>Val.: {{ob.valMax ? ob.valMax : '-'}} | {{ob.bonusMax ? ob.bonusMax : '0'}} ( {{ ob.isBonusProcentual ?
+              "%" : "RON"}} )</td>
+            <td style="text-align: center;">
+              @if (ob.isFaraProcent) {
+              <button type="button" color="basic" mat-mini-fab>
+                DA
+              </button>
+              }
+              @if (!ob.isFaraProcent) {
+              <button type="button" color="basic" mat-mini-fab>
+                NU
+              </button>
+              }
+            </td>
+            <td style="text-align: center;">
+              @if (ob.isRealizat) {
+              <mat-icon color="primary" fontIcon="check"></mat-icon>
+              }
+              @if (!ob.isRealizat) {
+              <mat-icon color="warn" fontIcon="close"></mat-icon>
+              }
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="row pt-1">
+  <back-button [routerLink]="['../../listaSubalterni']"></back-button>
+</div>

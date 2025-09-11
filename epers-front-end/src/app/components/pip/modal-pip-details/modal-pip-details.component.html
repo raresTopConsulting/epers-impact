@@ -1,0 +1,206 @@
+<div mat-dialog-title>
+  <div class="form-group row">
+    <div class="col-10 text-center">
+      <h3>Plan de îmbunătățire a performanței profesionale a salariaților (PIP)</h3>
+    </div>
+    <div class="col-2">
+      <button mat-icon-button (click)="close()">
+        <mat-icon fontIcon="close"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-10">
+      <button type="button" mat-raised-button color="accent" class="form-control" (click)="generatePDFPIP(idAngajat)">
+        <mat-icon color="basic" fontIcon="print"></mat-icon> &nbsp;
+        Descărcați PDF
+      </button>
+    </div>
+  </div>
+  <hr>
+  </div>
+  @if (pipDetailsDisplay) {
+    <div mat-dialog-content>
+      <div class="row">
+        <div class="col-6 pt-4">
+          <div class="form-group row p-2">
+            <div class="col-6">
+              <mat-label class="header-mat-label">Nume și Prenume Salariat:</mat-label>
+            </div>
+            <div class="col-6">
+              <span>{{pipDetailsDisplay.numePrenumeAngajat}}</span>
+            </div>
+          </div>
+          <div class="form-group row p-2">
+            <div class="col-6">
+              <mat-label class="header-mat-label">Post ocupat:</mat-label>
+            </div>
+            <div class="col-6">
+              <span>{{pipDetailsDisplay.postAngajat}}</span>
+            </div>
+          </div>
+          <div class="form-group row p-2">
+            <div class="col-6">
+              <mat-label class="header-mat-label">Califiactivul obținut în urma evaluării profesionale:</mat-label>
+            </div>
+            <div class="col-6">
+              <span>{{pipDetailsDisplay.calificativEvaluare | number: '1.2-2'}}</span>
+            </div>
+          </div>
+          <div class="form-group row p-2">
+            <mat-label class="header-mat-label">Observații HR:</mat-label>
+            <span>{{pipDetailsDisplay.observatiiHr}}</span>
+          </div>
+        </div>
+        <div class="col-6 pt-4">
+          <div class="form-group row p-2">
+            <div class="col-6">
+              <mat-label class="header-mat-label">Nume și Prenume Manager direct:</mat-label>
+            </div>
+            <div class="col-6">
+              <span>{{pipDetailsDisplay.numePrenumeSuperior}}</span>
+            </div>
+          </div>
+          <div class="form-group row p-2">
+            <div class="col-6">
+              <mat-label class="header-mat-label">Post ocupat:</mat-label>
+            </div>
+            <div class="col-6">
+              <span>{{pipDetailsDisplay.postSuperior}}</span>
+            </div>
+          </div>
+          <div class="form-group row p-2">
+            <div class="col-12">
+              <mat-label class="header-mat-label">Perioada de desfășurare a evaluării profesionale:</mat-label>
+            </div>
+            <div class="col-12">
+              <span>{{pipDetailsDisplay.dataInceputEvaluare | date: 'dd/MM/yyyy'}}</span> -
+              <span>{{pipDetailsDisplay.dataSfarsitEvaluare | date: 'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-6 pt-4">
+          <div class="form-group row p-2">
+            <div class="col-4">
+              <mat-label class="header-mat-label">Data start PIP:</mat-label>
+            </div>
+            <div class="col-8">
+              <span>{{pipDetailsDisplay.dataInceputPip | date: 'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 pt-4">
+          <div class="form-group row p-2">
+            <div class="col-4">
+              <mat-label class="header-mat-label">Data finalizare PIP:</mat-label>
+            </div>
+            <div class="col-8">
+              <span>{{pipDetailsDisplay.dataSfarsitPip | date: 'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 pt-4">
+          <div class="form-group row p-2">
+            <div class="col-4">
+              <mat-label class="header-mat-label">Calificativ minim așteptat după finalizarea PIP:</mat-label>
+            </div>
+            <div class="col-8">
+              <span>{{pipDetailsDisplay.calificativMinimPip}}</span>
+            </div>
+          </div>
+          <div class="form-group row p-2">
+            <div class="col-4">
+              <mat-label class="header-mat-label">Obiectivele de dezvoltare ale salariatului pentru îmbunătățirea
+              performanței:</mat-label>
+            </div>
+            <div class="col-8">
+              <div class="form-outline">
+                <span>{{pipDetailsDisplay.obiectiveDezvoltare}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row p-2">
+            <div class="col-4">
+              <mat-label class="header-mat-label">Acțiunile specifice pentru atingerea obiectivelor de
+              dezvoltare:</mat-label>
+            </div>
+            <div class="col-8">
+              <div class="form-outline">
+                <span>{{pipDetailsDisplay.actiuniSalariat}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row p-2">
+            <div class="col-4">
+              <mat-label class="header-mat-label">Suportul oferit de Managerul direct:</mat-label>
+            </div>
+            <div class="col-8">
+              <div class="form-outline">
+                <span>{{pipDetailsDisplay.suportManager}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row p-2">
+            <div class="col-4">
+              <mat-label class="header-mat-label">Alte tipuri de suport oferit de Societate pentru dezvoltarea
+              salariatului:</mat-label>
+            </div>
+            <div class="col-8">
+              <div class="form-outline">
+                <span>{{pipDetailsDisplay.altSuport}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <br>
+        <h5>Evaluare finalizare PIP:</h5>
+        <div class="row">
+          <div class="col-12 pt-4">
+            <div class="form-group row p-2">
+              <div class="col-4">
+                <mat-label class="header-mat-label">Calificativ obținut la finalizarea PIP:</mat-label>
+              </div>
+              <div class="col-8">
+                <span>{{pipDetailsDisplay.calificativFinalPip}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 pt-4">
+            <div class="form-group row p-2">
+              <div class="col-4">
+                <mat-label class="header-mat-label">Observații Manager direct pe perioada PIP:</mat-label>
+              </div>
+              <div class="col-8">
+                <div class="form-outline">
+                  <span>{{pipDetailsDisplay.observatiFinalPip}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 pt-4">
+            <div class="form-group row p-2">
+              <div class="col-4">
+                <mat-label class="header-mat-label">Decizie finală Manager direct:</mat-label>
+              </div>
+              <div class="col-8">
+                <div class="form-outline">
+                  <span>{{pipDetailsDisplay.deczieFinalaManager}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    <div mat-dialog-actions>
+
+      <button mat-button mat-stroked-button class="form-control" color="primary" (click)="close()">
+        <mat-icon mat-stroked-icon fontIcon="cancel"></mat-icon> &nbsp;
+      Închideți</button>
+
+    </div>

@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-12 text-center p-4">
+    <h3>Evaluare Obiective</h3>
+  </div>
+</div>
+<userdata-header [idAngajat]="idAngajat"></userdata-header>
+<form (ngSubmit)="save()" #evalObiective="ngForm">
+  <div class="row pt-1">
+    <div class="col-12">
+      <div class="p-4 border rounded">
+        <table-header [currentPage]="currentPage" [pages]="pages" [itemsPerPage]="itemsPerPage"
+          (nextPage)="nextPage($event)" (previousPage)="previousPage($event)" (lastPage)="lastPage($event)"
+          (selectItemsPerPage)="changeItemsPerPage($event)" (serachFilter)="filter($event)"></table-header>
+        <table class="table p-3 table-striped table-bordered">
+          <thead class="table-header">
+            <th>Tip</th>
+            <th>Denumire</th>
+            <th>Data început</th>
+            <th>Frecvența</th>
+            <th>Val. min. | Bonus min.</th>
+            <th>Val. target | Bonus target</th>
+            <th>Val. max. | Bonus max.</th>
+            <th>Obiectiv calitativ</th>
+            <th>Realizat</th>
+          </thead>
+          <tbody>
+            @for (ob of obiectiveActuale; track ob; let i = $index) {
+            <tr>
+              <td>{{ob.tip == "I" ? "Individual" : ob.tip == "D" ? "Depatamental" : "Corporativ"}}</td>
+              <td>{{ob.denumire}}</td>
+              <td>{{ob.dataIn | date: "dd/MM/yyyy"}}</td>
+              <td>{{ob.frecventa}}</td>
+              <td>Val.: {{ob.valMin ? ob.valMin: '-'}} | {{ob.bonusMin ? ob.bonusMin : '0'}} ( {{ ob.isBonusProcentual ?
+                "%" : "RON"}} )</td>
+              <td class="bold-font">Val.: {{ob.valTarget ? ob.valTarget : '-'}} | {{ob.bonusTarget ? ob.bonusTarget :
+                '0'}} ( {{ ob.isBonusProcentual ? "%" : "RON"}} )</td>
+              <td>Val.: {{ob.valMax ? ob.valMax : '-'}} | {{ob.bonusMax ? ob.bonusMax : '0'}} ( {{ ob.isBonusProcentual
+                ? "%" : "RON"}} )</td>
+              <td style="text-align: center;">
+                @if (ob.isFaraProcent) {
+                <button type="button" color="basic" mat-mini-fab>
+                  DA
+                </button>
+                }
+                @if (!ob.isFaraProcent) {
+                <button type="button" color="basic" mat-mini-fab>
+                  NU
+                </button>
+                }
+              </td>
+              <td style="text-align: center;">
+                @if (ob.isFaraProcent) {
+                <select id="evalob-isRealizat" class="form-select form-select-sm" name="isRealizat"
+                  #isRealizat="ngModel" [(ngModel)]="ob.isRealizat">
+                  <option [ngValue]="null">Nu se evaluează acum</option>
+                  <option [ngValue]="true">DA</option>
+                  <option [ngValue]="false">NU</option>
+                </select>
+                }
+                @if (!ob.isFaraProcent) {
+                <input type="text" class="form-control form-control-sm" name="valoareRealizata"
+                  [id]="'valoareRealizata'+i" [(ngModel)]="ob.valoareRealizata" #valoareRealizata="ngModel" />
+                }
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-1">
+    <div class="row pt-1">
+      <div class="col-6">
+        <cancel-button [routerLink]="['../../listaSubalterni']"></cancel-button>
+      </div>
+      <div class="col-6">
+        <save-button [disabled]="isSaving"></save-button>
+      </div>
+    </div>
+  </div>
+</form>

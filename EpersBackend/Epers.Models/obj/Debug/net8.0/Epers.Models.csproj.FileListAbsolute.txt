@@ -1,0 +1,12 @@
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/bin/Debug/net8.0/Epers.Models.deps.json
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/bin/Debug/net8.0/Epers.Models.dll
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/bin/Debug/net8.0/Epers.Models.pdb
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/Debug/net8.0/Epers.Models.GeneratedMSBuildEditorConfig.editorconfig
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/Debug/net8.0/Epers.Models.AssemblyInfoInputs.cache
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/Debug/net8.0/Epers.Models.AssemblyInfo.cs
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/Debug/net8.0/Epers.Models.csproj.CoreCompileInputs.cache
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/Debug/net8.0/Epers.Models.sourcelink.json
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/Debug/net8.0/Epers.Models.dll
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/Debug/net8.0/refint/Epers.Models.dll
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/Debug/net8.0/Epers.Models.pdb
+/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/Debug/net8.0/ref/Epers.Models.dll

@@ -1,0 +1,70 @@
+<div mat-dialog-title>
+  <div class="form-group row">
+    <div class="col-10 text-center">
+      <h3>Detalii utilizator: {{userDetails?.numePrenume}}</h3>
+    </div>
+    <div class="col-2">
+      <button mat-icon-button (click)="onClose()">
+        <mat-icon fontIcon="close"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <hr>
+  </div>
+  @if (userDetails) {
+    <div mat-dialog-content>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group-row p-1">
+            <mat-label class="header-mat-label">Email:</mat-label>
+            <span>{{userDetails.username}}</span>
+          </div>
+          <div class="form-group-row p-1">
+            <mat-label class="header-mat-label">Nume și prenume:</mat-label>
+            <span>{{userDetails.numePrenume}}</span>
+          </div>
+          <div class="form-group-row p-1">
+            <mat-label class="header-mat-label">Matricola:</mat-label>
+            <span>{{userDetails.matricola}}</span>
+          </div>
+          <div class="form-group-row p-1">
+            <mat-label class="header-mat-label">Rol:</mat-label>
+            <span>{{userDetails.rol}}</span>
+          </div>
+          <div class="form-group-row p-1">
+            <mat-label class="header-mat-label">Nume Manager direct:</mat-label>
+            <span>{{userDetails.numeSuperior}}</span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group-row p-1">
+            <mat-label class="header-mat-label">Post:</mat-label>
+            <span>{{userDetails.denumirePost}}</span>
+          </div>
+          <div class="form-group-row p-1">
+            <mat-label class="header-mat-label">COR:</mat-label>
+            <span>{{userDetails.cor}}</span>
+          </div>
+          <div class="form-group-row p-1">
+            <mat-label class="header-mat-label">Locație:</mat-label>
+            <span>{{userDetails.locatie}}</span>
+          </div>
+          <div class="form-group-row p-1">
+            <mat-label class="header-mat-label">Organizație de bază:</mat-label>
+            <span>{{userDetails.organizatieBaza}}</span>
+          </div>
+          @if (userDetails.organizatieIntermediara) {
+            <div class="form-group-row p-1">
+              <mat-label class="header-mat-label">Organizație intermediară:</mat-label>
+              <span>{{userDetails.organizatieIntermediara}}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+  <div mat-dialog-actions>
+    <button mat-button mat-stroked-button class="form-control" color="primary" (click)="onClose()">
+      <mat-icon mat-stroked-icon fontIcon="cancel"></mat-icon> &nbsp;
+    Închideți</button>
+  </div>

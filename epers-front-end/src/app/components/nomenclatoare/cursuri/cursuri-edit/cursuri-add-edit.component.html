@@ -1,0 +1,112 @@
+<div class="container">
+
+  @if (curs) {
+    <div class="row">
+      <div class="row p-3 border">
+        <div class="col-12 text-center p-4 border-bottom">
+          @if (!isEditMode) {
+            <h3>Adăugare Curs</h3>
+          }
+          @if (isEditMode) {
+            <h3>Modificare Curs</h3>
+          }
+        </div>
+        <form (ngSubmit)="save()" #cursartimentForm="ngForm">
+          <input name="id" type="hidden" [(ngModel)]="curs.id" />
+          <div class="row">
+            <div class="col-5 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="curs-denumire" class="required-label">Denumire</label>
+                  <input type="text" id="curs-denumire" name="denumire" class="form-control" [(ngModel)]="curs.denumire"
+                    #denumire="ngModel" required [class.invalid]="denumire.touched && denumire.invalid">
+                  @if (!denumire.valid && denumire.touched) {
+                    <span class="help-block help-block-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="curs-organizator">Organizator</label>
+                  <input type="text" id="curs-organizator" name="organizator" class="form-control"
+                    [(ngModel)]="curs.organizator" #organizator="ngModel">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="curs-pret">Preț</label>
+                  <input type="number" id="curs-pret" name="pret" class="form-control" [(ngModel)]="curs.pret"
+                    #pret="ngModel">
+                </div>
+              </div>
+            </div>
+            <div class="col-7 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="curs-dataInceput">Data Început</label>
+                  <input class="form-control date" data-provide="datepicker" type="date" name="dataInceput"
+                    [ngModel]="curs.dataInceput | date:'yyyy-MM-dd'" (ngModelChange)="curs.dataInceput = $event"
+                    id="curs-dataInceput" #dataInceput="ngModel" />
+                </div>
+                <div class="col-md-6">
+                  <label for="curs-dataSfarsit">Data Sfărșit</label>
+                  <input class="form-control date" data-provide="datepicker" type="date" name="dataSfarsit"
+                    [ngModel]="curs.dataSfarsit | date:'yyyy-MM-dd'" (ngModelChange)="curs.dataSfarsit = $event"
+                    id="curs-dataSfarsit" #dataSfarsit="ngModel" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <div class="row">
+                    <label for="curs-isOnline">Cursul se desfasoara online</label>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <input class="form-check-input big-checkbox" type="checkbox" name="isOnline" id="curs-isOnline"
+                        #isOnline="ngModel" [(ngModel)]="curs.isOnline" />
+                    </div>
+                  </div>
+                </div>
+                @if (curs.isOnline) {
+                  <div class="col-md-6">
+                    <label for="curs-link">Link</label>
+                    <input class="form-control" type="text" name="link" id="curs-link" #link="ngModel"
+                      [(ngModel)]="curs.link" />
+                  </div>
+                }
+                @if (!curs.isOnline) {
+                  <div class="col-md-6">
+                    <label for="curs-link">Locație</label>
+                    <input class="form-control" type="text" name="locatie" id="curs-locatie" #locatie="ngModel"
+                      [(ngModel)]="curs.locatie" />
+                  </div>
+                }
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="curs-firma">Firma</label>
+                  <select class="form-select" [(ngModel)]="curs.idFirma" id="idFirma" name="idFirma" [disabled]="loggedInUserHasFirma">
+                    <option [value]="0">Selectați firma</option>
+                    @for (ddFilter of ddFirmeSelectionList; track ddFilter) {
+                      <option [value]="ddFilter.Value">{{ ddFilter.Text }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-6">
+              <cancel-button (click)="onCancel()"></cancel-button>
+            </div>
+            <div class="col-6">
+              <save-button [disabled]="!cursartimentForm.valid"></save-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

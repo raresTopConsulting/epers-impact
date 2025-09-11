@@ -1,0 +1,54 @@
+<h3>Autentificare</h3>
+
+<div class="row">
+  @if (!isLoginInProgress) {
+    <div class="col-6" style="font-size: small">
+      <section>
+        <form id="login" (ngSubmit)="onLogin()" #loginForm="ngForm">
+          <hr />
+          <div class="form-group p-2">
+            <label for="login-username">Nume Utilizator</label>
+            <input type="email" id="login-username" name="username" class="form-control" [(ngModel)]="user.username"
+              #username="ngModel" required [class.invalid]="username.touched && username.invalid" email />
+            @if (username.touched && username.errors) {
+              <span class="help-block help-block-danger">
+                @if (username.errors['required']) {
+                  Câmpul este obligatoriu!
+                }
+                @if (username.errors['email'] && !username.errors['required'] && username.touched) {
+                  Format email invalid!
+                }
+              </span>
+            }
+          </div>
+          <div class="form-group p-2">
+            <label for="login-password">Parola</label>
+            <input type="password" for="password" id="login-password" class="form-control" name="password"
+              [(ngModel)]="user.password" #password="ngModel" required
+              [class.invalid]="password.touched && password.invalid" />
+            @if (!password.valid && password.touched) {
+              <span class="help-block help-block-danger">Câmpul este
+              obligatoriu!</span>
+            }
+          </div>
+          <div class="form-group p-2">
+            <button type="submit" [disabled]="loginForm.invalid" mat-raised-button color="primary" class="form-control">
+              Intrați în cont
+            </button>
+          </div>
+          <div class="form-group p-2">
+            <a type="button" mat-raised-button color="basic " class="form-control" href="#"
+              [routerLink]="['/forgotPassword']">
+              Am uitat parola
+            </a>
+          </div>
+        </form>
+      </section>
+    </div>
+  }
+  @if (isLoginInProgress) {
+    <div class="col-6">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
+</div>

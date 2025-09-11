@@ -1,0 +1,120 @@
+<div class="container">
+  @if (locatie) {
+    <div class="row">
+      <div class="row p-3 border">
+        <div class="col-12 text-center p-4 border-bottom">
+          @if (!isEditMode) {
+            <h3>Adăugare Locație</h3>
+          }
+          @if (isEditMode) {
+            <h3>Modificare Locație</h3>
+          }
+        </div>
+        <form (ngSubmit)="save()" #locatieForm="ngForm">
+          <input name="id" type="hidden" [(ngModel)]="locatie.id" />
+          <div class="row">
+            <div class="col-5 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="loc-denumire" class="required-label mb-1">Denumire</label>
+                  <input type="text" id="loc-denumire" name="denumire" class="form-control" [(ngModel)]="locatie.denumire"
+                    #denumire="ngModel" ngModel required [class.invalid]="denumire.touched && denumire.invalid">
+                  @if (!denumire.valid && denumire.touched) {
+                    <span class="help-block help-block-danger">Câmpul este
+                    obligatoriu!</span>
+                  }
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label for="loc-adresa" class="mb-1">Adresa</label>
+                  <input type="text" id="loc-adresa" name="adresa" class="form-control" [(ngModel)]="locatie.adresa"
+                    #adresa="ngModel" ngModel />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <label class="mb-1" for="loc-localitate">Localitate</label>
+                  <input type="text" id="loc-localitate" class="form-control" name="localitate" #localitate="ngModel"
+                    [(ngModel)]="locatie.localitate" />
+                </div>
+              </div>
+            </div>
+            <div class="col-7 pt-4">
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label class="mb-1" for="loc-judet">Județ</label>
+                  <select id="loc-judet" class="form-select" name="judet" #judet="ngModel" [(ngModel)]="locatie.judet">
+                    @for (judet of judete; track judet) {
+                      <option [value]="judet.Valoare">{{ judet.Valoare }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="col-md-8">
+                  <label class="mb-1" for="loc-tara">Țara</label>
+                  <input id="loc-tara" class="form-control" type="text" name="tara" #tara="ngModel" ngModel
+                    [(ngModel)]="locatie.tara" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="mb-1" for="loc-dataIn">Data Început</label>
+                  <input id="loc-dataIn" class="form-control date" data-provide="datepicker" type="date"
+                    [ngModel]="locatie.dataIn | date:'yyyy-MM-dd'" (ngModelChange)="locatie.dataIn = $event" name="dataIn"
+                    #dataIn="ngModel" ngModel />
+                </div>
+                <div class="col-md-6">
+                  <label class="mb-1" for="loc-dataSf">Data Sfărșit</label>
+                  <input id="loc-dataSf" class="form-control date" data-provide="datepicker" type="date" name="dataSf"
+                    [ngModel]="locatie.dataSf | date:'yyyy-MM-dd'" (ngModelChange)="locatie.dataSf = $event"
+                    #dataSf="ngModel" ngModel />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="mb-1" for="loc-firma">Firma</label>
+                  <select class="form-select" [(ngModel)]="locatie.idFirma" id="idFirma"
+                    name="idFirma" [disabled]="loggedInUserHasFirma">
+                    <option [value]="0">Selectați firma</option>
+                    @for (ddFilter of ddFirmeSelectionList; track ddFilter) {
+                      <option [value]="ddFilter.Value">{{ ddFilter.Text }}
+                      </option>
+                    }
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <label class="mb-1" for="loc-dataSf">Sediu Principal Firmă</label>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <input type="checkbox" class="form-check-input big-checkbox"
+                        [(ngModel)]="locatie.isSediuPrincipalFirma" name="loc-isSediuFirma" #isSediuFirma="ngModel"
+                        (ngModelChange)="schimbareSediuFirma($event)" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="col-md-12">
+                @if (seSchimbaSediuFirma) {
+                  <p class="warning">Atenție, firma poate avea un singur sediu! Noul sediu va fi
+                  {{locatie.denumire}}, {{locatie.adresa}}.</p>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-6">
+              <cancel-button (click)="onCancel()"></cancel-button>
+            </div>
+            <div class="col-6">
+              <save-button [disabled]="!locatieForm.valid"></save-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

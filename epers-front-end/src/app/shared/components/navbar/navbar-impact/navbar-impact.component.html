@@ -1,0 +1,140 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-impact">
+  <a href="#" class="navbar-brand p-2">
+    <img class="home__image" src="assets/images/impact-logo.png">
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="nav navbar-nav">
+      <li role="presentation" class="nav-item active"><a class="nav-link" routerLink="/">Acasa</a></li>
+      @if (isUserAuth && (userRoleId === 1 || userRoleId ===4)) {
+        <li role="presentation" class="nav-item">
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Utilizatori
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#" [routerLink]="['../utilizatori']">Angajați</a></li>
+            </ul>
+          </div>
+        </li>
+      }
+      @if (isUserAuth && (userRoleId === 1 || userRoleId ===4)) {
+        <li role="presentation" class="nav-item">
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Nomenclatoare
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              @if (isUserAdmin) {
+                <li><a class="dropdown-item" href="#" [routerLink]="['../nomenclatoare/firme']">Firme</a></li>
+              }
+              <li><a class="dropdown-item" href="#" [routerLink]="['../nomenclatoare/posturi']">Posturi</a></li>
+              <li><a class="dropdown-item" href="#" [routerLink]="['../nomenclatoare/skills']">Competențe</a></li>
+              <li><a class="dropdown-item" href="#" [routerLink]="['../nomenclatoare/compartimente']">Compartimente</a></li>
+              <li><a class="dropdown-item" href="#" [routerLink]="['../nomenclatoare/locatii']">Locații</a></li>
+              <li><a class="dropdown-item" href="#" [routerLink]="['../nomenclatoare/divizii']">Linii de Business</a></li>
+              <li><a class="dropdown-item" href="#" [routerLink]="['../nomenclatoare/nomObiective']">Obiective</a></li>
+              <li><a class="dropdown-item" href="#" [routerLink]="['../nomenclatoare/cursuri']">Cursuri</a></li>
+            </ul>
+          </div>
+        </li>
+      }
+      @if (isUserAuth) {
+        <li role="presentation" class="nav-item">
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Obiective
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#" [routerLink]="['../obiective/actuale/' + userId]">Obiective active
+              personale</a></li>
+              <li><a class="dropdown-item" href="#" [routerLink]="['../obiective/istoric/' + userId]">Istoric obiective
+              personale</a>
+            </li>
+            <li><a class="dropdown-item" href="#" [routerLink]="['../obiective/listaSubalterni']">Listă subalterni pt.
+            obiective</a></li>
+          </ul>
+        </div>
+      </li>
+    }
+    @if (isUserAuth) {
+      <li role="presentation" class="nav-item">
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Competențe
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-item navbar-menu-title">Competențe</h6>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="#" [routerLink]="['../evaluare/autoevaluare']">Autoevaluare</a></li>
+            <li><a class="dropdown-item" href="#" [routerLink]="['../evaluare/istoricEvPersonala']">Istoric evaluare</a>
+          </li>
+          <li><a class="dropdown-item" href="#" [routerLink]="['../evaluare/listaSubalterni']">Listă subalterni pt.
+          competențe</a></li>
+        </ul>
+      </div>
+    </li>
+  }
+  @if (isUserAuth) {
+    <li role="presentation" class="nav-item">
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Concluzii
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#" [routerLink]="['../concluzii/listaSubalterni']">Listă subalterni pt.
+          concluzii</a></li>
+          <li><a class="dropdown-item" href="#" [routerLink]="['../concluzii/istoric/' + userId]">Istoric concluzii
+          personale</a></li>
+          @if (userRoleId === 1 || userRoleId === 4) {
+            <li><a class="dropdown-item" href="#" [routerLink]="['../pip/lista-subalterni-calificati-pip']">Listă angajați aprobare PIP</a></li>
+          }
+          <li><a class="dropdown-item" href="#" [routerLink]="['../pip/lista-subalterni-with-pip']">Listă subalterni cu PIP în curs</a></li>
+          <li><a class="dropdown-item" href="#" [routerLink]="['../pip/istoric-lista-subalterni-with-pip']">Listă subalterni participanți în PIP</a></li>
+        </ul>
+      </div>
+    </li>
+  }
+  @if (isUserAuth) {
+    <li role="presentation" class="nav-item">
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Ajutor
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#" [routerLink]="['../ajutor/ghidUtilizareVideo']">Ghid de utilizare
+          video</a></li>
+          <li><a class="dropdown-item" href="#" [routerLink]="['../ajutor/ghidUtilizare']">Ghid de utilizare
+          scris</a></li>
+          <li><a class="dropdown-item" href="#" [routerLink]="['../ajutor/proceduraEvalPerformante']">Procedură
+            evaluare
+          performanțe</a></li>
+          <li><a class="dropdown-item" href="#" [routerLink]="['../ajutor/ghidDezvoltare']">Ghid de dezvoltare
+          competențe</a></li>
+          <li><a class="dropdown-item" href="#" [routerLink]="['../ajutor/dictionareExplicative']">Dicționare
+            explicative
+          competențe</a></li>
+          <li><a class="dropdown-item" href="#" [routerLink]="['../ajutor/setareaEvaluareObiectivelor']">Setarea și
+            evaluarea
+          obiectivelor unui subaltern</a></li>
+          <li><a class="dropdown-item" href="#" [routerLink]="['../ajutor/proceduraEvaluare']">Procedura si harta de
+          proces</a></li>
+        </ul>
+      </div>
+    </li>
+  }
+  <li role="presentation" class="nav-item">
+    <user-profile></user-profile>
+  </li>
+</ul>
+</div>
+</nav>

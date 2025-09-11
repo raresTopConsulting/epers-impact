@@ -1,0 +1,40 @@
+﻿<Properties StartupConfiguration="{F0F808EF-92C2-4A27-B329-B054B3DCED32}|https">
+  <MonoDevelop.Ide.Workbench ActiveDocument="EpersBackend/Services/Evaluare/EvaluareService.cs">
+    <Files>
+      <File FileName="Epers.Models/Evaluare/EvaluareListaSubalteni.cs" />
+      <File FileName="EpersBackend/Services/Evaluare/EvaluareService.cs" Line="243" Column="95" />
+      <File FileName="EpersBackend/appsettings.json" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="EpersBackend" expanded="True" selected="True">
+            <Node name="Epers.DataAccess" expanded="True" />
+            <Node name="Epers.Models" expanded="True">
+              <Node name="Evaluare" expanded="True" />
+              <Node name="Nomenclatoare" expanded="True" />
+            </Node>
+            <Node name="EpersBackend" expanded="True">
+              <Node name="Services" expanded="True">
+                <Node name="Evaluare" expanded="True" />
+                <Node name="Header" expanded="True" />
+                <Node name="Nomenclatoare" expanded="True" />
+                <Node name="ObiectivService" expanded="True" />
+                <Node name="PDF" expanded="True" />
+                <Node name="Sincron" expanded="True" />
+                <Node name="Users" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.EpersBackend PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/Epers.Models.csproj",
+      "projectUniqueName": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.Models/Epers.Models.csproj",
       "projectName": "Epers.Models",
-      "projectPath": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/Epers.Models.csproj",
+      "projectPath": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.Models/Epers.Models.csproj",
       "packagesPath": "/Users/rarespop-moldovan/.nuget/packages/",
-      "outputPath": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/",
+      "outputPath": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.Models/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/rarespop-moldovan/.nuget/NuGet/NuGet.Config"

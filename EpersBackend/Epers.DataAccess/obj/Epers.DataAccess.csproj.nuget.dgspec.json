@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/Epers.DataAccess.csproj": {}
+    "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.DataAccess/Epers.DataAccess.csproj": {}
   },
   "projects": {
-    "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/Epers.DataAccess.csproj": {
+    "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.DataAccess/Epers.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/Epers.DataAccess.csproj",
+        "projectUniqueName": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.DataAccess/Epers.DataAccess.csproj",
         "projectName": "Epers.DataAccess",
-        "projectPath": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/Epers.DataAccess.csproj",
+        "projectPath": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.DataAccess/Epers.DataAccess.csproj",
         "packagesPath": "/Users/rarespop-moldovan/.nuget/packages/",
-        "outputPath": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.DataAccess/obj/",
+        "outputPath": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.DataAccess/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/rarespop-moldovan/.nuget/NuGet/NuGet.Config"
@@ -26,8 +26,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/Epers.Models.csproj": {
-                "projectPath": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/Epers.Models.csproj"
+              "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.Models/Epers.Models.csproj": {
+                "projectPath": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.Models/Epers.Models.csproj"
               }
             }
           }
@@ -77,14 +77,14 @@
         }
       }
     },
-    "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/Epers.Models.csproj": {
+    "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.Models/Epers.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/Epers.Models.csproj",
+        "projectUniqueName": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.Models/Epers.Models.csproj",
         "projectName": "Epers.Models",
-        "projectPath": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/Epers.Models.csproj",
+        "projectPath": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.Models/Epers.Models.csproj",
         "packagesPath": "/Users/rarespop-moldovan/.nuget/packages/",
-        "outputPath": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/Epers.Models/obj/",
+        "outputPath": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/Epers.Models/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/rarespop-moldovan/.nuget/NuGet/NuGet.Config"

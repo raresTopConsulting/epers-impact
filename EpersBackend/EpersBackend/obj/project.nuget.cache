@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "G4ICNe1I11E=",
+  "dgSpecHash": "LEvrpwcXD/8=",
   "success": true,
-  "projectFilePath": "/Users/rarespop-moldovan/TopConsultingGit/epers/EpersBackend/EpersBackend/EpersBackend.csproj",
+  "projectFilePath": "/Users/rarespop-moldovan/TopConsultingGit/epers-impact/EpersBackend/EpersBackend/EpersBackend.csproj",
   "expectedPackageFiles": [
     "/Users/rarespop-moldovan/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/rarespop-moldovan/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

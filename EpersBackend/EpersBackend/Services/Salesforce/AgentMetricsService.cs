@@ -43,7 +43,6 @@ namespace EpersBackend.Services.Salesforce
 
             if (apiResponse == null)
                 return 0;
-
             
             int insertCount = 0;
             foreach (var agent in apiResponse.Agents)

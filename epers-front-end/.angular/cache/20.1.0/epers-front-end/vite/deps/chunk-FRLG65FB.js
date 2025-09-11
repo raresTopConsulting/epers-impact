@@ -10,6 +10,13 @@ import {
   coerceCssPixelValue
 } from "./chunk-KAPXTIMC.js";
 import {
+  ESCAPE,
+  _IdGenerator,
+  _getEventTarget,
+  coerceArray,
+  hasModifierKey
+} from "./chunk-XOB4HPCF.js";
+import {
   ScrollDispatcher,
   ScrollingModule,
   ViewportRuler
@@ -17,13 +24,6 @@ import {
 import {
   supportsScrollBehavior
 } from "./chunk-EOFW2REK.js";
-import {
-  ESCAPE,
-  _IdGenerator,
-  _getEventTarget,
-  coerceArray,
-  hasModifierKey
-} from "./chunk-IVRSRXSJ.js";
 import {
   BidiModule,
   Directionality
@@ -2894,4 +2894,4 @@ export {
   createOverlayRef,
   OverlayModule
 };
-//# sourceMappingURL=chunk-6NR7P4VX.js.map
+//# sourceMappingURL=chunk-FRLG65FB.js.map

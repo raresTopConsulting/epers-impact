@@ -3,6 +3,9 @@ import {
 } from "./chunk-64FLZIBI.js";
 import "./chunk-KAPXTIMC.js";
 import {
+  MatCommonModule
+} from "./chunk-XOB4HPCF.js";
+import {
   ScrollingModule,
   ViewportRuler
 } from "./chunk-YKIW7WNJ.js";
@@ -14,9 +17,6 @@ import {
   isDataSource
 } from "./chunk-PNSNFV3Y.js";
 import "./chunk-EOFW2REK.js";
-import {
-  MatCommonModule
-} from "./chunk-IVRSRXSJ.js";
 import {
   Directionality
 } from "./chunk-QLXX37O3.js";

@@ -907,6 +907,14 @@ var ObserversModule = class _ObserversModule {
   }], null, null);
 })();
 
+// node_modules/@angular/cdk/fesm2022/keycodes.mjs
+function hasModifierKey(event, ...modifiers) {
+  if (modifiers.length) {
+    return modifiers.some((modifier) => event[modifier]);
+  }
+  return event.altKey || event.shiftKey || event.ctrlKey || event.metaKey;
+}
+
 // node_modules/@angular/cdk/fesm2022/id-generator-LuoRZSid.mjs
 var counters = {};
 var _IdGenerator = class __IdGenerator {
@@ -941,14 +949,6 @@ var _IdGenerator = class __IdGenerator {
     }]
   }], null, null);
 })();
-
-// node_modules/@angular/cdk/fesm2022/keycodes.mjs
-function hasModifierKey(event, ...modifiers) {
-  if (modifiers.length) {
-    return modifiers.some((modifier) => event[modifier]);
-  }
-  return event.altKey || event.shiftKey || event.ctrlKey || event.metaKey;
-}
 
 // node_modules/@angular/cdk/fesm2022/typeahead-9ZW4Dtsf.mjs
 var DEFAULT_TYPEAHEAD_DEBOUNCE_INTERVAL_MS = 200;
@@ -3130,10 +3130,10 @@ export {
   InteractivityChecker,
   FocusTrapFactory,
   A11yModule,
-  _IdGenerator,
   hasModifierKey,
+  _IdGenerator,
   FocusKeyManager,
   AriaDescriber,
   MatCommonModule
 };
-//# sourceMappingURL=chunk-IVRSRXSJ.js.map
+//# sourceMappingURL=chunk-XOB4HPCF.js.map

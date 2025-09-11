@@ -38,7 +38,7 @@ namespace EpersBackend.Controllers.ExternalApis
             return Ok(agentMetrice);
         }
 
-        [HttpPost("SyncAll")]
+        [HttpPost("Agent/SyncAll")]
         public async Task<IActionResult> SyncAllAgentsWithSalesfoce()
         {
             var countUpdatedAgents = await _agentMetricsService.SyncAgentMetricsFromSalesforce();

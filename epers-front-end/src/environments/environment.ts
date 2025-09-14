@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: "http://localhost:7233/api",
-  companyName: "demo",
+  companyName: "Impact",
   displayUserSetup: true,
   displayGenerarePdfExcelEvaluari: true,
   usesOldUserTalbe: false

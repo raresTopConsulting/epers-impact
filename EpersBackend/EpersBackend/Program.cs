@@ -15,6 +15,7 @@ using EpersBackend.Services.PIP;
 using EpersBackend.Services.Salesforce;
 using EpersBackend.Services.Sincron;
 using EpersBackend.Services.Users;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -107,6 +108,9 @@ builder.Services.AddSwaggerGen(options =>
     //options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddHangfireServer();
+
 // Authenticaion
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -179,7 +183,17 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseHangfireDashboard();
+app.UseHangfireServer();
+
 app.MapControllers();
+
+// Schedule the job to run daily
+RecurringJob.AddOrUpdate<IAgentMetricsService>(
+    "sync-agent-metrics",
+    service => service.SyncAgentMetricsFromSalesforce(),
+    Cron.Daily
+);
 
 app.Use(async (context, next) =>
 {

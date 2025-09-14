@@ -75,6 +75,7 @@ namespace EpersBackend.Controllers.User
         }
 
         [HttpPost("refresh-token")]
+        [Authorize]
         public IActionResult RefreshToken()
         {
             var oldRefreshToken = Request.Cookies["RefreshToken"];

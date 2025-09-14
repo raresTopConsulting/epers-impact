@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EpersBackend.Controllers.ExternalApis
 {
     [Route("api/[controller]")]
-    // [Authorize]
+    [Authorize]
     [ApiController]
 
     public class SalesforceController : ControllerBase

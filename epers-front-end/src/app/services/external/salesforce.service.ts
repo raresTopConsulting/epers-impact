@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NCompartimentDisplay, NCompartimente } from 'src/app/models/nomenclatoare/NCompartimente';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,7 +15,7 @@ constructor(private httpClient: HttpClient) {}
     return this.httpClient.get<number>(this.baseUrl + "/Salesforce/Agent/SyncAll");
   }
 
-  public sync(compartiment: NCompartimente) {
-    return this.httpClient.put<NCompartimente>(this.baseUrl + "/Salesforce/Agent/SyncAll/", compartiment);
-  }
+  // public sync() {
+  //   return this.httpClient.post<AgentMetrics>(this.baseUrl + "/Salesforce/Agent/SyncAll/", {});
+  // }
 }

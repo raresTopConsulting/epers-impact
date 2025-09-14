@@ -5,7 +5,9 @@ using Epers.Models.Obiectiv;
 using Epers.Models.Pagination;
 using Epers.Models.Users;
 using EpersBackend.Services.Email;
+using EpersBackend.Services.Nomenclatoare;
 using EpersBackend.Services.Pagination;
+using EpersBackend.Services.Salesforce;
 using EpersBackend.Services.Users;
 
 namespace EpersBackend.Services.ObiectivService
@@ -19,6 +21,7 @@ namespace EpersBackend.Services.ObiectivService
         private readonly IPagination _paginationService;
         private readonly IConfiguration _configuration;
         private readonly IEmailSendService _emailSendService;
+        private readonly IEfAgentMetricsRepository _agentMetricsRepo;
 
         public ObiectiveService(EpersContext epersContext,
             ILogger<Evaluare_competente> logger,
@@ -26,6 +29,7 @@ namespace EpersBackend.Services.ObiectivService
             IUserService userService,
             IPagination paginationService,
             IConfiguration configuration,
+            IEfAgentMetricsRepository agentMetricsRepo,
             IEmailSendService emailSendService)
         {
             _epersContext = epersContext;
@@ -35,6 +39,7 @@ namespace EpersBackend.Services.ObiectivService
             _paginationService = paginationService;
             _configuration = configuration;
             _emailSendService = emailSendService;
+            _agentMetricsRepo = agentMetricsRepo;
         }
 
         public void Add(SetareObiective setareObiective, int[]? idAngajatiSelectati = null)
@@ -66,20 +71,7 @@ namespace EpersBackend.Services.ObiectivService
                         obieciv.UpdateDate = DateTime.Now;
                         obieciv.Id = 0;
 
-                        try
-                        {
-                            using (var dbTransaction = _epersContext.Database.BeginTransaction())
-                            {
-                                _epersContext.Obiective.Add(obieciv);
-                                _epersContext.SaveChanges();
-                                dbTransaction.Commit();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.LogError(ex, "Obiective: Add");
-                            throw;
-                        }
+                        InsertObiectiv(obieciv);
                     }
                 }
 
@@ -99,20 +91,7 @@ namespace EpersBackend.Services.ObiectivService
                         obieciv.UpdateDate = DateTime.Now;
                         obieciv.Id = 0;
 
-                        try
-                        {
-                            using (var dbTransaction = _epersContext.Database.BeginTransaction())
-                            {
-                                _epersContext.Obiective.Add(obieciv);
-                                _epersContext.SaveChanges();
-                                dbTransaction.Commit();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.LogError(ex, "Obiective: Add");
-                            throw;
-                        }
+                        InsertObiectiv(obieciv);
                     }
                 }
             }
@@ -545,81 +524,150 @@ namespace EpersBackend.Services.ObiectivService
             };
         }
 
-//         public async Task SyncImpactSalesForceWithEpers()
-//         {
-//             var impactSalesForceEndpoint = _config["Impact:SalesForceApiUrl"] ?? throw new ArgumentNullException("Impact:SalesForceApiUrl not configured");
-//             var impactSalesForceToken = _config["Impact:SalesForceApiToken"] ?? throw new InvalidOperationException("Impact:SalesForceApiToken not configured");
+// Move this logic to a separate service for sync with obiective
+        public int GetSalesforceDataInObiective()
+        {
+            var agentMetrics = _agentMetricsRepo.GetAll();
+            int countObAddedOrUpdated = 0;
+            var obiectiveList = new List<Obiective>();
 
-//             _httpClient.BaseAddress = new Uri(impactSalesForceEndpoint);
-//             _httpClient.DefaultRequestHeaders.Authorization =
-//           new AuthenticationHeaderValue("Bearer", impactSalesForceToken);
+            foreach (var agentMetric in agentMetrics)
+            {
+                if (int.TryParse(agentMetric.IdAgent, out int idAngajat))
+                {
+                    var user = _userService.Get(idAngajat);
+                    // 4. if not found -> create it
+                    // 5. if found -> update it
 
-//             try
-//             {
-//                 var salesForceResp = await _httpClient.GetAsync(impactSalesForceEndpoint).ConfigureAwait(true);
-//                 salesForceResp.EnsureSuccessStatusCode();
-//                 var salesForceContent = await salesForceResp.Content.ReadAsStringAsync().ConfigureAwait(true);
-//                 var salesForceData = System.Text.Json.JsonSerializer.Deserialize<List<SalesForceImpactModel>>(salesForceContent);
+                    var obiectiveLeadRamase = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Leaduri Ramase");
+                    var obiectiveLeadTotal = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Leaduri Total");
+                    var obiectiveTelefoane = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Telefoane");
+                    var obiectiveMesaje = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Mesaje");
+                    var obiectiveIntalniri = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Intalniri");
 
-//                 var obiectiveList = new List<Obiective>();
+                    if (obiectiveLeadRamase != null)
+                    {
+                        InsertObiectiv(obiectiveLeadRamase);
+                        countObAddedOrUpdated++;
+                    }
+                    if (obiectiveLeadTotal != null)
+                    {
+                        InsertObiectiv(obiectiveLeadTotal);
+                        countObAddedOrUpdated++;
+                    }
+                    if (obiectiveTelefoane != null)
+                    {
+                        InsertObiectiv(obiectiveTelefoane);
+                        countObAddedOrUpdated++;
+                    }
+                    if (obiectiveMesaje != null)
+                    {
+                        InsertObiectiv(obiectiveMesaje);
+                        countObAddedOrUpdated++;
+                    }
+                    if (obiectiveIntalniri != null)
+                    {
+                        InsertObiectiv(obiectiveIntalniri);
+                        countObAddedOrUpdated++;
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Nu s-a gasit angajat cu Id {agentMetric.IdAgent} din Salesforce in Epers.");
+                }
 
-//                 // 1. Prepare the mapping between metric names and NObiective IDs
-//                 var metricMap = new Dictionary<string, (int Id, Func<Metrics, int> ValueSelector)>
-// {
-//     { "leaduri", (3007, m => m.LeaduriTotal) },
-//     { "telefoane", (3008, m => m.Telefoane) },
-//     { "mesaje", (3009, m => m.Mesaje) },
-//     { "întâlniri", (3010, m => m.Intânlniri) },
-//     { "revizionari", (3011, m => m.Revizionări) },
-//     { "semnariNoi", (3012, m => m.SemnăriNoi) },
-//     { "valoareSemnariNoi", (3013, m => m.ValoareSemnăriNoi) },
-//     { "cvcCount", (3014, m => m.CvcCount) },
-//     { "cvcValue", (3016, m => m.CvcValue) }
-// };
 
-//                 // 2. Iterate through each agent and metric
-//                 foreach (var agent in salesForceData)
-//                 {
-//                     foreach (var metric in metricMap)
-//                     {
-//                         var value = metric.Value.ValueSelector(agent.Metrics);
 
-//                         var obiectiv = new Obiective
-//                         {
-//                             Denumire = metric.Key,
-//                             IdAngajat = agent.AgentId,
-//                             DataIn = agent.Start,
-//                             DataSf = agent.End,
-//                             ValoareRealizata = value.ToString(),
-//                             UpdateDate = agent.SyncedAt.UtcDateTime,
-//                             IdPost = null, // leave empty if not available
-//                             IdCompartiment = null, // leave empty if not available
-//                             IdFirma = null, // or set if you have it
-//                             IsActive = true,
-//                             // Set other properties as needed
-//                         };
+                // var obiectiv = new Obiective
+                // {
+                //     IdAngajat = agentMetric.IdAgent,
+                //     MatricolaAngajat = _userService.Get(idAngajat).Matricola,
+                //     Denumire = agentMetric.
+                //     Descriere = "Sincronizare date din Salesforce",
+                //     DataIn = agentMetric.SyncedAt,
+                //     DataSf = agentMetric.SyncedAt,
+                //     ValTarget = 0,
+                //     ValoareRealizata = $"Leads Total: {agentMetric.LeaduriTotal}, Leads Ramase: {agentMetric.LeaduriRamase}, Telefoane: {agentMetric.Telefoane}, Mesaje: {agentMetric.Mesaje}, Intalniri: {agentMetric.Intalniri}",
+                //     IsRealizat = true,
+                //     Frecventa = "Odata",
+                //     IsActive = false,
+                //     IdCompartiment = null,
+                //     IdPost = null,
+                //     IdSuperior = null,
+                //     MatricolaSuperior = null,
+                //     IdFirma = null,
+                //     CreateId = 0,
+                //     CreateDate = DateTime.Now,
+                //     UpdateId = 0,
+                //     UpdateDate = DateTime.Now
+                // };
 
-//                         // Insert obiectiv into your database context
-//                         dbContext.Obiective.Add(obiectiv);
-//                     }
-//                 }
+                obiectiveList.Add(obiectiv);
 
-//                 // 3. Save changes to the database
-//                 dbContext.SaveChanges(
+            }
 
-//             }
-//             catch (HttpRequestException httpEx)
-//             {
-//                 _logger.LogError(httpEx, "Error connecting to SalesForce Impact API");
-//                 throw;
-//             }
-//             catch (Exception ex)
-//             {
-//                 _logger.LogError(ex, "General error in SyncImpactSalesForceWithEpers");
-//                 throw;
-//             }
 
-//         }
+        }
+
+        public Obiective? GetObActiveForSalesforce(int idAngajat, DateTime dataIn, string? denumire = null)
+        {
+            Obiective? obiectiv = null;
+
+            obiectiv = _epersContext.Obiective.FirstOrDefault(ob => ob.IdAngajat == idAngajat.ToString()
+                && ob.DataIn.HasValue && ob.DataIn.Value.Date == dataIn.Date
+                && ob.Denumire == denumire
+                && ob.IsActive == true);
+
+            return obiectiv;
+        }
+
+        private void InsertObiectiv(Obiective obieciv)
+        {
+            try
+            {
+                using (var dbTransaction = _epersContext.Database.BeginTransaction())
+                {
+                    _epersContext.Obiective.Add(obieciv);
+                    _epersContext.SaveChanges();
+                    dbTransaction.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Obiective: Add");
+                throw;
+            }
+        }
+
+        private void InsertOrUpdateObiectiv(Obiective obieciv)
+        {
+            try
+            {
+                using (var dbTransaction = _epersContext.Database.BeginTransaction())
+                {
+                    var existingObiectiv = _epersContext.Obiective.FirstOrDefault(ob => ob.Id == obieciv.Id);
+                    if (existingObiectiv != null)
+                    {
+                        // Update existing record
+                        _epersContext.Entry(existingObiectiv).CurrentValues.SetValues(obieciv);
+                    }
+                    else
+                    {
+                        // Insert new record
+                        _epersContext.Obiective.Add(obieciv);
+                    }
+
+                    _epersContext.SaveChanges();
+                    dbTransaction.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Obiective: InsertOrUpdate");
+                throw;
+            }
+        }
+
     }
 }
 

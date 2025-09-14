@@ -26,7 +26,9 @@ namespace EpersBackend.Services.ObiectivService
 
         void Evaluare(Obiective[] obiective);
 
-        // Task SyncImpactSalesForceWithEpers();
+        int GetSalesforceDataInObiective();
+
+        Obiective? GetObActiveForSalesforce(int idAngajat, DateTime dataIn, string denumire);
     }
 }
 

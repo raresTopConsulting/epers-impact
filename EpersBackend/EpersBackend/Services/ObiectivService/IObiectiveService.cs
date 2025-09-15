@@ -1,5 +1,4 @@
 ﻿using Epers.Models.Obiectiv;
-using Epers.Models.Users;
 
 namespace EpersBackend.Services.ObiectivService
 {
@@ -23,12 +22,11 @@ namespace EpersBackend.Services.ObiectivService
         ObiectiveListaSubalterniDisplayModel GetListaSubalterniPaginated(int currentPage, int itemsPerPage, int loggedInUserFirma,
             string? matricolaSuperior = null, string? filter = null);
 
-
         void Evaluare(Obiective[] obiective);
 
-        int GetSalesforceDataInObiective();
-
-        Obiective? GetObActiveForSalesforce(int idAngajat, DateTime dataIn, string denumire);
+        void InsertObiectiv(Obiective obieciv);
+        void UpdateObiectiv(Obiective obieciv);
+        void InsertOrUpdateObiectiv(Obiective obieciv);
     }
 }
 

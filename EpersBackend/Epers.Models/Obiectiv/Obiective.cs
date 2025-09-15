@@ -61,7 +61,7 @@ namespace Epers.Models.Obiectiv
 
         public int? IdFirma { get; set; }
         
-        public bool? IsInDesfasurare { get; set; }
+        // public bool? IsInDesfasurare { get; set; }
     }
 }
 

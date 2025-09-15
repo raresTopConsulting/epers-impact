@@ -5,7 +5,6 @@ using Epers.Models.Obiectiv;
 using Epers.Models.Pagination;
 using Epers.Models.Users;
 using EpersBackend.Services.Email;
-using EpersBackend.Services.Nomenclatoare;
 using EpersBackend.Services.Pagination;
 using EpersBackend.Services.Salesforce;
 using EpersBackend.Services.Users;
@@ -524,104 +523,7 @@ namespace EpersBackend.Services.ObiectivService
             };
         }
 
-// Move this logic to a separate service for sync with obiective
-        public int GetSalesforceDataInObiective()
-        {
-            var agentMetrics = _agentMetricsRepo.GetAll();
-            int countObAddedOrUpdated = 0;
-            var obiectiveList = new List<Obiective>();
-
-            foreach (var agentMetric in agentMetrics)
-            {
-                if (int.TryParse(agentMetric.IdAgent, out int idAngajat))
-                {
-                    var user = _userService.Get(idAngajat);
-                    // 4. if not found -> create it
-                    // 5. if found -> update it
-
-                    var obiectiveLeadRamase = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Leaduri Ramase");
-                    var obiectiveLeadTotal = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Leaduri Total");
-                    var obiectiveTelefoane = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Telefoane");
-                    var obiectiveMesaje = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Mesaje");
-                    var obiectiveIntalniri = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce Intalniri");
-
-                    if (obiectiveLeadRamase != null)
-                    {
-                        InsertObiectiv(obiectiveLeadRamase);
-                        countObAddedOrUpdated++;
-                    }
-                    if (obiectiveLeadTotal != null)
-                    {
-                        InsertObiectiv(obiectiveLeadTotal);
-                        countObAddedOrUpdated++;
-                    }
-                    if (obiectiveTelefoane != null)
-                    {
-                        InsertObiectiv(obiectiveTelefoane);
-                        countObAddedOrUpdated++;
-                    }
-                    if (obiectiveMesaje != null)
-                    {
-                        InsertObiectiv(obiectiveMesaje);
-                        countObAddedOrUpdated++;
-                    }
-                    if (obiectiveIntalniri != null)
-                    {
-                        InsertObiectiv(obiectiveIntalniri);
-                        countObAddedOrUpdated++;
-                    }
-                }
-                else
-                {
-                    throw new Exception($"Nu s-a gasit angajat cu Id {agentMetric.IdAgent} din Salesforce in Epers.");
-                }
-
-
-
-                // var obiectiv = new Obiective
-                // {
-                //     IdAngajat = agentMetric.IdAgent,
-                //     MatricolaAngajat = _userService.Get(idAngajat).Matricola,
-                //     Denumire = agentMetric.
-                //     Descriere = "Sincronizare date din Salesforce",
-                //     DataIn = agentMetric.SyncedAt,
-                //     DataSf = agentMetric.SyncedAt,
-                //     ValTarget = 0,
-                //     ValoareRealizata = $"Leads Total: {agentMetric.LeaduriTotal}, Leads Ramase: {agentMetric.LeaduriRamase}, Telefoane: {agentMetric.Telefoane}, Mesaje: {agentMetric.Mesaje}, Intalniri: {agentMetric.Intalniri}",
-                //     IsRealizat = true,
-                //     Frecventa = "Odata",
-                //     IsActive = false,
-                //     IdCompartiment = null,
-                //     IdPost = null,
-                //     IdSuperior = null,
-                //     MatricolaSuperior = null,
-                //     IdFirma = null,
-                //     CreateId = 0,
-                //     CreateDate = DateTime.Now,
-                //     UpdateId = 0,
-                //     UpdateDate = DateTime.Now
-                // };
-
-                obiectiveList.Add(obiectiv);
-
-            }
-
-
-        }
-
-        public Obiective? GetObActiveForSalesforce(int idAngajat, DateTime dataIn, string? denumire = null)
-        {
-            Obiective? obiectiv = null;
-
-            obiectiv = _epersContext.Obiective.FirstOrDefault(ob => ob.IdAngajat == idAngajat.ToString()
-                && ob.DataIn.HasValue && ob.DataIn.Value.Date == dataIn.Date
-                && ob.Denumire == denumire
-                && ob.IsActive == true);
-
-            return obiectiv;
-        }
-
-        private void InsertObiectiv(Obiective obieciv)
+        public void InsertObiectiv(Obiective obieciv)
         {
             try
             {
@@ -639,7 +541,25 @@ namespace EpersBackend.Services.ObiectivService
             }
         }
 
-        private void InsertOrUpdateObiectiv(Obiective obieciv)
+        public void UpdateObiectiv(Obiective obieciv)
+        {
+            try
+            {
+                using (var dbTransaction = _epersContext.Database.BeginTransaction())
+                {
+                    _epersContext.Obiective.Update(obieciv);
+                    _epersContext.SaveChanges();
+                    dbTransaction.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Obiective: Add");
+                throw;
+            }
+        }
+
+        public void InsertOrUpdateObiectiv(Obiective obieciv)
         {
             try
             {

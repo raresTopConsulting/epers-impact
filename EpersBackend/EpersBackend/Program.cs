@@ -94,6 +94,7 @@ builder.Services.AddScoped<IConversionHelper, ConversionHelper>();
 // Salesforce
 builder.Services.AddScoped<IEfAgentMetricsRepository, EfAgentMetricsRepository>();
 builder.Services.AddScoped<IAgentMetricsService, AgentMetricsService>();
+builder.Services.AddScoped<IObiectiveSalesforceIntegrationService, ObiectiveSalesforceIntegrationService>();
 
 // Bearer Token Swager
 builder.Services.AddSwaggerGen(options =>
@@ -192,7 +193,12 @@ app.MapControllers();
 RecurringJob.AddOrUpdate<IAgentMetricsService>(
     "sync-agent-metrics",
     service => service.SyncAgentMetricsFromSalesforce(),
-    Cron.Daily
+    Cron.Hourly
+);
+RecurringJob.AddOrUpdate<IObiectiveSalesforceIntegrationService>(
+    "get-salesforce-data-in-obiective",
+    service => service.GetSalesforceDataInObiective(),
+    Cron.Minutely
 );
 
 app.Use(async (context, next) =>

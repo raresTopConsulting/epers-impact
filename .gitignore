@@ -1,0 +1,95 @@
+# ========================
+# .NET / Visual Studio
+# ========================
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+*.user
+*.userosscache
+*.suo
+*.swp
+*.cache
+*.config
+*.dbmdl
+*.bak
+*.ncb
+*.opendb
+*.VC.db
+*.vscode
+*.vs/
+.vscode/
+_ReSharper*/
+[Tt]est[Rr]esult*/
+*.coverage
+*.coveragexml
+*.CodeCoverage
+*.DS_Store
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# Dotnet artifacts
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.log
+*.vspscc
+*.vssscc
+*.scc
+*.tmp
+*.pid
+*.svclog
+*.log
+*.db
+
+# Publish
+publish/
+wwwroot/
+*.Publish.xml
+
+# User Secrets
+secrets.json
+
+# ========================
+# Angular
+# ========================
+node_modules/
+dist/
+tmp/
+temp/
+out-tsc/
+.angular/
+.angular/cache/
+
+# Environment files
+src/environments/environment.*.ts
+
+# NPM/Yarn logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ========================
+# IDE / OS Specific
+# ========================
+*.idea/
+*.iml
+*.orig
+*.rej
+*.sw?
+*.swo
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*.stackdump
+*.pyc
+*.pyo

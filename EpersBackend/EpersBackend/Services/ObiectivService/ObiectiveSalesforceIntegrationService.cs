@@ -54,7 +54,7 @@ namespace EpersBackend.Services.ObiectivService
 
                 foreach (var (denumire, value) in obiectivTypes)
                 {
-                    var existingObiectiv = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, denumire);
+                    var existingObiectiv = GetObActiveForSalesforce(user.Id, denumire);
                     if (existingObiectiv != null)
                     {
                         existingObiectiv.ValTarget = (decimal?)value ?? null;
@@ -74,12 +74,12 @@ namespace EpersBackend.Services.ObiectivService
             return countObAddedOrUpdated;
         }
 
-        public Obiective? GetObActiveForSalesforce(int idAngajat, DateTime dataIn, string? denumire = null)
+        public Obiective? GetObActiveForSalesforce(int idAngajat, string? denumire = null)
         {
             Obiective? obiectiv = null;
 
             obiectiv = _epersContext.Obiective.FirstOrDefault(ob => ob.IdAngajat == idAngajat.ToString()
-                && ob.DataIn.HasValue && ob.DataIn.Value.Date.Day == dataIn.Date.Day && ob.DataIn.Value.Date.Month == dataIn.Date.Month && ob.DataIn.Value.Date.Year == dataIn.Date.Year
+                && ob.DataSf.HasValue && ob.DataSf.Value.Date >= DateTime.UtcNow.Date
                 && ob.Denumire == denumire
                 && ob.IsActive == true);
 

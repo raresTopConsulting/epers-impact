@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EpersBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+af43e5eb3f1e83dedc465e105b5bc3613efcba40")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2a1782594a3fcc76deb46ba7650e14a4a370a2cf")]
 [assembly: System.Reflection.AssemblyProductAttribute("EpersBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EpersBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

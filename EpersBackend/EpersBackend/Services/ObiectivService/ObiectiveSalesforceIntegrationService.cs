@@ -34,87 +34,41 @@ namespace EpersBackend.Services.ObiectivService
             foreach (var agentMetric in agentMetrics)
             {
                 var user = _userService.Get(agentMetric.Email);
-
-                if (user != null)
-                {
-                    var obiectiveLeadRamase = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce: Leaduri Ramase");
-                    var obiectiveLeadTotal = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce: Leaduri Total");
-                    var obiectiveTelefoane = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce: Telefoane");
-                    var obiectiveMesaje = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce: Mesaje");
-                    var obiectiveIntalniri = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, "Salesforce: Intalniri");
-
-                    if (obiectiveLeadRamase != null)
-                    {
-                        _obiectiveService.UpdateObiectiv(obiectiveLeadRamase);
-                        countObAddedOrUpdated++;
-                    }
-                    else if (obiectiveLeadRamase == null)
-                    {
-                        var newObiectiv = BuildObiectiveBase(user, agentMetric);
-                        newObiectiv.Denumire = "Salesforce: Leaduri Ramase";
-                        newObiectiv.ValTarget = agentMetric.LeaduriRamase;
-                        _obiectiveService.InsertObiectiv(newObiectiv);
-                        countObAddedOrUpdated++;
-                    }
-                    if (obiectiveLeadTotal != null)
-                    {
-                        _obiectiveService.UpdateObiectiv(obiectiveLeadTotal);
-                        countObAddedOrUpdated++;
-                    }
-                    else if (obiectiveLeadTotal == null)
-                    {
-                        var newObiectiv = BuildObiectiveBase(user, agentMetric);
-                        newObiectiv.Denumire = "Salesfore: Leaduri Total";
-                        newObiectiv.ValTarget = agentMetric.LeaduriTotal;
-                        _obiectiveService.InsertObiectiv(newObiectiv);
-                        countObAddedOrUpdated++;
-                    }
-                    if (obiectiveTelefoane != null)
-                    {
-                        _obiectiveService.UpdateObiectiv(obiectiveTelefoane);
-                        countObAddedOrUpdated++;
-                    }
-                    else if (obiectiveTelefoane == null)
-                    {
-                        var newObiectiv = BuildObiectiveBase(user, agentMetric);
-                        newObiectiv.Denumire = "Salesforce: Telefoane";
-                        newObiectiv.ValTarget = agentMetric.Telefoane;
-                        _obiectiveService.InsertObiectiv(newObiectiv);
-                        countObAddedOrUpdated++;
-                    }
-                    if (obiectiveMesaje != null)
-                    {
-                        _obiectiveService.UpdateObiectiv(obiectiveMesaje);
-                        countObAddedOrUpdated++;
-                    }
-                    else if (obiectiveMesaje == null && agentMetric.Mesaje > 0)
-                    {
-                        var newObiectiv = BuildObiectiveBase(user, agentMetric);
-
-                        newObiectiv.Denumire = "Salesforce: Mesaje";
-                        newObiectiv.ValTarget = agentMetric.Mesaje;
-                        _obiectiveService.InsertObiectiv(newObiectiv);
-                        countObAddedOrUpdated++;
-                    }
-                    if (obiectiveIntalniri != null)
-                    {
-                        _obiectiveService.UpdateObiectiv(obiectiveIntalniri);
-                        countObAddedOrUpdated++;
-                    }
-                    else if (obiectiveIntalniri == null && agentMetric.Intalniri > 0)
-                    {
-                        var newObiectiv = BuildObiectiveBase(user, agentMetric);
-
-                        newObiectiv.Denumire = "Salesforce: Intalniri";
-                        newObiectiv.ValTarget = agentMetric.Intalniri;
-                        _obiectiveService.InsertObiectiv(newObiectiv);
-                        countObAddedOrUpdated++;
-                    }
-                }
-
-                else
+                if (user == null)
                 {
                     throw new Exception($"Nu s-a gasit angajat cu adresa de Email: {agentMetric.Email} din Salesforce in Epers.");
+                }
+
+                var obiectivTypes = new List<(string Denumire, decimal? Value)>
+                {
+                    ("Salesforce: Leaduri Ramase", agentMetric.LeaduriRamase),
+                    ("Salesforce: Leaduri Total", agentMetric.LeaduriTotal),
+                    ("Salesforce: Telefoane", agentMetric.Telefoane),
+                    ("Salesforce: Mesaje", agentMetric.Mesaje),
+                    ("Salesforce: Intalniri", agentMetric.Intalniri),
+                    ("Salesforce: Semnari Noi", agentMetric.SemnariNoi),
+                    ("Salesforce: Valoare Semnari Noi", agentMetric.ValoareSemnariNoi),
+                    ("Salesforce: Cvc Count", agentMetric.CvcCount),
+                    ("Salesforce: Cvc Value", agentMetric.CvcValue)
+                };
+
+                foreach (var (denumire, value) in obiectivTypes)
+                {
+                    var existingObiectiv = GetObActiveForSalesforce(user.Id, agentMetric.StartDate, denumire);
+                    if (existingObiectiv != null)
+                    {
+                        existingObiectiv.ValTarget = (decimal?)value ?? null;
+                        _obiectiveService.UpdateObiectiv(existingObiectiv);
+                        countObAddedOrUpdated++;
+                    }
+                    else
+                    {
+                        var newObiectiv = BuildObiectiveBase(user, agentMetric);
+                        newObiectiv.Denumire = denumire;
+                        newObiectiv.ValTarget = (decimal?)value ?? null;
+                        _obiectiveService.InsertObiectiv(newObiectiv);
+                        countObAddedOrUpdated++;
+                    }
                 }
             }
             return countObAddedOrUpdated;
@@ -125,7 +79,7 @@ namespace EpersBackend.Services.ObiectivService
             Obiective? obiectiv = null;
 
             obiectiv = _epersContext.Obiective.FirstOrDefault(ob => ob.IdAngajat == idAngajat.ToString()
-                && ob.DataIn.HasValue && ob.DataIn.Value.Date == dataIn.Date
+                && ob.DataIn.HasValue && ob.DataIn.Value.Date.Day == dataIn.Date.Day && ob.DataIn.Value.Date.Month == dataIn.Date.Month && ob.DataIn.Value.Date.Year == dataIn.Date.Year
                 && ob.Denumire == denumire
                 && ob.IsActive == true);
 

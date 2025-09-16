@@ -40,26 +40,42 @@ namespace Epers.Models.Salesforce
 
         [JsonPropertyName("leaduriTotal")]
         [Column("Leaduri_total")]
-        public int LeaduriTotal { get; set; }
+        public int? LeaduriTotal { get; set; }
 
         [JsonPropertyName("leaduriRamase")]
         [Column("Leaduri_ramase")]
-        public int LeaduriRamase { get; set; }
+        public int? LeaduriRamase { get; set; }
 
         [JsonPropertyName("telefoane")]
         [Column("Telefoane")]
-        public int Telefoane { get; set; }
+        public int? Telefoane { get; set; }
 
         [JsonPropertyName("mesaje")]
         [Column("Mesaje")]
-        public int Mesaje { get; set; }
+        public int? Mesaje { get; set; }
 
         [JsonPropertyName("intalniri")]
         [Column("Intalniri")]
-        public int Intalniri { get; set; }
+        public int? Intalniri { get; set; }
+        
+        [JsonPropertyName("semnariNoi")]
+        [Column("SemnariNoi")]
+        public int? SemnariNoi { get; set; }
+
+        [JsonPropertyName("valoareSemnariNoi")]
+        [Column("ValoareSemnariNoi")]
+        public decimal? ValoareSemnariNoi { get; set; }
+
+        [JsonPropertyName("cvcCount")]
+        [Column("CvcCount")]
+        public int? CvcCount { get; set; }
+
+        [JsonPropertyName("cvcValue")]
+        [Column("CvcValue")]
+        public decimal? CvcValue { get; set; }
 
         [JsonPropertyName("syncedAt")]
         [Column("SyncedAt")]
-        public DateTime SyncedAt { get; set; }   // stored as UTC in the DB
+        public DateTime? SyncedAt { get; set; }
     }
 }

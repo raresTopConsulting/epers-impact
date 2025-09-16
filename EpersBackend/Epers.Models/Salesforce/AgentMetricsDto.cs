@@ -54,6 +54,18 @@ namespace Epers.Models.Salesforce
 
         [JsonPropertyName("intalniri")]
         public int Intalniri { get; set; }
+
+        [JsonPropertyName("semnariNoi")]
+        public int SemnariNoi { get; set; }
+
+        [JsonPropertyName("valoareSemnariNoi")]
+        public decimal ValoareSemnariNoi { get; set; }
+
+        [JsonPropertyName("cvcCount")]
+        public int CvcCount { get; set; }
+
+        [JsonPropertyName("cvcValue")]
+        public decimal CvcValue { get; set; }
     }
 
 }

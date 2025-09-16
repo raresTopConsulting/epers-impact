@@ -193,12 +193,12 @@ app.MapControllers();
 RecurringJob.AddOrUpdate<IAgentMetricsService>(
     "sync-agent-metrics",
     service => service.SyncAgentMetricsFromSalesforce(),
-    Cron.Hourly
+    Cron.Daily
 );
 RecurringJob.AddOrUpdate<IObiectiveSalesforceIntegrationService>(
     "get-salesforce-data-in-obiective",
     service => service.GetSalesforceDataInObiective(),
-    Cron.Minutely
+    Cron.Daily
 );
 
 app.Use(async (context, next) =>

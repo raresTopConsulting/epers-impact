@@ -4,3 +4,4 @@
 GET https://sf.app.impactsa.ro/metrics/db/latest 
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
+

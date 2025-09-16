@@ -101,12 +101,18 @@ namespace EpersBackend.Services.Salesforce
 
                     if (existing != null)
                     {
-                        // Update only the fields you want to overwrite
-                        existing.Name = agentData.Name;
-                        existing.Email = agentData.Email;
                         existing.StartDate = agentData.StartDate;
                         existing.EndDate = agentData.EndDate;
                         existing.SyncedAt = agentData.SyncedAt;
+                        existing.LeaduriTotal = agentData.LeaduriTotal;
+                        existing.LeaduriRamase = agentData.LeaduriRamase;
+                        existing.Telefoane = agentData.Telefoane;
+                        existing.Mesaje = agentData.Mesaje;
+                        existing.Intalniri = agentData.Intalniri;
+                        existing.SemnariNoi = agentData.SemnariNoi;
+                        existing.ValoareSemnariNoi = agentData.ValoareSemnariNoi;
+                        existing.CvcCount = agentData.CvcCount;
+                        existing.CvcValue = agentData.CvcValue;
 
                         _epersContext.AgentMetrics.Update(existing);
                     }

@@ -40,6 +40,7 @@ namespace EpersBackend.Services.Salesforce
             var content = response.Content.ReadAsStringAsync();
 
             var apiResponse = JsonSerializer.Deserialize<AgentMetricsApiResponse>(content.Result);
+            Console.WriteLine(apiResponse);
 
             if (apiResponse == null)
                 return 0;
@@ -59,7 +60,11 @@ namespace EpersBackend.Services.Salesforce
                     LeaduriRamase = agent.Metrics.LeaduriRamase,
                     Telefoane = agent.Metrics.Telefoane,
                     Mesaje = agent.Metrics.Mesaje,
-                    Intalniri = agent.Metrics.Intalniri
+                    Intalniri = agent.Metrics.Intalniri,
+                    SemnariNoi = agent.Metrics.SemnariNoi,
+                    ValoareSemnariNoi = agent.Metrics.ValoareSemnariNoi,
+                    CvcCount = agent.Metrics.CvcCount,
+                    CvcValue = agent.Metrics.CvcValue
                 };
 
                 _efAgentMetricsRepository.Upsert(agentMetrics);
